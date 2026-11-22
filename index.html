@@ -228,6 +228,7 @@ p{margin:0}
 .wmeta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .sinp{width:100%;font:16px var(--f-body,inherit);padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
 .pill .x{border:0;background:transparent;color:inherit;font:700 14px var(--f-mono);cursor:pointer;padding:0 0 0 2px}
+mark{background:var(--soft);color:inherit;border-radius:3px;padding:0 2px;font-weight:600}
 </style>
 <div class="wrap" id="app"></div>
 <div id="sheet"></div>
@@ -5111,7 +5112,29 @@ var dict=null;
 
 /* ---------- Giọng đọc mẫu ---------- */
 var TTS='speechSynthesis' in window&&'SpeechSynthesisUtterance' in window,VOICES=[],tok=0,toastT=0;
-function loadVoices(){if(!TTS)return;var vs=speechSynthesis.getVoices().filter(function(v){return /^en[-_]/i.test(v.lang);});var us=vs.filter(function(v){return /^en[-_]US/i.test(v.lang);});VOICES=us.length>=2?us:vs;}
+/* ---------- Tra từ bất kỳ, lưu bất kỳ, quan hệ từ, giọng Mỹ ---------- */
+var BADV=/albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|organ|princess|trinoids|whisper|zarvox|superstar|wobble|fred|junior|ralph|kathy|espeak|eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley/i;
+function vScore(v){
+  var n=v.name,s=0;
+  if(/^en[-_]US/i.test(v.lang))s+=50;else s-=30;
+  if(/natural|neural|online/i.test(n))s+=40;
+  if(/premium|enhanced/i.test(n))s+=30;
+  if(/google us english/i.test(n))s+=28;
+  if(/samantha|ava\b|allison|zoe|aria|jenny|evan|nathan|joanna|matthew|siri|susan|guy|andrew|emma|michelle|ana\b|steffan|brian/i.test(n))s+=15;
+  if(BADV.test(n))s-=100;
+  if(v.localService)s+=2;
+  return s;
+}
+function loadVoices(){
+  if(!TTS)return;
+  var vs=speechSynthesis.getVoices().filter(function(v){return /^en[-_]/i.test(v.lang)&&!BADV.test(v.name);});
+  vs.sort(function(a,b){return vScore(b)-vScore(a);});
+  var us=vs.filter(function(v){return /^en[-_]US/i.test(v.lang);});
+  VOICES=us.length?us:vs;
+  var pick=P.voice&&VOICES.filter(function(v){return v.name===P.voice;})[0];
+  if(pick){VOICES=[pick].concat(VOICES.filter(function(v){return v!==pick;}));}
+}
+
 if(TTS){loadVoices();try{speechSynthesis.addEventListener('voiceschanged',loadVoices);}catch(e){}}
 function toast(msg,kind,emo){var t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('role','status');document.body.appendChild(t);}
   t.className='toast '+(kind||'');t.innerHTML=(emo?'<span class="te" aria-hidden="true">'+emo+'</span>':'')+'<span>'+esc(msg)+'</span>';t.hidden=false;
@@ -5153,7 +5176,7 @@ function weekStat(w){
   return {tot:tot,done:done,pct:tot?Math.round(done/tot*100):0};
 }
 function currentWeek(){for(var i=0;i<WEEKS.length;i++){if(weekStat(WEEKS[i]).pct<100)return WEEKS[i].n;}return WEEKS.length;}
-function allVocab(){var a=[];WEEKS.forEach(function(w){w.vocab.forEach(function(v){a.push({wk:w.n,id:v.id,w:v.w,m:v.m,ex:v.ex});});});((P.sv&&P.sv.list)||[]).forEach(function(id){var v=VMAP[id];if(v&&id.charAt(0)==='L')a.push({wk:0,tn:v.tn,id:id,w:v.w,m:v.m,ex:v.ex});});return a;}
+function allVocab(){var a=[];WEEKS.forEach(function(w){w.vocab.forEach(function(v){a.push({wk:w.n,id:v.id,w:v.w,m:v.m,ex:v.ex});});});((P.sv&&P.sv.list)||[]).forEach(function(id){var v=VMAP[id];if(v&&/^(L|U_)/.test(id))a.push({wk:0,tn:v.tn,id:id,w:v.w,m:v.m,ex:v.ex});});return a;}
 function buildDeck(extra){
   var t=today(),all=allVocab();
   var due=all.filter(function(v){return P.srs[v.id]&&P.srs[v.id].due<=t;});
@@ -5993,10 +6016,11 @@ var VT=(function(){
 var VMAP={};
 WEEKS.forEach(function(w){w.vocab.forEach(function(v){VMAP[v.id]={id:v.id,w:v.w,pos:'',m:v.m,ex:v.ex,syn:[],ant:[],wk:w.n};});});
 VT.forEach(function(t){t.words.forEach(function(v){VMAP[v.id]=v;});});
+if(P.sv&&P.sv.cu)Object.keys(P.sv.cu).forEach(function(k){VMAP[k]=P.sv.cu[k];});
 var RT={syn:'Đồng nghĩa',ant:'Trái nghĩa',fam:'Cùng họ từ',col:'Hay đi cùng',rel:'Liên quan'};
 function SV(){if(!P.sv)P.sv={list:[],rel:{}};return P.sv;}
 function svHas(id){return SV().list.indexOf(id)>-1;}
-function svDrop(id){var s=SV(),i=s.list.indexOf(id);if(i>-1)s.list.splice(i,1);delete s.rel[id];Object.keys(s.rel).forEach(function(k){s.rel[k]=s.rel[k].filter(function(r){return r.to!==id;});if(!s.rel[k].length)delete s.rel[k];});}
+function svDrop(id){var s=SV(),i=s.list.indexOf(id);if(s.cu)delete s.cu[id];if(i>-1)s.list.splice(i,1);delete s.rel[id];Object.keys(s.rel).forEach(function(k){s.rel[k]=s.rel[k].filter(function(r){return r.to!==id;});if(!s.rel[k].length)delete s.rel[k];});}
 function svToggle(id){
   if(svHas(id)){svDrop(id);toast('Đã bỏ lưu "'+VMAP[id].w+'"','soft','🗑️');}
   else{SV().list.unshift(id);toast('Đã lưu "'+VMAP[id].w+'". Xem ở mục Từ vựng, Từ đã lưu.','good','⭐');}
@@ -6020,8 +6044,9 @@ function vSearch(q){
   q=norm(q.trim());if(!q)return '';
   var out=[];Object.keys(VMAP).forEach(function(k){var v=VMAP[k];if(norm(v.w).indexOf(q)>-1||norm(v.m).indexOf(q)>-1)out.push(v);});
   out.sort(function(a,b){var x=norm(a.w).indexOf(q)===0?0:1,y=norm(b.w).indexOf(q)===0?0:1;return x-y||a.w.localeCompare(b.w);});
-  if(!out.length)return '<p class="fine">Không tìm thấy từ nào.</p>';
-  return '<p class="fine">'+out.length+' kết quả'+(out.length>30?', hiển thị 30 đầu':'')+'</p>'+out.slice(0,30).map(function(v){return vCard(v);}).join('');
+  var cw=cleanWord(q),lb=/^[a-z' ]+$/.test(q)&&cw.length>1?'<button class="btn" data-act="lk-open" data-w="'+esc(cw)+'">Tra cứu &quot;'+esc(cw)+'&quot;, xem quan hệ từ và lưu</button>':'';
+  if(!out.length)return '<p class="fine">Không có trong thư viện 600 từ.</p>'+lb;
+  return lb+'<p class="fine">'+out.length+' kết quả'+(out.length>30?', hiển thị 30 đầu':'')+'</p>'+out.slice(0,30).map(function(v){return vCard(v);}).join('');
 }
 function searchBox(id,val,ph){return '<input id="'+id+'" class="sinp" type="search" value="'+esc(val||'')+'" placeholder="'+ph+'" aria-label="'+ph+'" autocomplete="off" autocapitalize="off">';}
 function savedDeckBuild(){return {list:SV().list.map(function(id){var v=VMAP[id];return {wk:v.wk||0,tn:v.tn,id:id,w:v.w,m:v.m,ex:v.ex};}),i:0,flip:false,fresh:0};}
@@ -6034,7 +6059,7 @@ function viewVocab(){
   '<div id="vgrid" class="wks"'+(q.trim()?' style="display:none"':'')+'>'+VT.map(function(t){
     var sv=t.words.filter(function(v){return svHas(v.id);}).length;
     return '<a class="wk" href="#vocab-'+t.id+'"><span class="n">'+String(t.id).padStart(2,'0')+'</span><span><span class="tt">'+esc(t.name)+'</span><br><span class="ff">'+esc(t.vi)+' · '+t.words.length+' từ'+(sv?' · '+sv+' đã lưu':'')+'</span></span></a>';
-  }).join('')+'</div>';
+  }).join('')+'</div>'+voiceCard();
 }
 function viewVTopic(){
   var t=VT[S.vt-1],all=t.words.every(function(v){return svHas(v.id);});
@@ -6057,7 +6082,7 @@ function savedItem(id,i,n,filt){
   var v=VMAP[id],rel=SV().rel[id]||[],open=S.relOpen===id,h='<div class="card vc" style="display:grid;gap:6px" data-wid="'+id+'">';
   h+='<div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><b style="font-size:18px">'+esc(v.w)+'</b>'+(v.pos?'<span class="pill">'+esc(v.pos)+'</span>':'')+'<span class="fine">'+(v.tn?esc(v.tn):v.wk?lab(v.wk):'')+'</span></div>';
   if(ipaOf(v.w))h+='<p class="ipa-line">'+esc(ipaOf(v.w))+'</p>';
-  h+='<p><b>'+esc(v.m)+'</b></p><p class="fine" style="font-size:14px">'+esc(v.ex)+'</p>';
+  h+=(v.custom?'<input class="sinp mi" data-id="'+id+'" value="'+esc(v.m)+'" placeholder="Nhập nghĩa tiếng Việt" aria-label="Nghĩa tiếng Việt của '+esc(v.w)+'">':'<p><b>'+esc(v.m)+'</b></p>')+'<p class="fine" style="font-size:14px">'+esc(v.ex)+'</p><p><button class="btn sm ghost" data-act="lk-open" data-w="'+esc(v.w.toLowerCase())+'">Tra quan hệ từ</button></p>';
   if(rel.length)h+='<p style="display:flex;gap:6px;flex-wrap:wrap">'+rel.map(function(r){return '<span class="pill" title="'+RT[r.type]+'">'+RT[r.type]+': '+esc(VMAP[r.to].w)+' <button class="x" data-act="rel-del" data-a="'+id+'" data-b="'+r.to+'" aria-label="Xóa liên kết với '+esc(VMAP[r.to].w)+'">×</button></span>';}).join('')+'</p>';
   var sg=svSuggest(id);
   if(sg.length)h+='<p class="fine">Gợi ý: '+sg.map(function(s){return '<button class="btn sm ghost" data-act="rel-add" data-a="'+id+'" data-b="'+s[0]+'" data-type="'+s[1]+'">+ '+RT[s[1]]+': '+esc(VMAP[s[0]].w)+'</button>';}).join(' ')+'</p>';
@@ -6097,6 +6122,182 @@ function viewSaved(){
   '<div id="sres" style="display:grid;gap:10px">'+savedList()+'</div>';
 }
 
+function voiceCard(){
+  var on=P.lk!==0;
+  var opts=VOICES.slice(0,10).map(function(v,i){return '<option value="'+esc(v.name)+'"'+(i===0?' selected':'')+'>'+esc(v.name)+(i===0?' (đang dùng)':'')+'</option>';}).join('');
+  return '<div class="card" style="display:grid;gap:8px"><h3>Giọng đọc và chạm để tra từ</h3>'+
+  (TTS&&VOICES.length?'<p class="fine">Giọng đọc tiếng Anh Mỹ. Máy tự chọn giọng tự nhiên nhất đang có. Bạn có thể đổi nếu thấy giọng khác hay hơn.</p><select id="vsel" class="sinp" aria-label="Chọn giọng đọc">'+opts+'</select><div class="btns"><button class="btn sm" data-act="v-test">'+IC.spk+' Nghe thử</button></div>':'<p class="fine">Thiết bị chưa có giọng đọc tiếng Anh. Hãy cài giọng English (US) trong cài đặt của điện thoại.</p>')+
+  '<p class="fine">Chạm vào bất kỳ từ tiếng Anh nào trong bài để tra: phiên âm Mỹ, nghĩa, từ đồng nghĩa, trái nghĩa, họ từ, câu ví dụ, và lưu từ.</p><button class="btn sm'+(on?' primary':'')+'" data-act="lk-tog" aria-pressed="'+on+'">Chạm để tra từ: '+(on?'Đang bật':'Đang tắt')+'</button></div>';
+}
+
+/* --- Tìm từ trong dữ liệu có sẵn --- */
+function cleanWord(s){return String(s||'').toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g,'').replace(/[’]/g,"'");}
+function vFind(w){
+  var hit=null;
+  Object.keys(VMAP).forEach(function(k){var v=VMAP[k];if(v.w.toLowerCase()===w&&(!hit||(k.charAt(0)==='L'&&hit.id.charAt(0)!=='L')))hit=v;});
+  return hit;
+}
+function stemsOf(w){
+  var out={},add=function(s){if(s.length>=3)out[s]=1;};
+  add(w);
+  [['ies','y'],['ied','y'],['ing',''],['ing','e'],['ed',''],['ed','e'],['es',''],['s',''],['ly',''],['ily','y'],['er',''],['er','e'],['est',''],['ment',''],['ness',''],['ful',''],['less',''],['able',''],['able','e'],['ibly','ible'],['ably','able'],['ive',''],['ive','e'],['ively',''],['ion',''],['ion','e'],['ation',''],['ation','e'],['ization','ize'],['ition','it'],['ity',''],['al',''],['ally',''],['ic',''],['ous',''],['ance',''],['ence',''],['ant',''],['ent',''],['ize','e'],['ise','e'],['or',''],['or','e'],['ure',''],['y','']].forEach(function(p){
+    if(w.length>p[0].length+2&&w.slice(-p[0].length)===p[0])add(w.slice(0,-p[0].length)+p[1]);
+  });
+  Object.keys(out).forEach(function(s){if(s.charAt(s.length-1)==='e')add(s.slice(0,-1));if(/(.)\1$/.test(s))add(s.slice(0,-1));if(s.slice(-1)==='i')add(s.slice(0,-1)+'y');});
+  return Object.keys(out);
+}
+var FSUF=['','s','es','ed','d','ing','er','ers','or','ors','ion','ions','ation','ations','tion','tions','tive','tively','sion','sions','sive','cy','ncy','action','actory','ication','ications','ication','ment','ments','ive','ively','ly','al','ally','able','ably','ability','ity','ness','ful','less','ize','ization','ise','ance','ence','ant','ants','ent','ous','ic','ure','ual','ory'];
+var FBAD={apple:1,apples:1,invent:1,competent:1,competence:1,appliance:1,organic:1,organs:1,organ:1,creature:1,actual:1,actually:1};
+function famOf(w){
+  var found={},st=stemsOf(w);
+  st.forEach(function(s){
+    var variants=[s,s+'e'];if(s.slice(-1)==='e')variants.push(s.slice(0,-1));if(s.slice(-1)==='y')variants.push(s.slice(0,-1)+'i');if(s.slice(-1)==='t')variants.push(s.slice(0,-1)+'s');if(s.slice(-2)==='nd')variants.push(s.slice(0,-1)+'s');if(s.slice(-1)==='d')variants.push(s.slice(0,-1)+'s');if(s.slice(-1)==='t')variants.push(s+'t');if(s.slice(-1)==='y')variants.push(s.slice(0,-1));if(s.slice(-4)==='ound')variants.push(s.slice(0,-3)+'os');
+    variants.forEach(function(b){FSUF.forEach(function(x){var c=b+x;if(c!==w&&c.length>3&&IPAMAP[c]&&!FBAD[c]&&c.slice(0,Math.min(4,w.length))===w.slice(0,Math.min(4,c.length))&&Math.abs(c.length-w.length)<=6)found[c]=1;});});
+  });
+  var l=Object.keys(found);
+  l.sort(function(a,b){return Math.abs(a.length-w.length)-Math.abs(b.length-w.length)||a.localeCompare(b);});
+  return l.slice(0,14);
+}
+var CORP=null;
+function corpus(){
+  if(CORP)return CORP;
+  var seen={},out=[];
+  function add(s,src){s=String(s).replace(/\s+/g,' ').trim();if(s.length<18||s.length>220||seen[s]||!/[a-z]{3}/.test(s)||/[àáảãạăâđêôơưòóỏõọụủũùúèéẻẽẹìíỉĩị]/i.test(s))return;seen[s]=1;out.push({s:s,src:src});}
+  function walk(o,src,d){if(d>6||o==null)return;if(typeof o==='string'){o.split(/(?<=[.!?])\s+/).forEach(function(x){add(x,src);});return;}if(Array.isArray(o)){o.forEach(function(x){walk(x,src,d+1);});return;}if(typeof o==='object'){Object.keys(o).forEach(function(k){if(k==='id'||k==='m'||k==='vi'||k==='e'||k==='exp')return;walk(o[k],src,d+1);});}}
+  Object.keys(VMAP).forEach(function(k){add(VMAP[k].ex,VMAP[k].tn||'Từ vựng');});
+  WEEKS.forEach(function(w){walk(w.p5,lab(w.n),0);walk(w.p2,lab(w.n),0);walk(w.blocks,lab(w.n),0);});
+  SW.sp.concat(SW.wr).forEach(function(t){walk(t.model,'Nói/Viết',0);walk(t.read,'Nói/Viết',0);});
+  return (CORP=out);
+}
+function ctxOf(w,n){
+  var re=new RegExp('\\b'+w.replace(/[^a-z\']/g,'')+'(s|es|ed|d|ing|ly)?\\b','i'),out=[];
+  var C=corpus();
+  for(var i=0;i<C.length&&out.length<n;i++){if(re.test(C[i].s))out.push(C[i]);}
+  return out;
+}
+function relOf(w){
+  var syn={},ant={};
+  Object.keys(VMAP).forEach(function(k){
+    var v=VMAP[k],lw=v.w.toLowerCase();
+    if(lw===w){v.syn.forEach(function(x){syn[x.toLowerCase()]=1;});v.ant.forEach(function(x){ant[x.toLowerCase()]=1;});}
+    else{if(v.syn.some(function(x){return x.toLowerCase()===w;}))syn[lw]=1;if(v.ant.some(function(x){return x.toLowerCase()===w;}))ant[lw]=1;}
+  });
+  var c=P.lkc&&P.lkc[w];if(c){(c.syn||[]).forEach(function(x){syn[x]=1;});(c.ant||[]).forEach(function(x){ant[x]=1;});}
+  delete syn[w];delete ant[w];
+  return {syn:Object.keys(syn),ant:Object.keys(ant)};
+}
+function sameTopic(w){var v=vFind(w);if(!v||!v.tid)return [];return VT[v.tid-1].words.filter(function(x){return x.w.toLowerCase()!==w;}).map(function(x){return x.w;});}
+
+/* --- Tra trực tuyến (không bắt buộc, có bộ nhớ đệm) --- */
+function fetchJ(url){
+  return new Promise(function(res){
+    var done=false,t=setTimeout(function(){if(!done){done=true;res(null);}},6000);
+    try{fetch(url).then(function(r){return r.ok?r.json():null;}).then(function(j){if(!done){done=true;clearTimeout(t);res(j);}},function(){if(!done){done=true;clearTimeout(t);res(null);}});}catch(e){if(!done){done=true;clearTimeout(t);res(null);}}
+  });
+}
+function lkOnline(w){
+  if(!P.lkc)P.lkc={};
+  S.lk.tried[w]=1;
+  return Promise.all([
+    fetchJ('https://api.dictionaryapi.dev/v2/entries/en/'+encodeURIComponent(w)),
+    vFind(w)&&vFind(w).m?Promise.resolve(null):fetchJ('https://api.mymemory.translated.net/get?q='+encodeURIComponent(w)+'&langpair=en|vi')
+  ]).then(function(r){
+    var d=r[0],t=r[1],o={};
+    if(Array.isArray(d)&&d[0]){
+      var syn={},ant={},def='',pos='',ex='';
+      d.forEach(function(e){(e.meanings||[]).forEach(function(m){
+        if(!pos){pos=m.partOfSpeech||'';}
+        (m.synonyms||[]).forEach(function(x){syn[x.toLowerCase()]=1;});(m.antonyms||[]).forEach(function(x){ant[x.toLowerCase()]=1;});
+        (m.definitions||[]).forEach(function(df){if(!def){def=df.definition||'';}if(!ex&&df.example)ex=df.example;(df.synonyms||[]).forEach(function(x){syn[x.toLowerCase()]=1;});(df.antonyms||[]).forEach(function(x){ant[x.toLowerCase()]=1;});});
+      });});
+      o.def=def;o.pos=pos;o.ex=ex;o.syn=Object.keys(syn).slice(0,8);o.ant=Object.keys(ant).slice(0,6);
+    }
+    if(t&&t.responseData&&t.responseData.translatedText&&!/MYMEMORY|INVALID|QUERY LENGTH/i.test(t.responseData.translatedText)){var vi=String(t.responseData.translatedText).toLowerCase();if(vi!==w)o.vi=vi;}
+    if(o.def||o.vi){P.lkc[w]=o;var ks=Object.keys(P.lkc);if(ks.length>300)delete P.lkc[ks[0]];save();}
+  });
+}
+
+/* --- Cửa sổ tra từ --- */
+function lkEntry(w){var v=vFind(w);if(v)return v;var id='U_'+w;if(VMAP[id])return VMAP[id];return null;}
+function lkSave(w){
+  var v=vFind(w),id;
+  if(v){svToggle(v.id);return;}
+  id='U_'+w;
+  if(svHas(id)){svDrop(id);toast('Đã bỏ lưu "'+w+'"','soft','🗑️');save();return;}
+  var c=(P.lkc&&P.lkc[w])||{},cx=(S.lk&&S.lk.ctx)||ctxOf(w,1)[0]&&ctxOf(w,1)[0].s||c.ex||'';
+  var rl=relOf(w),e={id:id,w:w,pos:c.pos?{noun:'n',verb:'v',adjective:'adj',adverb:'adv'}[c.pos]||c.pos:'',m:c.vi||'',ex:cx,syn:rl.syn.slice(0,4),ant:rl.ant.slice(0,3),tn:'Từ của tôi',custom:1};
+  VMAP[id]=e;(SV().cu||(SV().cu={}))[id]=e;SV().list.unshift(id);save();
+  toast('Đã lưu "'+w+'". Vào Từ vựng, Từ đã lưu để xem.','good','⭐');
+}
+function chipsHtml(list,cls){return list.map(function(x){return '<button class="btn sm ghost" data-act="lk-open" data-w="'+esc(x)+'">'+esc(x)+'</button>';}).join(' ');}
+function hl(s,w){var re=new RegExp('\\b('+w.replace(/[^a-z\']/g,'')+'(?:s|es|ed|d|ing|ly)?)\\b','ig');return esc(s).replace(re,'<mark>$1</mark>');}
+function lkHtml(){
+  var L=S.lk,w=L.w,v=lkEntry(w),c=(P.lkc&&P.lkc[w])||{},sid=v?v.id:'U_'+w,saved=svHas(sid),ipa=ipaOf(w),h='';
+  var rl=relOf(w),fam=famOf(w),top=sameTopic(w),ctx=L.ctx?[{s:L.ctx,src:'Câu bạn vừa chạm'}].concat(ctxOf(w,4).filter(function(x){return x.s!==L.ctx;}).slice(0,3)):ctxOf(w,4);
+  var mine=SV().rel[sid]||[];
+  h+='<div class="sh-head"><span class="eyebrow">Tra từ</span><button class="btn sm" data-act="lk-close">Đóng</button></div>';
+  h+='<p class="target" style="margin:0">'+esc(w)+(v&&v.pos?' <span class="pill">'+esc(v.pos)+'</span>':c.pos?' <span class="pill">'+esc(c.pos)+'</span>':'')+'</p>';
+  h+=ipa?'<p class="ipa-line">'+esc(ipa)+' <span class="fine">(giọng Mỹ)</span></p>':'<p class="fine">Chưa có phiên âm cho từ này trong từ điển của app.</p>';
+  var vi=(v&&v.m)||c.vi||'';
+  h+=vi?'<p><b>'+esc(vi)+'</b>'+((!v||!v.m)&&c.vi?' <span class="fine">(dịch tự động, có thể chưa sát)</span>':'')+'</p>':'';
+  if(c.def)h+='<p class="fine" style="font-size:14px">'+esc(c.def)+'</p>';
+  if(L.loading)h+='<p class="fine">Đang tra thêm trực tuyến...</p>';
+  else if(!vi&&!c.def&&!(v&&v.ex))h+='<p class="fine">Chưa tra được nghĩa (không có mạng hoặc từ hiếm). Bạn vẫn lưu được và tự nhập nghĩa trong mục Từ đã lưu.</p>';
+  h+='<div class="btns"><button class="btn sm" data-act="lk-say" data-w="'+esc(w)+'">'+IC.spk+' Nghe giọng Mỹ</button><button class="btn sm" data-act="lk-say-slow" data-w="'+esc(w)+'">Nghe chậm</button><button class="btn sm" data-act="lk-prac" data-w="'+esc(w)+'">'+IC.mic+' Nói</button><button class="btn sm'+(saved?' primary':'')+'" data-act="lk-save" data-w="'+esc(w)+'" aria-pressed="'+saved+'">'+(saved?'★ Đã lưu':'☆ Lưu từ này')+'</button></div>';
+  function sec(t,body){return body?'<div><h3 style="margin:10px 0 4px">'+t+'</h3>'+body+'</div>':'';}
+  h+=sec('Đồng nghĩa',rl.syn.length?'<p>'+chipsHtml(rl.syn)+'</p>':'');
+  h+=sec('Trái nghĩa',rl.ant.length?'<p>'+chipsHtml(rl.ant)+'</p>':'');
+  h+=sec('Họ từ (cùng gốc)',fam.length?'<p>'+chipsHtml(fam)+'</p>':'');
+  h+=sec('Cùng chủ đề "'+(v&&v.tn?esc(v.tn):'')+'"',top.length?'<p>'+chipsHtml(top)+'</p>':'');
+  if(mine.length)h+=sec('Bạn đã liên kết',mine.map(function(r){return '<span class="pill">'+RT[r.type]+': '+esc(VMAP[r.to].w)+'</span>';}).join(' '));
+  h+=sec('Câu ví dụ trong app',ctx.length?ctx.map(function(x){return '<p style="margin:4px 0;font-size:14px">'+hl(x.s,w)+' <span class="fine">('+esc(x.src)+')</span> <button class="btn sm ghost" data-act="say" data-text="'+esc(x.s)+'" aria-label="Nghe câu">'+IC.spk+'</button></p>';}).join(''):'');
+  if(!rl.syn.length&&!rl.ant.length&&!fam.length&&!ctx.length&&!L.loading)h+='<p class="fine">Chưa có dữ liệu quan hệ cho từ này.</p>';
+  h+='<p class="fine" style="margin-top:12px">Họ từ được suy ra từ cách cấu tạo từ, nên có thể có từ chưa thật gần nghĩa. Đồng nghĩa và trái nghĩa lấy từ thư viện 600 từ và từ điển trực tuyến.</p>';
+  return h;
+}
+function lkRender(){
+  var bg=$('#lkbg');
+  if(!S.lk){if(bg)bg.remove();if(!S.practice)document.body.style.overflow='';return;}
+  if(!bg){bg=document.createElement('div');bg.id='lkbg';bg.className='sheet-bg';bg.style.zIndex=60;bg.setAttribute('data-act','lk-bg');bg.innerHTML='<div class="sheet" role="dialog" aria-modal="true" aria-label="Tra từ" id="lkbox"></div>';document.body.appendChild(bg);}
+  document.body.style.overflow='hidden';
+  var box=$('#lkbox'),st=box.scrollTop;box.innerHTML=lkHtml();box.scrollTop=st;
+}
+function lkOpen(raw,ctx){
+  var w=cleanWord(raw);if(!w||w.length<2)return;
+  var prev=S.lk;S.lk={w:w,ctx:ctx||'',tried:prev?prev.tried:{},loading:false};
+  var need=!(P.lkc&&P.lkc[w])&&!S.lk.tried[w];
+  if(need)S.lk.loading=true;
+  lkRender();var box=$('#lkbox');if(box)box.scrollTop=0;
+  if(need)lkOnline(w).then(function(){if(S.lk&&S.lk.w===w){S.lk.loading=false;lkRender();}});
+}
+function lkClose(){S.lk=null;lkRender();}
+/* --- Chạm vào từ trong bài --- */
+var VIET=/[àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ]/i,IPACH=/[ˈˌəɪʊʃʒθðŋɑɔæɛʌ]/;
+function wordAt(x,y){
+  var n,off;
+  if(document.caretPositionFromPoint){var p=document.caretPositionFromPoint(x,y);if(!p)return null;n=p.offsetNode;off=p.offset;}
+  else if(document.caretRangeFromPoint){var r=document.caretRangeFromPoint(x,y);if(!r)return null;n=r.startContainer;off=r.startOffset;}
+  else return null;
+  if(!n||n.nodeType!==3)return null;
+  var t=n.nodeValue;if(VIET.test(t)||IPACH.test(t))return null;
+  var re=/[A-Za-z][A-Za-z'’-]*[A-Za-z]|[A-Za-z]/g,m,best=null;
+  while((m=re.exec(t))){if(off>=m.index&&off<=m.index+m[0].length){best=m;break;}}
+  if(!best)return null;
+  var el=n.parentElement;if(el&&el.closest('input,textarea,select,button,a,[data-act],.ipa-line,.ipa,.ipa-s,.eyebrow,nav'))return null;
+  var s=t.lastIndexOf('. ',best.index);s=s<0?0:s+2;var e=t.indexOf('. ',best.index+best[0].length);e=e<0?t.length:e+1;
+  return {word:best[0].replace(/-/g,'').length?best[0]:'',sentence:t.slice(s,e).trim()};
+}
+document.addEventListener('click',function(e){
+  if(P.lk===0)return;
+  var t=e.target;if(!t||!t.closest||t.closest('button,a,input,textarea,select,label,[data-act],.sheet-bg,nav,.toast'))return;
+  if(!t.closest('#app'))return;
+  var sel=window.getSelection&&String(window.getSelection());if(sel&&sel.length>1)return;
+  var r=wordAt(e.clientX,e.clientY);if(!r||!r.word)return;
+  var cw=cleanWord(r.word);if(cw.length<2||!/^[a-z']+$/.test(cw))return;
+  lkOpen(cw,r.sentence.length>18&&r.sentence.length<220?r.sentence:'');
+  try{if(!P.tipLk){P.tipLk=1;save();}}catch(x){}
+});
+
 function navRender(){
   var items=[['home','#home','Học',IC.home],['vocab','#vocab','Từ vựng',IC.cards],['grammar','#grammar','Ngữ pháp',IC.book],['pron','#pron','Phát âm',IC.mic22],['sw','#sw','Nói/Viết',IC.pen],['progress','#progress','Tiến độ',IC.chart]];
   var active=S.route==='cards'||S.route==='vtopic'||S.route==='saved'?'vocab':S.route==='week'||S.route==='guide'||S.route==='test'?'home':S.route==='gtopic'||S.route==='gmap'?'grammar':S.route==='ptopic'?'pron':S.route==='speak'||S.route==='write'?'sw':S.route;
@@ -6109,7 +6310,7 @@ function render(){
 }
 function route(){
   var h=location.hash.slice(1)||'home',m=h.match(/^week-(\d+)$/);
-  S.practice=null;S.rec=null;stopSpeak();renderSheet();tmStop();S.sw=null;S.wr=null;S.tadv=false;TQ=TQB;
+  S.practice=null;S.rec=null;stopSpeak();renderSheet();S.lk=null;lkRender();tmStop();S.sw=null;S.wr=null;S.tadv=false;TQ=TQB;
   if(m&&WEEKS[+m[1]-1]){S.route='week';S.week=+m[1];}
   else if(h==='grammar'){S.route='grammar';}
   else if((m=h.match(/^gram-(\d+)$/))&&GT[+m[1]-1]){S.route='gtopic';S.gt=+m[1];S.gtab='ref';S.gans=false;}
@@ -6151,6 +6352,15 @@ document.addEventListener('click',function(e){
     case 'rel-add-sel':{var rs2=$('#rsel'),rt=$('#rtype');if(rs2&&rs2.value){relAdd(el.dataset.a,rs2.value,rt.value);toast('Đã thêm liên kết','good','🔗');}render();break;}
     case 'rel-del':relDel(el.dataset.a,el.dataset.b);render();break;
     case 'saved-deck':location.hash='cards-saved';break;
+    case 'lk-open':lkOpen(el.dataset.w);break;
+    case 'lk-close':lkClose();break;
+    case 'lk-bg':if(e.target===el)lkClose();break;
+    case 'lk-say':say(el.dataset.w);break;
+    case 'lk-say-slow':say(el.dataset.w,0.6);break;
+    case 'lk-save':lkSave(el.dataset.w);lkRender();if(S.route==='saved'||S.route==='vocab'||S.route==='vtopic')render();break;
+    case 'lk-prac':{var lw=el.dataset.w,lv=vFind(lw);lkClose();openPractice([{id:'lk_'+lw,t:lw,vi:(lv&&lv.m)||'',label:'Từ vựng'}],0);break;}
+    case 'lk-tog':P.lk=P.lk===0?1:0;save();render();break;
+    case 'v-test':say('The quarterly report shows a steady increase in customer deposits.');break;
     case 'swtab':S.swtab=el.dataset.tab;render();break;
     case 'say-slow':say(el.dataset.text,0.7);break;
     case 'sp-read':{var rt=SWQ[S.sid];openPractice(splitSentences(rt.read).map(function(x,i){return {id:rt.id+'r'+i,t:x,vi:'',label:'Đọc to'};}),0);break;}
@@ -6224,6 +6434,10 @@ document.addEventListener('click',function(e){
     case 'reset-ask':S.confirm=!S.confirm;render();break;
     case 'reset-do':P={q:{},pr:{},srs:{},days:{},hist:[],nc:{d:'',n:0}};initP();save();S.chosen={};S.confirm=false;render();toast('Đã xóa tiến độ.');break;
   }
+});
+document.addEventListener('change',function(e){
+  if(e.target.id==='vsel'){P.voice=e.target.value;save();loadVoices();say('Good morning. How may I help you today?');}
+  if(e.target.classList&&e.target.classList.contains('mi')){var id=e.target.dataset.id;if(VMAP[id]){VMAP[id].m=e.target.value.trim();if(SV().cu&&SV().cu[id])SV().cu[id].m=VMAP[id].m;save();}}
 });
 document.addEventListener('input',function(e){
   if(e.target.id==='vq'){S.vq=e.target.value;var r=$('#vres'),g=$('#vgrid');if(r)r.innerHTML=vSearch(S.vq);if(g)g.style.display=S.vq.trim()?'none':'';return;}
