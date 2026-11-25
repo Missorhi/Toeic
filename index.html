@@ -410,6 +410,29 @@ mark{background:var(--butter);color:var(--ink);border-radius:6px;padding:0 3px}
 .mascot{filter:drop-shadow(0 4px 8px rgba(176,100,160,.3))}
 a{color:var(--accent);font-weight:800}.wk,.tile,.gcard,.btn,.nav a,.back{color:inherit}.back{color:var(--muted)}
 .ipa,.ipa-s,.ipa-line,[class*="ipa"]{font-family:var(--f-mono);letter-spacing:0;font-size:.92em;font-weight:500}
+
+.pic{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--soft);color:var(--accent);flex:none;vertical-align:middle}
+.pic svg{width:20px;height:20px}
+.mm{margin:12px 0 18px}
+.mm-c{display:block;margin:0 auto 8px;max-width:88%;text-align:center;padding:12px 20px;border-radius:24px;font-weight:800;font-size:19px;line-height:1.3;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink);box-shadow:0 8px 18px rgba(122,89,209,.25)}
+.mm-c small{display:block;font-size:12.5px;font-weight:600;opacity:.9}
+.mm-trunk{margin-left:14px;padding-left:18px;border-left:3px solid var(--line)}
+.mm-b{--bgc:var(--soft);--bc:#B79CF5;position:relative;margin:14px 0;padding:11px 12px 12px;border-radius:20px;background:var(--bgc)}
+.mm-b::before{content:"";position:absolute;left:-21px;top:22px;width:18px;height:3px;border-radius:2px;background:var(--bc)}
+.mm-b.c0{--bgc:var(--rose);--bc:#F2A5C3}.mm-b.c1{--bgc:var(--mist);--bc:#8DBDF0}.mm-b.c2{--bgc:var(--butter);--bc:#EBC65A}.mm-b.c3{--bgc:var(--mint);--bc:#7ACBA6}.mm-b.c4{--bgc:var(--soft);--bc:#B79CF5}.mm-b.c5{--bgc:var(--sand);--bc:#F2B48A}
+.mm-bt{font-weight:800;margin-bottom:8px}
+.mm-l{display:flex;flex-wrap:wrap;gap:7px}
+.mm-chip,.mm-note{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:16px;background:var(--surface);border:1.5px solid var(--line);font-weight:700;color:var(--ink);text-decoration:none;font-size:14.5px;line-height:1.4}
+.mm-chip .pic{width:24px;height:24px;border-radius:8px}.mm-chip .pic svg{width:15px;height:15px}
+.mm-w{font:inherit;font-weight:800;color:var(--ink);background:none;border:0;padding:0;cursor:pointer}
+.mm-vi{font-weight:500;color:var(--muted);font-size:13.5px;transition:filter .15s}
+.mm-note{font-weight:600;font-size:14px;align-items:flex-start;border-radius:14px}
+.mm.hide .mm-vi:not(.on){filter:blur(6px);cursor:pointer;user-select:none}
+.mm .mm-vi{cursor:pointer}
+.mm-w{text-align:left}
+.mm-note{flex-direction:column;gap:2px;align-items:flex-start}.mm-note>span:first-child{font-weight:800}
+.scene{margin:0 0 8px;padding:10px 12px;border-radius:16px;background:var(--butter);font-weight:700}
+#lknote{width:100%}
 </style>
 <div class="wrap" id="app"></div>
 <div id="sheet"></div>
@@ -8899,7 +8922,7 @@ function viewHome(){
     '<a class="tile" href="#grammar"><span class="tic">'+IC2.pen+'</span><span class="ti">Ngữ pháp</span><span class="td">'+GT.length+' chủ đề, '+gTotal()+' bài tập</span></a>'+
     '<a class="tile" href="#pron"><span class="tic">'+IC2.wave+'</span><span class="ti">Phát âm</span><span class="td">'+PT.length+' bài IPA giọng Mỹ</span></a>'+
     '<a class="tile" href="#sw"><span class="tic">'+IC2.mic+'</span><span class="ti">Nói và Viết</span><span class="td">'+SW.sp.length+' bài Nói, '+SW.wr.length+' bài Viết</span></a></div>'+
-    '<p class="fine links"><a href="#gmap">Danh mục ngữ pháp</a> · <a href="#guide">Bản đồ TOEIC 4 kỹ năng</a> · <a href="#progress">Tiến độ</a> · <a href="#backup">Sao lưu</a></p></section>'+
+    '<p class="fine links"><a href="#gmap">Danh mục ngữ pháp</a> · <a href="#guide">Bản đồ TOEIC 4 kỹ năng</a> · <a href="#learn">Phương pháp học</a> · <a href="#progress">Tiến độ</a> · <a href="#backup">Sao lưu</a></p></section>'+
     '<section><h2 class="sec">3. Lộ trình bài học</h2><p class="fine sub">Học theo thứ tự: Chi nhánh, rồi Hội sở, rồi Nâng cao.</p>'+
     '<details class="path" open><summary>Chi nhánh: 12 tuần <span class="fine">Giao dịch viên, tư vấn, dịch vụ khách hàng</span></summary><div class="wks">'+wkList(0,BR)+'</div></details>'+
     '<details class="path"><summary>Hội sở: 4 bài <span class="fine">Họp, báo cáo, tuân thủ, sản phẩm</span></summary><div class="wks">'+wkList(BR,16)+'</div></details>'+
@@ -8909,9 +8932,9 @@ function viewHome(){
 /* ---------- Giao diện: tuần học ---------- */
 function badge(id){var b=P.pr[id];return b!==undefined?'<span class="pill '+(b>=85?'good':b>=60?'warn':'')+'" title="Điểm nói cao nhất">'+b+'</span>':'';}
 function vocabTab(w){
-  return '<div class="card"><p class="fine">Chạm biểu tượng loa để nghe từ và câu ví dụ. Chạm Nói để luyện phát âm, máy sẽ chấm từng từ.</p>'+
+  return '<div class="btns" style="margin-bottom:10px"><a class="btn primary" href="#mm-w'+w.n+'">Sơ đồ tư duy của bài</a></div><div class="card"><p class="fine">Chạm biểu tượng loa để nghe từ và câu ví dụ. Chạm Nói để luyện phát âm, máy sẽ chấm từng từ.</p>'+
     w.vocab.map(function(v,i){
-      return '<div class="row"><div><div class="t"><b>'+esc(v.w)+'</b> <span class="ipa">'+esc(ipaOf(v.w))+'</span> <span class="mean">'+esc(v.m)+'</span></div><div class="s">'+esc(v.ex)+'</div><div class="ipa-s">'+esc(ipaOf(v.ex))+'</div>'+badge(v.id+'x')+'</div>'+
+      return '<div class="row"><div><div class="t">'+picOf(v.w,v.m)+' <b>'+esc(v.w)+'</b> <span class="ipa">'+esc(ipaOf(v.w))+'</span> <span class="mean">'+esc(v.m)+'</span></div><div class="s">'+esc(v.ex)+'</div><div class="ipa-s">'+esc(ipaOf(v.ex))+'</div>'+badge(v.id+'x')+'</div>'+
         '<div class="acts"><button class="btn sm" data-act="say" data-text="'+esc(v.w+'. '+v.ex)+'" aria-label="Nghe từ '+esc(v.w)+'">'+IC.spk+'</button>'+
         '<button class="btn sm" data-act="prac-v" data-w="'+w.n+'" data-i="'+i+'" aria-label="Luyện nói từ '+esc(v.w)+'">'+IC.mic+' Nói</button>'+svBtn(v.id)+'</div></div>';
     }).join('')+'</div>';
@@ -8992,7 +9015,7 @@ function fmt(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(
 function gTotal(){return GT.reduce(function(n,t){return n+t.qs.length;},0);}
 function gStat(t){var d=0,r=0;t.qs.forEach(function(q){var c=S.chosen[q.id];if(c!==undefined){d++;if(q.o[c].ok)r++;}});return {d:d,r:r,n:t.qs.length,pct:Math.round(100*d/t.qs.length)};}
 function viewGrammar(){
-  var h='<header class="top"><p class="eyebrow">Ngữ pháp · từ số 0 đến 990</p><h1>Hệ thống ngữ pháp đầy đủ</h1><p class="lead">'+GT.length+' chủ đề, mỗi chủ đề có tài liệu ngắn và bài tập có đáp án. Học theo thứ tự, khoảng 20 phút mỗi chủ đề. Có cả đảo ngữ (chủ đề 20), giả định, rút gọn mệnh đề, cụm động từ.</p><a class="btn" href="#gmap">Xem danh mục toàn bộ điểm ngữ pháp</a></header>';
+  var h='<header class="top"><p class="eyebrow">Ngữ pháp · từ số 0 đến 990</p><h1>Hệ thống ngữ pháp đầy đủ</h1><p><a class="btn primary" href="#gmm">Sơ đồ tư duy toàn bộ ngữ pháp</a></p><p class="lead">'+GT.length+' chủ đề, mỗi chủ đề có tài liệu ngắn và bài tập có đáp án. Học theo thứ tự, khoảng 20 phút mỗi chủ đề. Có cả đảo ngữ (chủ đề 20), giả định, rút gọn mệnh đề, cụm động từ.</p><a class="btn" href="#gmap">Xem danh mục toàn bộ điểm ngữ pháp</a></header>';
   GGROUPS.forEach(function(g){
     h+='<section><h2 style="margin:6px 0 10px">'+g[0]+'</h2><div class="wks">'+GT.filter(function(t){return t.id>=g[1]&&t.id<=g[2];}).map(function(t){var s=gStat(t);
       return '<a class="wk" href="#gram-'+t.id+'"><span class="n">'+String(t.id).padStart(2,'0')+'</span><span><span class="tt">'+esc(t.name)+'</span><br><span class="ff">'+esc(t.sum)+'</span><span class="bar"><i style="width:'+s.pct+'%"></i></span></span></a>';
@@ -9040,7 +9063,7 @@ function viewGTopic(isP){
   if(isP&&(t.ws.length||t.ss.length))tabs.push(['sp','Luyện nói ('+(t.ws.length+t.ss.length)+')']);
   tabs.push(['ex','Bài tập ('+t.qs.length+')']);
   var body=S.gtab==='ref'?refHtml(t,isP):S.gtab==='sp'&&isP?spHtml(t):exHtml(t,isP);
-  return '<header class="top"><a class="back" href="#'+(isP?'pron':'grammar')+'">‹ Danh sách '+(isP?'bài':'chủ đề')+'</a><p class="eyebrow">'+(isP?'Phát âm · bài ':'Ngữ pháp · chủ đề ')+t.id+'/'+L.length+'</p><h1>'+esc(t.name)+'</h1><p class="lead">'+esc(t.sum)+'</p></header>'+
+  return '<header class="top"><a class="back" href="#'+(isP?'pron':'grammar')+'">‹ Danh sách '+(isP?'bài':'chủ đề')+'</a><p class="eyebrow">'+(isP?'Phát âm · bài ':'Ngữ pháp · chủ đề ')+t.id+'/'+L.length+'</p><h1>'+esc(t.name)+'</h1><p class="lead">'+esc(t.sum)+'</p>'+(isP?'':'<p><a class="btn" href="#gmm-'+t.id+'">Sơ đồ tư duy chủ đề này</a></p>')+'</header>'+
   '<div class="tabs" role="tablist">'+tabs.map(function(x){return '<button class="tab" role="tab" aria-selected="'+(S.gtab===x[0])+'" data-act="gtab" data-tab="'+x[0]+'">'+x[1]+'</button>';}).join('')+'</div>'+body;
 }
 function viewPron(){
@@ -9530,7 +9553,7 @@ function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ
 function svBtn(id){var on=svHas(id);return '<button class="btn sm'+(on?' primary':'')+'" data-act="sv" data-id="'+id+'" aria-pressed="'+on+'" aria-label="'+(on?'Bỏ lưu':'Lưu')+' từ '+esc(VMAP[id].w)+'">'+(on?IC2.bmf+' Đã lưu':IC2.bm+' Lưu')+'</button>';}
 function vCard(v,extra){
   var ch=(v.syn.length?'<span class="fine">Đồng nghĩa: '+esc(v.syn.join(', '))+'</span> ':'')+(v.ant.length?'<span class="fine">Trái nghĩa: '+esc(v.ant.join(', '))+'</span>':'');
-  return '<div class="card vc" style="display:grid;gap:6px"><div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><b style="font-size:18px">'+esc(v.w)+'</b>'+(v.pos?'<span class="pill">'+esc(v.pos)+'</span>':'')+(v.tn?'<span class="fine">'+esc(v.tn)+'</span>':v.wk?'<span class="fine">'+lab(v.wk)+'</span>':'')+'</div>'+
+  return '<div class="card vc" style="display:grid;gap:6px"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+picOf(v.w,v.m)+'<b style="font-size:18px">'+esc(v.w)+'</b>'+(v.pos?'<span class="pill">'+esc(v.pos)+'</span>':'')+(v.tn?'<span class="fine">'+esc(v.tn)+'</span>':v.wk?'<span class="fine">'+lab(v.wk)+'</span>':'')+'</div>'+
     (ipaOf(v.w)?'<p class="ipa-line">'+esc(ipaOf(v.w))+'</p>':'')+'<p><b>'+esc(v.m)+'</b></p><p class="fine" style="font-size:14px">'+esc(v.ex)+'</p>'+(ch?'<p>'+ch+'</p>':'')+
     '<div class="btns"><button class="btn sm" data-act="say" data-text="'+esc(v.w+'. '+v.ex)+'" aria-label="Nghe từ '+esc(v.w)+'">'+IC.spk+'</button><button class="btn sm" data-act="vprac" data-id="'+v.id+'">'+IC.mic+' Nói</button>'+svBtn(v.id)+(extra||'')+'</div></div>';
 }
@@ -9558,7 +9581,7 @@ function viewVocab(){
 function viewVTopic(){
   var t=VT[S.vt-1],all=t.words.every(function(v){return svHas(v.id);});
   return '<header class="top"><a class="back" href="#vocab">‹ Thư viện từ vựng</a><p class="eyebrow">Chủ đề '+t.id+'/'+VT.length+'</p><h1>'+esc(t.name)+'</h1><p class="lead">'+esc(t.vi)+' · '+t.words.length+' từ</p>'+
-  '<div class="btns"><button class="btn'+(all?'':' primary')+'" data-act="sv-all" data-t="'+t.id+'">'+(all?'Bỏ lưu cả chủ đề':IC2.bm+' Lưu cả chủ đề')+'</button><button class="btn" data-act="vprac-t" data-t="'+t.id+'">'+IC.mic+' Luyện nói cả chủ đề</button></div></header>'+
+  '<div class="btns"><a class="btn primary" href="#mm-v'+t.id+'">Sơ đồ tư duy</a><button class="btn'+(all?'':' primary')+'" data-act="sv-all" data-t="'+t.id+'">'+(all?'Bỏ lưu cả chủ đề':IC2.bm+' Lưu cả chủ đề')+'</button><button class="btn" data-act="vprac-t" data-t="'+t.id+'">'+IC.mic+' Luyện nói cả chủ đề</button></div></header>'+
   t.words.map(function(v){return vCard(v);}).join('')+
   '<div class="btns">'+(t.id>1?'<a class="btn" href="#vocab-'+(t.id-1)+'">‹ Chủ đề trước</a>':'')+(t.id<VT.length?'<a class="btn primary" href="#vocab-'+(t.id+1)+'">Chủ đề sau ›</a>':'')+'</div>';
 }
@@ -9850,7 +9873,7 @@ function lkHtml(){
   var rl=relOf(w),fam=famOf(w),top=sameTopic(w),ctx=L.ctx?[{s:L.ctx,src:'Câu bạn vừa chạm'}].concat(ctxOf(w,4).filter(function(x){return x.s!==L.ctx;}).slice(0,3)):ctxOf(w,4);
   var mine=SV().rel[sid]||[];
   h+='<div class="sh-head"><span class="eyebrow">Tra từ</span><button class="btn sm" data-act="lk-close">Đóng</button></div>';
-  h+='<p class="target" style="margin:0">'+esc(w)+(v&&v.pos?' <span class="pill">'+esc(v.pos)+'</span>':c.pos?' <span class="pill">'+esc(c.pos)+'</span>':'')+'</p>';
+  h+='<p class="target" style="margin:0">'+picOf(w,(v&&v.m)||c.vi||'')+' '+esc(w)+(v&&v.pos?' <span class="pill">'+esc(v.pos)+'</span>':c.pos?' <span class="pill">'+esc(c.pos)+'</span>':'')+'</p>';
   h+=ipa?'<p class="ipa-line">'+esc(ipa)+' <span class="fine">(giọng Mỹ)</span></p>':'<p class="fine">Chưa có phiên âm cho từ này trong từ điển của app.</p>';
   var vi=(v&&v.m)||c.vi||'';
   h+=vi?'<p><b>'+esc(vi)+'</b>'+((!v||!v.m)&&c.vi?' <span class="fine">(dịch tự động, có thể chưa sát)</span>':'')+'</p>':'';
@@ -9859,6 +9882,9 @@ function lkHtml(){
   else if(!vi&&!c.def&&!(v&&v.ex))h+='<p class="fine">Chưa tra được nghĩa (không có mạng hoặc từ hiếm). Bạn vẫn lưu được và tự nhập nghĩa trong mục Từ đã lưu.</p>';
   h+='<div class="btns"><button class="btn sm" data-act="lk-say" data-w="'+esc(w)+'">'+IC.spk+' Nghe giọng Mỹ</button><button class="btn sm" data-act="lk-say-slow" data-w="'+esc(w)+'">Nghe chậm</button><button class="btn sm" data-act="lk-prac" data-w="'+esc(w)+'">'+IC.mic+' Nói</button><button class="btn sm'+(saved?' primary':'')+'" data-act="lk-save" data-w="'+esc(w)+'" aria-pressed="'+saved+'">'+(saved?IC2.bmf+' Đã lưu':IC2.bm+' Lưu từ này')+'</button></div>';
   function sec(t,body){return body?'<div style="margin-top:10px"><h3 style="margin:0 0 4px">'+t+'</h3>'+body+'</div>':'';}
+  h+=sec('Sơ đồ tư duy của từ',wordMM(w));
+  var scn=(v&&v.ex)||c.ex||'',nt=(P.lkn&&P.lkn[w])||'';
+  h+=sec('Hình dung và ghi nhớ','<p class="fine" style="margin:0 0 6px">'+(picName(w,(v&&v.m)||c.vi||'')?'':'Từ này khó vẽ thành một hình. ')+'Nhắm mắt, hình dung cảnh này ở quầy giao dịch, rồi nói lại câu bằng lời của bạn.</p>'+(scn?'<p class="scene">'+esc(scn)+'</p>':'')+'<textarea id="lknote" class="wta" rows="2" placeholder="Ghi cách nhớ của bạn: một hình ảnh, một câu chuyện ngắn hoặc từ tiếng Việt nghe giống" aria-label="Ghi chú ghi nhớ" data-w="'+esc(w)+'">'+esc(nt)+'</textarea>');
   var G=famGroups(w),PN={n:'Danh từ',v:'Động từ',adj:'Tính từ',adv:'Trạng từ'},fam='',total=0;
   ['n','v','adj','adv'].forEach(function(k){var l=G[k].filter(function(x){return x!==w;});total+=l.length;if(l.length)fam+='<div style="margin-top:6px"><span class="fine" style="font-weight:700">'+PN[k]+'</span>'+l.map(relRow).join('')+'</div>';});
   if(G.inf.length)fam+='<div style="margin-top:6px"><span class="fine" style="font-weight:700">Dạng chia, số nhiều</span><p>'+chipsHtml(G.inf.filter(function(x){return x!==w;}))+'</p></div>';
@@ -9998,13 +10024,212 @@ function viewBackup(){
   '<div class="card"><h3>Còn tài khoản theo số điện thoại?</h3><p class="fine">App chạy hoàn toàn trên trình duyệt, chưa có máy chủ để đăng nhập bằng số điện thoại và tự đồng bộ. Tính năng đó cần một dịch vụ bên ngoài (gửi mã OTP qua SMS và lưu dữ liệu đám mây). Trước mắt, sao lưu bằng file hoặc mã ở trên chuyển được toàn bộ nội dung học giữa các thiết bị.</p></div>';
 }
 
+/* ---------- Minh họa (mã hóa kép) và sơ đồ tư duy ---------- */
+function pi(p){return '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';}
+var PICS={
+ idcard:pi('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M6 16c.5-1.5 1.5-2 2.5-2s2 .5 2.5 2M14 10h4M14 14h4"/>'),
+ card:pi('<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h4"/>'),
+ cash:pi('<rect x="3" y="7" width="18" height="10" rx="2"/><circle cx="12" cy="12" r="2.4"/><path d="M6.5 12h.01M17.5 12h.01"/>'),
+ coin:pi('<circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5C14 8.5 13 8 12 8c-1.4 0-2.5.8-2.5 2s1.1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1.1 0-2.1-.6-2.6-1.6M12 6v2M12 16v2"/>'),
+ bank:pi('<path d="M3 10l9-6 9 6zM5.5 10v8M9.8 10v8M14.2 10v8M18.5 10v8M3 20h18"/>'),
+ lock:pi('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+ shield:pi('<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>'),
+ doc:pi('<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9.5 12h6M9.5 16h6"/>'),
+ pen:pi('<path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19z"/><path d="M14.5 6.5l3 3"/>'),
+ calc:pi('<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7h7M9 12h.01M12 12h.01M15 12h.01M9 16h.01M12 16h.01M15 16h.01"/>'),
+ clock:pi('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+ calendar:pi('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/>'),
+ phone:pi('<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>'),
+ mail:pi('<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3.5 8l8.5 6 8.5-6"/>'),
+ person:pi('<circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/>'),
+ people:pi('<circle cx="9" cy="9" r="3"/><path d="M3 19c0-3.5 2.7-5.5 6-5.5s6 2 6 5.5M16 6.5a3 3 0 0 1 0 5.5M17.5 14c2 .6 3.5 2.2 3.5 5"/>'),
+ trend:pi('<path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/>'),
+ down:pi('<path d="M4 7l6 6 4-4 6 7"/><path d="M15 16h5v-5"/>'),
+ bars:pi('<path d="M5 20V12M10 20V6M15 20v-9M20 20V9"/>'),
+ percent:pi('<path d="M18 6L6 18"/><circle cx="7.5" cy="7.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/>'),
+ key:pi('<circle cx="8" cy="14" r="3.5"/><path d="M10.5 11.5L20 4M16 8l2 2M18 6l1.5 1.5"/>'),
+ home:pi('<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>'),
+ car:pi('<path d="M5 16v-4l2-5h10l2 5v4zM3 16h18"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/>'),
+ case:pi('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 13h18"/>'),
+ globe:pi('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>'),
+ search:pi('<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>'),
+ warn:pi('<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>'),
+ bag:pi('<path d="M9 4h6l-1.5 3h-3zM8 7c-3 3-4 6-4 9a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4c0-3-1-6-4-9"/><path d="M12 11v6"/>'),
+ building:pi('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h.01M12 7h.01M15 7h.01M9 11h.01M12 11h.01M15 11h.01M10.5 21v-4h3v4"/>'),
+ box:pi('<path d="M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8"/>'),
+ scale:pi('<path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z"/>'),
+ ok:pi('<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>'),
+ bulb:pi('<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 11c.7.6 1 1.3 1 2h5c0-.7.3-1.4 1-2A6 6 0 0 0 12 3z"/>'),
+ book:pi('<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/>')
+};
+var PICR=[
+ ['idcard',/^(identif|identity|passport|licen|proof|photo id|id )/],
+ ['card',/^(card|debit|credit|atm|swipe|pin\b)/],
+ ['lock',/^(secur|lock|safe|passw|confiden|protect|private|privacy|encrypt|vault)/],
+ ['shield',/^(insur|guarant|warrant|coverage|fraud|complian|audit|liabil|prevent)/],
+ ['doc',/^(document|form|statement|record|report|file|paper|applic|contract|agreement|receipt|invoice|certific|brochure|memo|check\b|checking|ledger|policy)/],
+ ['pen',/^(sign|endors|draft|write|written|handwrit|initial)/],
+ ['calc',/^(calcul|total|sum\b|balanc|figure|amount|budget|estimat|tax|accounting|compute)/],
+ ['percent',/^(percent|interest|discount|rate\b|rates|margin|commission)/],
+ ['trend',/^(increas|growth|profit|gain|rise|improv|income|revenue|earn|invest|yield|surplus|boost|expand|appreciat)/],
+ ['down',/^(decreas|declin|loss|drop|reduc|deficit|debt|expens|shrink|cut\b|cuts|depreci|overdraft)/],
+ ['bars',/^(chart|statist|data|analy|market|perform|survey|forecast|trend|portfolio)/],
+ ['coin',/^(fee|charge|price|cost|tuition|payment|pay\b|pays|paid|fund|dollar|currency|coin|money|expens|afford|wage|salary|fare|cheap|expensive)/],
+ ['cash',/^(cash|bill\b|bills|banknote|withdraw|deposit|teller|change\b|counter)/],
+ ['bank',/^(bank|branch|financial|institution|lender|loan|mortgage|credit\b)/],
+ ['home',/^(mortgage|house|home|propert|real estate|rent|lease|housing|apartment)/],
+ ['bag',/^(saving|wealth|asset|capital|reserve|nest egg)/],
+ ['clock',/^(time|schedul|deadline|hour|late|urgent|period|delay|duration|overdue|due\b|soon|immediate|temporar|expire|expir|prompt)/],
+ ['calendar',/^(date|month|annual|calendar|appoint|year|week|daily|quarter|yearly|holiday)/],
+ ['phone',/^(phone|call|mobile|telephone|app\b|online|digital|text|dial|hotline)/],
+ ['mail',/^(mail|letter|email|notice|message|send|deliver|post\b|mailing|envelope)/],
+ ['people',/^(team|meeting|committee|board|public|staff|department|colleague|audience|crowd)/],
+ ['person',/^(customer|client|applic|manager|officer|employ|clerk|member|person|owner|borrow|holder|agent|signer|resident|supervisor|assistant|partner|candidate|individual)/],
+ ['key',/^(access|key|unlock|login|open\b|authoriz|permission)/],
+ ['globe',/^(internation|global|foreign|overseas|exchange|world|abroad|domestic|import|export)/],
+ ['search',/^(search|inspect|review|examin|verif|investig|find|detect|look|monitor)/],
+ ['warn',/^(warn|alert|caution|danger|problem|error|penalt|issue|mistake|risk|threat|violat)/],
+ ['building',/^(office|building|headquart|facilit|premises|lobby)/],
+ ['box',/^(package|shipment|order|product|goods|supply|stock|inventory|parcel|deliver)/],
+ ['scale',/^(law|legal|regulat|court|rule|lawyer|attorney|sue\b|legislat|compliance)/],
+ ['ok',/^(approv|accept|confirm|complet|agree|grant|qualif|eligib|success|valid)/],
+ ['bulb',/^(idea|plan|strateg|propos|suggest|solution|innovat|concept|goal|objective)/],
+ ['case',/^(business|career|job|compan|corporat|profession|vacancy|position|resume)/],
+ ['book',/^(learn|study|train|course|educat|lesson|instruct|guide|manual)/]
+];
+var PICV=[
+ ['idcard',/(giấy tờ tùy thân|chứng minh|căn cước|hộ chiếu|danh tính|nhận dạng|bằng lái)/],
+ ['card',/(thẻ|máy atm|quẹt)/],
+ ['lock',/(bảo mật|an toàn|an ninh|bí mật|mật khẩu|bảo vệ|riêng tư|khóa|mã hóa)/],
+ ['shield',/(bảo hiểm|bảo đảm|bảo hành|đảm bảo|tuân thủ|gian lận|kiểm toán|trách nhiệm|phòng ngừa|ngăn ngừa)/],
+ ['doc',/(tài liệu|biểu mẫu|đơn |hồ sơ|báo cáo|sao kê|hợp đồng|thỏa thuận|hóa đơn|biên lai|chứng chỉ|giấy|văn bản|tờ rơi|thông báo bằng văn bản|chính sách)/],
+ ['pen',/(ký|chữ ký|viết|soạn|bút)/],
+ ['calc',/(tính toán|tổng|số dư|con số|số tiền|ngân sách|ước tính|thuế|kế toán|chi tiết số)/],
+ ['percent',/(lãi suất|phần trăm|chiết khấu|tỷ lệ|hoa hồng|tỷ suất|lãi)/],
+ ['trend',/(tăng|lợi nhuận|tăng trưởng|thu nhập|doanh thu|đầu tư|cải thiện|mở rộng|lãi|thặng dư|phát triển|nâng cao|thúc đẩy)/],
+ ['down',/(giảm|suy giảm|thua lỗ|lỗ|thâm hụt|nợ|chi phí|cắt|thấu chi|rút gọn)/],
+ ['bars',/(biểu đồ|thống kê|dữ liệu|phân tích|thị trường|hiệu suất|khảo sát|dự báo|xu hướng|danh mục đầu tư)/],
+ ['coin',/(phí|giá|chi phí|học phí|thanh toán|trả tiền|quỹ|tiền|đô la|tiền tệ|lương|tiền công|rẻ|đắt|khả năng chi trả|chi trả)/],
+ ['cash',/(tiền mặt|hóa đơn tiền|rút|gửi tiền|giao dịch viên|quầy|tiền thừa|đổi tiền)/],
+ ['bank',/(ngân hàng|chi nhánh|tài chính|tổ chức|cho vay|khoản vay|thế chấp|tín dụng|tài khoản)/],
+ ['home',/(nhà|bất động sản|thuê|cho thuê|căn hộ|tài sản thế chấp)/],
+ ['bag',/(tiết kiệm|của cải|tài sản|vốn|dự trữ)/],
+ ['clock',/(thời gian|lịch|hạn chót|giờ|trễ|muộn|khẩn|thời hạn|quá hạn|đến hạn|sớm|tạm thời|hết hạn|nhanh chóng|ngay lập tức|chậm|trì hoãn|kỳ hạn|giai đoạn)/],
+ ['calendar',/(ngày|tháng|hằng năm|hàng năm|lịch hẹn|cuộc hẹn|năm|tuần|hằng ngày|quý|kỳ nghỉ)/],
+ ['phone',/(điện thoại|gọi|di động|trực tuyến|ứng dụng|số hóa|nhắn tin|đường dây)/],
+ ['mail',/(thư|email|gửi|thông báo|tin nhắn|bưu|giao hàng)/],
+ ['people',/(nhóm|cuộc họp|ủy ban|hội đồng|công chúng|nhân viên|phòng ban|đồng nghiệp|khán giả)/],
+ ['person',/(khách hàng|người |quản lý|nhân viên|thành viên|chủ |người vay|người nộp|đại diện|cư dân|giám sát|trợ lý|đối tác|ứng viên|cá nhân)/],
+ ['key',/(truy cập|chìa khóa|mở khóa|đăng nhập|ủy quyền|cho phép|quyền)/],
+ ['globe',/(quốc tế|toàn cầu|nước ngoài|ngoại tệ|thế giới|trong nước|nhập khẩu|xuất khẩu)/],
+ ['search',/(tìm|kiểm tra|xem xét|xác minh|xác nhận danh|điều tra|phát hiện|quan sát|theo dõi|nhìn)/],
+ ['warn',/(cảnh báo|cảnh giác|nguy hiểm|vấn đề|lỗi|phạt|rủi ro|đe dọa|vi phạm|sai sót|hậu quả)/],
+ ['building',/(văn phòng|tòa nhà|trụ sở|cơ sở|sảnh)/],
+ ['box',/(gói|lô hàng|đơn hàng|sản phẩm|hàng hóa|nguồn cung|kho|bưu kiện|hàng tồn)/],
+ ['scale',/(luật|pháp lý|quy định|tòa|quy tắc|luật sư|kiện|lập pháp)/],
+ ['ok',/(chấp thuận|phê duyệt|chấp nhận|xác nhận|hoàn thành|đồng ý|cấp|đủ điều kiện|thành công|hợp lệ|đạt)/],
+ ['bulb',/(ý tưởng|kế hoạch|chiến lược|đề xuất|gợi ý|giải pháp|đổi mới|khái niệm|mục tiêu)/],
+ ['case',/(kinh doanh|nghề|công ty|doanh nghiệp|chuyên nghiệp|vị trí|việc làm|tuyển)/],
+ ['book',/(học|đào tạo|khóa|giáo dục|bài|hướng dẫn|sổ tay)/]
+];
+function picNameV(vi){vi=String(vi||'').toLowerCase();if(!vi)return '';for(var i=0;i<PICV.length;i++){if(PICV[i][1].test(vi))return PICV[i][0];}return '';}
+function picName(w,vi){
+  var n=picName0(w)||picNameV(vi);if(n)return n;
+  var v=vFind(String(w).toLowerCase());
+  if(v&&v.syn){for(var i=0;i<v.syn.length&&!n;i++){n=picName0(v.syn[i]);}}
+  return n||'';
+}
+function picName0(w){w=String(w||'').toLowerCase().trim();if(!w)return '';for(var i=0;i<PICR.length;i++){if(PICR[i][1].test(w))return PICR[i][0];}var parts=w.split(/\s+/);if(parts.length>1){for(var j=parts.length-1;j>=0;j--){for(var k=0;k<PICR.length;k++){if(PICR[k][1].test(parts[j]))return PICR[k][0];}}}return '';}
+function picOf(w,vi){var n=picName(w,vi);return n?'<span class="pic" aria-hidden="true">'+PICS[n]+'</span>':'';}
+
+function mmChip(w,vi){return '<span class="mm-chip">'+picOf(w,vi)+'<button class="mm-w" data-act="lk-open" data-w="'+esc(w)+'">'+esc(w)+'</button>'+(vi?'<span class="mm-vi" data-act="mm-rev">'+esc(vi)+'</span>':'')+'</span>';}
+function mmNote(a,b){return '<span class="mm-note"><span>'+fmt(a)+'</span>'+(b?' <span class="mm-vi" data-act="mm-rev">'+fmt(b)+'</span>':'')+'</span>';}
+function mmHtml(center,sub,branches,hide){
+  var h='<div class="mm'+(hide?' hide':'')+'"><div class="mm-c">'+esc(center)+(sub?'<small>'+esc(sub)+'</small>':'')+'</div><div class="mm-trunk">';
+  branches.forEach(function(b,i){if(!b.items.length)return;h+='<div class="mm-b c'+(i%6)+'"><div class="mm-bt">'+esc(b.t)+(b.n?' <span class="fine">'+b.n+'</span>':'')+'</div><div class="mm-l">'+b.items.join('')+'</div></div>';});
+  return h+'</div></div>';
+}
+function posVi(w,pos){
+  var p=String(pos||'').toLowerCase();
+  if(/^n/.test(p))return 'n';if(/^v/.test(p))return 'v';if(/^adj/.test(p)||/^a$/.test(p))return 'adj';if(/^adv/.test(p))return 'adv';
+  if(/^(re|per|de|con|con)?ceive$|^(arrive|approve|survive|deprive|derive|achieve|believe|relieve|retrieve|waive|resolve|involve|improve|remove|receive|submit|require|verify|complete|provide|propose|prove|serve|reserve|observe|preserve|deserve|move|save|solve|give|live|leave|have|come|become)(s|d)?$/.test(w))return 'v';
+  if(/^(applicant|assistant|consultant|tenant|participant|merchant|accountant|resident|president|agent|client|student|incident|document|payment|statement|agreement|department|investment|management|requirement|equipment|environment|employment|government|treatment|settlement)s?$/.test(w))return 'n';
+  var q=posOfWord(w,null)||posGuess(w);return q||'';
+}
+var MMPOS={n:'Danh từ',v:'Động từ',adj:'Tính từ',adv:'Trạng từ',ph:'Cụm từ',x:'Từ khác'};
+function mmByPos(list){
+  var G={n:[],v:[],adj:[],adv:[],ph:[],x:[]};
+  list.forEach(function(v){var lw=v.w.toLowerCase(),vf=vFind(lw),p=/\s/.test(lw)?'ph':posVi(lw,v.pos||(vf&&vf.pos))||'x';G[p].push(v);});
+  return ['n','v','adj','adv','ph','x'].map(function(k){return {t:MMPOS[k],n:G[k].length,items:G[k].map(function(v){return mmChip(v.w,v.m);})};});
+}
+function wordMM(w){
+  var rl=relOf(w),G=famGroups(w),br=[];
+  var PN={n:'Danh từ cùng họ',v:'Động từ cùng họ',adj:'Tính từ cùng họ',adv:'Trạng từ cùng họ'};
+  ['n','v','adj','adv'].forEach(function(k){var l=G[k].filter(function(x){return x!==w;});br.push({t:PN[k],items:l.slice(0,8).map(function(x){return mmChip(x,glossOf(x).m);})});});
+  br.push({t:'Đồng nghĩa',items:rl.syn.slice(0,8).map(function(x){return mmChip(x,glossOf(x).m);})});
+  br.push({t:'Trái nghĩa',items:rl.ant.slice(0,8).map(function(x){return mmChip(x,glossOf(x).m);})});
+  var pr=[];prepHeads(w).forEach(function(hd){PRI[hd].slice(0,5).forEach(function(e){pr.push('<span class="mm-note"><b>'+esc(hd)+' '+esc(e.prep)+'</b> <span class="fine">'+esc(AFTL[e.after]||'')+'</span></span>');});});
+  inflStems(w).filter(function(k,i,a){return VPI[k]&&a.indexOf(k)===i;}).forEach(function(hd){VPI[hd].slice(0,3).forEach(function(e){pr.push('<span class="mm-note"><b>'+esc(hd)+'</b> <mark>'+esc(e.pat)+'</mark></span>');});});
+  br.push({t:'Giới từ và cấu trúc đi kèm',items:pr});
+  br.push({t:'Cùng chủ đề',items:sameTopic(w).slice(0,8).map(function(x){return mmChip(x,glossOf(x).m);})});
+  var vf=vFind(w),vi=(vf&&vf.m)||((P.lkc&&P.lkc[w]&&P.lkc[w].vi)||'');
+  var any=br.some(function(b){return b.items.length;});
+  return any?mmHtml(w,vi,br,false):'<p class="fine">Chưa có đủ dữ liệu để vẽ sơ đồ cho từ này.</p>';
+}
+function mmHead(back,eyebrow,title,lead,extra){
+  return '<header class="top"><a class="back" href="'+back[0]+'">‹ '+back[1]+'</a><p class="eyebrow">'+eyebrow+'</p><h1>'+esc(title)+'</h1><p class="lead">'+lead+'</p>'+
+  '<div class="btns"><button class="btn'+(S.mmHide?' primary':'')+'" data-act="mm-hide">'+(S.mmHide?'Đang che nghĩa: chạm để hiện từng nghĩa':'Che nghĩa để tự nhớ')+'</button>'+(extra||'')+'</div></header>';
+}
+function viewMM(){
+  var m=S.mm,hide=!!S.mmHide,h='';
+  if(m.k==='w'){
+    var w=WEEKS[m.n-1];
+    h=mmHead(['#week-'+m.n,'Về '+lab(m.n)],'Sơ đồ tư duy · '+lab(m.n),w.title,'Từ vựng của bài, xếp theo loại từ. Chạm từ để tra họ từ, giới từ và ví dụ.')+
+      mmHtml(w.title,w.vocab.length+' từ',mmByPos(w.vocab),hide);
+  }else if(m.k==='v'){
+    var t=VT[m.n-1];
+    h=mmHead(['#vocab-'+m.n,'Chủ đề '+t.name],'Sơ đồ tư duy · chủ đề '+t.id,t.name,esc(t.vi)+'. Từ xếp theo loại từ.')+
+      mmHtml(t.name,t.words.length+' từ',mmByPos(t.words),hide);
+  }else if(m.k==='g'){
+    var br=GGROUPS.map(function(g){return {t:g[0],items:GT.filter(function(t){return t.id>=g[1]&&t.id<=g[2];}).map(function(t){return '<a class="mm-chip" href="#gram-'+t.id+'"><b>'+t.id+'</b> '+esc(t.name)+'</a>';})};});
+    h=mmHead(['#grammar','Ngữ pháp'],'Sơ đồ tư duy · toàn bộ ngữ pháp','Bản đồ ngữ pháp TOEIC','Nhìn toàn cảnh '+GT.length+' chủ đề theo nhóm. Chạm một chủ đề để học và làm bài.').replace(/<div class="btns">.*?<\/div>/,'')+
+      mmHtml('Ngữ pháp TOEIC',GT.length+' chủ đề',br,false);
+  }else{
+    var gt=GT[m.n-1],brs=[],cur=null;
+    if(gt.pts&&gt.pts.length)brs.push({t:'Điểm cần nhớ',items:gt.pts.map(function(p){return mmNote(p,'');})});
+    gt.blocks.forEach(function(b){
+      if(b.t==='h'){cur={t:b.x.replace(/\*/g,''),items:[]};brs.push(cur);}
+      else if(!cur)return;
+      else if(b.t==='ul'){b.items.slice(0,8).forEach(function(i){cur.items.push(mmNote(i,''));});}
+      else if(b.t!=='p'&&b.rows){b.rows.slice(0,8).forEach(function(r){var a=r[0]||'',c=r.slice(1,3).filter(Boolean).join(' · ');cur.items.push(mmNote(a,c));});}
+    });
+    h=mmHead(['#gram-'+gt.id,'Chủ đề '+gt.id],'Sơ đồ tư duy · ngữ pháp',gt.name,esc(gt.sum.replace(/\.+$/,''))+'. Che phần giải thích rồi tự nói lại trước khi mở.','<a class="btn" href="#gmm">Toàn bộ ngữ pháp</a>')+mmHtml(gt.name,'',brs,hide);
+  }
+  return h;
+}
+function viewLearn(){
+  var M=[
+   ['Lặp lại ngắt quãng','Ôn từ đúng lúc sắp quên thì nhớ lâu hơn nhiều so với học dồn.','Mục Ôn thẻ lên lịch ôn theo mức nhớ của bạn. Mỗi ngày ôn thẻ trước, rồi mới học từ mới.'],
+   ['Nhớ lại chủ động','Tự lục trí nhớ trước khi xem đáp án hiệu quả hơn đọc lại nhiều lần.','Trên mọi sơ đồ tư duy có nút Che nghĩa. Nhìn từ, nói nghĩa thành tiếng, rồi mới chạm để kiểm tra. Bài kiểm tra và thẻ lật cũng theo cách này.'],
+   ['Mã hóa kép: chữ và hình','Gắn từ với hình ảnh giúp tạo hai đường ghi nhớ.','Từ cụ thể (card, deposit, signature...) có biểu tượng minh họa. Với từ trừu tượng, hãy tự hình dung một tình huống ở quầy giao dịch rồi nhớ cả cảnh đó.'],
+   ['Học theo cụm và họ từ','Não nhớ cụm và quan hệ tốt hơn từ rời rạc.','Chạm một từ để xem sơ đồ họ từ, đồng nghĩa, trái nghĩa, giới từ đi kèm và dạng động từ phía sau (V-ing, to V).'],
+   ['Xen kẽ nhiều dạng bài','Trộn từ vựng, ngữ pháp, nghe và nói trong một buổi giúp chọn đúng cách làm khi thi.','Mục Hôm nay trộn 4 việc ngắn. Bài kiểm tra trộn đủ các phần. Tránh dành cả buổi cho một chủ đề.'],
+   ['Nghe rồi nói đuổi theo (shadowing)','Nhại theo người bản xứ giúp ngữ điệu và nối âm tự nhiên.','Bấm Nghe để nghe giọng Mỹ, nói đuổi theo từng câu, rồi bấm Nói để máy chấm. Nghe chậm khi cần.'],
+   ['Tự đặt câu của mình','Tự tạo câu ghi nhớ sâu hơn chỉ đọc ví dụ.','Sau mỗi chủ đề, nói to 2 câu về công việc ở quầy bằng từ mới. Dùng bài Nói và Viết để được chấm.'],
+   ['Theo dõi tiến độ và kiểm tra định kỳ','Biết mình yếu ở đâu để dồn thời gian đúng chỗ.','Mục Tiến độ cho thấy kết quả từng phần. Làm bài kiểm tra mỗi 2 tuần và ôn lại phần dưới 70%.']
+  ];
+  return '<header class="top"><a class="back" href="#home">‹ Về trang chủ</a><p class="eyebrow">Phương pháp học</p><h1>Học thế nào cho hiệu quả</h1><p class="lead">8 phương pháp được nghiên cứu nhiều về trí nhớ và học tập, cùng chỗ app hỗ trợ từng phương pháp.</p></header>'+
+   '<div class="card"><h3>Buổi học 20 phút gợi ý</h3><ol class="tips"><li>5 phút: Ôn thẻ đến hạn.</li><li>7 phút: Một nhóm từ mới, mở sơ đồ tư duy, nghe và nói theo.</li><li>5 phút: Che nghĩa trên sơ đồ, tự nhớ lại.</li><li>3 phút: Một câu hỏi ngữ pháp hoặc một bài nói ngắn.</li></ol></div>'+
+   M.map(function(x,i){return '<div class="card"><h3>'+(i+1)+'. '+x[0]+'</h3><p>'+x[1]+'</p><p class="fine"><b>Trong app:</b> '+x[2]+'</p></div>';}).join('');
+}
+
 function navRender(){
   var items=[['home','#home','Học',IC.home],['vocab','#vocab','Từ vựng',IC.cards],['grammar','#grammar','Ngữ pháp',IC.book],['pron','#pron','Phát âm',IC.mic22],['sw','#sw','Nói/Viết',IC.pen],['progress','#progress','Tiến độ',IC.chart]];
-  var active=S.route==='backup'?'progress':S.route==='cards'||S.route==='vtopic'||S.route==='saved'?'vocab':S.route==='week'||S.route==='guide'||S.route==='test'?'home':S.route==='gtopic'||S.route==='gmap'?'grammar':S.route==='ptopic'?'pron':S.route==='speak'||S.route==='write'?'sw':S.route;
+  var active=S.route==='mm'?(S.mm.k==='w'?'home':S.mm.k==='v'?'vocab':'grammar'):S.route==='learn'?'home':S.route==='backup'?'progress':S.route==='cards'||S.route==='vtopic'||S.route==='saved'?'vocab':S.route==='week'||S.route==='guide'||S.route==='test'?'home':S.route==='gtopic'||S.route==='gmap'?'grammar':S.route==='ptopic'?'pron':S.route==='speak'||S.route==='write'?'sw':S.route;
   navEl.innerHTML=items.map(function(i){return '<a href="'+i[1]+'"'+(active===i[0]?' aria-current="page"':'')+'>'+i[3]+'<span>'+i[2]+'</span></a>';}).join('');
 }
 function render(){
-  app.innerHTML=S.route==='home'?viewHome():S.route==='week'?viewWeek():S.route==='cards'?viewCards():S.route==='test'?viewTest():S.route==='grammar'?viewGrammar():S.route==='gtopic'?viewGTopic(false):S.route==='pron'?viewPron():S.route==='ptopic'?viewGTopic(true):S.route==='sw'?viewSW():S.route==='speak'?viewSpeak():S.route==='write'?viewWrite():S.route==='gmap'?viewGMap():S.route==='guide'?viewGuide():S.route==='backup'?viewBackup():S.route==='vocab'?viewVocab():S.route==='vtopic'?viewVTopic():S.route==='saved'?viewSaved():viewProgress();
+  app.innerHTML=S.route==='mm'?viewMM():S.route==='learn'?viewLearn():S.route==='home'?viewHome():S.route==='week'?viewWeek():S.route==='cards'?viewCards():S.route==='test'?viewTest():S.route==='grammar'?viewGrammar():S.route==='gtopic'?viewGTopic(false):S.route==='pron'?viewPron():S.route==='ptopic'?viewGTopic(true):S.route==='sw'?viewSW():S.route==='speak'?viewSpeak():S.route==='write'?viewWrite():S.route==='gmap'?viewGMap():S.route==='guide'?viewGuide():S.route==='backup'?viewBackup():S.route==='vocab'?viewVocab():S.route==='vtopic'?viewVTopic():S.route==='saved'?viewSaved():viewProgress();
   if(S.route==='write')wcUpdate();
   navRender();
 }
@@ -10022,6 +10247,11 @@ function route(){
   else if((m=h.match(/^vocab-(\d+)$/))&&VT[+m[1]-1]){S.route='vtopic';S.vt=+m[1];}
   else if(h==='saved'){S.route='saved';S.relOpen=null;S.sq='';}
   else if(h==='backup'){S.route='backup';S.bkIn=null;S.bkErr='';}
+  else if((m=h.match(/^mm-w(\d+)$/))&&WEEKS[+m[1]-1]){S.route='mm';S.mm={k:'w',n:+m[1]};}
+  else if((m=h.match(/^mm-v(\d+)$/))&&VT[+m[1]-1]){S.route='mm';S.mm={k:'v',n:+m[1]};}
+  else if(h==='gmm'){S.route='mm';S.mm={k:'g'};}
+  else if((m=h.match(/^gmm-(\d+)$/))&&GT[+m[1]-1]){S.route='mm';S.mm={k:'gt',n:+m[1]};}
+  else if(h==='learn'){S.route='learn';}
   else if(h==='gmap'){S.route='gmap';}
   else if(h==='guide'){S.route='guide';}
   else if(h==='pron'){S.route='pron';}
@@ -10037,6 +10267,7 @@ function goWeek(n,tab){
   if(location.hash==='#week-'+n){route();}else location.hash='week-'+n;
 }
 function weekBy(el){return WEEKS[+el.dataset.w-1];}
+document.addEventListener('input',function(e){var t=e.target;if(t&&t.id==='lknote'){P.lkn=P.lkn||{};var w=t.dataset.w;if(t.value.trim())P.lkn[w]=t.value;else delete P.lkn[w];save();}});
 document.addEventListener('click',function(e){
   var el=e.target.closest('[data-act]');if(!el)return;
   var a=el.dataset.act,w,b;
@@ -10054,6 +10285,8 @@ document.addEventListener('click',function(e){
     case 'rel-del':relDel(el.dataset.a,el.dataset.b);render();break;
     case 'saved-deck':location.hash='cards-saved';break;
     case 'lk-open':lkOpen(el.dataset.w);break;
+    case 'mm-hide':S.mmHide=!S.mmHide;render();break;
+    case 'mm-rev':el.classList.toggle('on');break;
     case 'lk-close':lkClose();break;
     case 'lk-bg':if(e.target===el)lkClose();break;
     case 'lk-say':say(el.dataset.w);break;
