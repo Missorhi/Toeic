@@ -1,4 +1,4 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>*,*::before,*::after{box-sizing:border-box}body{margin:0}</style><title>TOEIC Quầy Giao Dịch</title>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>*,*::before,*::after{box-sizing:border-box}body{margin:0}</style><title>TOEIC Học Nhanh Dễ Nhớ</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600&display=swap">
 <style>
@@ -433,6 +433,53 @@ a{color:var(--accent);font-weight:800}.wk,.tile,.gcard,.btn,.nav a,.back{color:i
 .mm-note{flex-direction:column;gap:2px;align-items:flex-start}.mm-note>span:first-child{font-weight:800}
 .scene{margin:0 0 8px;padding:10px 12px;border-radius:16px;background:var(--butter);font-weight:700}
 #lknote{width:100%}
+
+/* scene + onboarding */
+.scn{margin:0 0 8px}
+.scn-ctx{display:inline-block;margin-bottom:6px;background:var(--lilac,#EDE7FF);color:var(--ink);font-weight:800}
+.scn-key{margin:0 0 6px;font-size:15px}
+.scn-key .eyebrow{display:inline-block;margin-right:4px}
+.scn-en{margin:0;padding:8px 12px;border-left:3px solid var(--primary,#8b6cf0);border-radius:6px;background:var(--surface);font-weight:700}
+.ob{max-width:520px;margin:0 auto;padding:max(24px,env(safe-area-inset-top)) 16px 40px}
+.ob-hero{margin-bottom:14px}
+.ob-hero h1{margin:4px 0 8px}
+.ob-card{padding:16px;border-radius:22px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 30px rgba(150,120,220,.12)}
+.fld{margin-bottom:12px}
+.fld label{display:block;margin:0 0 4px;font-weight:800;font-size:14px}
+.inp{width:100%;font:16px/1.4 var(--f-body,inherit);padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg,var(--surface));color:var(--ink);min-height:46px}
+.inp:focus{outline:2px solid var(--primary,#8b6cf0);outline-offset:1px}
+.ob-err{min-height:20px;margin:0 0 8px;color:var(--bad,#c0392b);font-weight:700;font-size:14px}
+.ob-go{width:100%;min-height:48px}
+.ob-note{margin-top:12px}
+#nav[hidden]{display:none!important}
+body.ob-on{padding-bottom:0}
+details summary{list-style:none}
+details summary::-webkit-details-marker{display:none}
+
+.target.blurred{filter:blur(7px);user-select:none}
+.ty-ok{color:var(--good,#1f9d6b)}.ty-bad{color:var(--bad,#c0392b)}
+button.tile{font:inherit;text-align:left;cursor:pointer}
+
+.brandbar{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.brand{margin:2px 0 0;font-size:24px;line-height:1.2}
+.howbanner{display:block;text-decoration:none;color:var(--ink);margin:0 0 10px;border-left:4px solid var(--primary,#8b6cf0)}
+.howbanner b{display:block}
+.howlist{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px;counter-reset:h}
+.howlist li{display:grid;gap:2px}
+.howlist li b{font-size:16px}
+.howlist li span{color:var(--muted,#6b6580);font-size:15px;line-height:1.5}
+ol.howlist li{counter-increment:h;padding-left:34px;position:relative}
+ol.howlist li::before{content:counter(h);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--lilac,#EDE7FF);display:grid;place-items:center;font-weight:800;font-size:13px}
+
+#nav a span{white-space:nowrap;font-size:11px}
+#nav a{min-width:0;padding-left:6px;padding-right:6px}
+.brandbar{flex-wrap:nowrap}
+.brandbar>div{min-width:0}
+.brandbar .btn{flex:none}
+.brand{font-size:21px}
+.howend{display:grid;gap:8px}
+.howend .btn{width:100%;justify-content:center;text-align:center}
+header.top.brandbar{display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between;text-align:left;padding-left:0;padding-right:0}
 </style>
 <div class="wrap" id="app"></div>
 <div id="sheet"></div>
@@ -5268,6 +5315,269 @@ var RAWV=`@t 1|Contracts|Hợp đồng
 @v sense|n|giác quan, cảm giác|Some cold medicines can dull your sense of taste and smell.|feeling;awareness|
 @v volunteer|n|tình nguyện viên|A volunteer at the pharmacy delivers medicine to elderly neighbors every week.|helper|
 `;
+var RAWSC=`determine|Phòng họp|Ba giám khảo xem bảng điểm, rồi một người giơ thẻ xanh để chọn công ty thắng thầu. Thẻ xanh quyết định kết quả.|Tấm thẻ xanh được giơ lên|The judges will determine the winner after reviewing every final score sheet.
+establish|Văn phòng|Hai người cùng ký vào lịch thanh toán mới rồi dán lên tường, đặt ra quy định đầu tiên cho cả phòng.|Lịch thanh toán mới dán lên tường|The two partners agreed to establish a monthly payment schedule for the office.
+specify|Kho hàng|Nhân viên cầm phiếu đặt hàng, dùng bút dạ tô đậm ngày giao và viết rõ từng chữ địa chỉ.|Ngày giao được tô đậm|Please specify the delivery date and address when you order the boxes.
+compare|Siêu thị|Một người cầm hai hộp sữa, mắt nhìn giá hộp này rồi sang hộp kia. Hai tay giơ ngang nhau.|Hai hộp sữa giơ ngang nhau|She will compare the two prices before putting one carton in the cart.
+compete|Chợ|Hai sạp trái cây đứng sát nhau, mỗi chủ sạp giơ bảng giảm giá to hơn để giành khách đứng giữa.|Hai bảng giảm giá đối đầu|Two fruit stalls compete for the same customers by lowering their prices daily.
+consume|Nhà ở|Cả nhà ngồi bàn ăn, những chai nước đã uống cạn xếp thành hàng dài trên quầy bếp.|Hàng chai nước rỗng|Our family can consume ten bottles of water in a single weekend.
+convince|Cửa hàng|Người bán chỉ số liệu trên máy tính bảng; vị khách đang nghi ngờ dần gật đầu và cầm bút ký.|Khách gật đầu cầm bút|The salesman will convince the customer that this tablet is worth the price.
+current|Ga tàu|Trên bảng điện tử ở ga, dòng giờ tàu nhấp nháy nhãn "Bây giờ". Người đợi ngước lên xem.|Nhãn "Bây giờ" nhấp nháy|Please check the current train schedule on the board before you leave.
+inspire|Trường học|Cô giáo kể chuyện trước lớp, mắt các em sáng lên, vài em giơ tay muốn thử làm ngay.|Những cánh tay giơ lên|Her story about the young scientist will inspire students to try new things.
+persuade|Phòng khám|Bác sĩ ngồi nói chuyện với bệnh nhân đang lưỡng lự. Một lúc sau ông gật đầu, cầm điện thoại đặt lịch khám định kỳ.|Bệnh nhân gật đầu, đặt lịch|The doctor tried to persuade him to book a regular checkup this month.
+satisfy|Nhà hàng|Thực khách ăn xong, đặt đĩa sạch bóng xuống, xoa bụng và mỉm cười với người phục vụ.|Đĩa sạch bóng và nụ cười|The chef works hard to satisfy every guest who walks into the restaurant.
+characteristic|Cửa hàng|Nhân viên cầm cái laptop, chỉ vào dòng chữ "pin 20 giờ" dán nổi bật trên hộp. Đó là nét riêng của máy.|Nhãn "pin 20 giờ" trên hộp|The most important characteristic of this laptop is its twenty hour battery.
+reputation|Gara|Trước gara sửa xe, khách xếp hàng dài, trên tường treo nhiều tấm bằng khen và đánh giá năm sao.|Tường đầy đánh giá năm sao|This garage has a good reputation for fixing cars quickly and honestly.
+gather|Phòng khảo sát|Một nhân viên đi từng bàn, gom các tờ báo cáo vào một xấp, rồi ôm xấp giấy về phòng mình.|Xấp báo cáo gom từ mọi bàn|An employee will gather the reports from every desk before the afternoon meeting.
+strong|Bờ sông|Một người đàn ông bước lên cây cầu mới bắc qua sông, nhún nhún chân thử. Cầu không rung lay, xe đẩy xi măng nặng vẫn đi qua.|Cầu vững, xe đẩy xi măng đi qua|The new bridge is strong enough to carry heavy trucks every day.
+substitute|Nhà máy|Công nhân gỡ thanh gỗ hỏng khỏi dây chuyền và lắp một thanh nhựa vào đúng chỗ đó.|Thanh nhựa vào chỗ thanh gỗ|The workers found a cheaper substitute for the broken part on the line.
+association|Văn phòng|Nhiều người đeo thẻ cùng logo đứng quanh tấm biển hiệu "Hiệp hội thợ may". Họ cùng chung một hội.|Tấm biển "Hiệp hội thợ may"|She joined the tailors' association to meet other people in her trade.
+attend|Hội nghị|Hàng trăm người cầm thẻ tên đi qua cổng, ngồi xuống ghế trong hội trường lớn và nhìn lên sân khấu.|Thẻ tên và hàng ghế đầy|Many doctors will attend the medical conference in the main hall tomorrow.
+get in touch|Khách sạn|Khách đứng ở sảnh khách sạn, cầm tấm danh thiếp ghi số, gọi cho lễ tân để báo chuyến bay của mình bị trễ.|Danh thiếp và cuộc gọi|Please get in touch with the hotel if your flight is delayed.
+overcrowded|Sân bay|Sảnh sân bay kín người, vali chồng chất, mọi người đứng sát vai nhau, không còn lối đi.|Sảnh kín người không lối đi|The terminal was overcrowded, so we waited for an hour to check in.
+select|Hội nghị|Người tham dự cầm bảng chương trình, dùng bút khoanh tròn ba buổi hội thảo mình thích.|Ba vòng khoanh bút|You can select three workshops from the program before the conference starts.
+take part in|Dã ngoại|Cả công ty đi dã ngoại. Nhân viên các phòng ban chia hai đội, cùng kéo co trên bãi cỏ, ai cũng hăng hái tham gia.|Hai đội kéo co trên cỏ|Everyone should take part in the team game during the company picnic.
+allocate|Phòng máy|Người quản lý nhìn bảng ổ đĩa, kéo một thanh dung lượng lớn sang ô của phòng thiết kế.|Thanh dung lượng kéo sang ô khác|The manager will allocate more storage space to the design department this week.
+compatible|Cửa hàng|Khách cắm cùng một cục sạc vào điện thoại cũ lẫn điện thoại mới ở quầy; cả hai máy đều hiện biểu tượng đang sạc.|Hai điện thoại cùng đang sạc|This charger is compatible with most phones sold in our shop.
+delete|Phòng IT|Nhân viên chọn một loạt tệp cũ trên màn hình máy tính, bấm phím Delete, các biểu tượng biến mất.|Các biểu tượng biến mất|Please delete the old files from your computer to free up some space.
+display|Phòng họp|Màn hình lớn trong phòng họp hiện hai tài liệu cạnh nhau, mọi người nhìn rõ từng dòng.|Hai tài liệu cạnh nhau trên màn hình|The screen can display two documents side by side during the meeting.
+duplicate|Tiệm photo|Máy photo chạy, một bản hợp đồng đi vào còn hai bản y hệt đi ra, xếp cạnh nhau.|Hai bản hợp đồng y hệt|Please duplicate this contract so that both parties receive one copy.
+fail|Quán cà phê|Máy tính tiền tối đen giữa giờ cao điểm. Nhân viên lúng túng, khách xếp hàng không thể gọi món.|Màn hình tối đen, khách xếp hàng|The cash register can fail at the busiest hour, so customers must wait.
+ignore|Nhà ở|Điện thoại trên bàn báo "Cập nhật phần mềm", người dùng lướt qua bỏ mặc, tiếp tục xem phim.|Thông báo bị lờ đi|He decided to ignore the update message and kept watching his movie.
+shut down|Văn phòng|Cuối ngày, nhân viên bấm nút Shut down, màn hình tối dần, rồi cô xách túi ra về.|Màn hình tối dần lúc tan ca|Remember to shut down your computer before you leave the office tonight.
+as needed|Bếp|Đầu bếp nếm nồi súp, thấy nhạt thì cho thêm một chút muối, thấy vừa thì dừng lại.|Nhón thêm muối vào nồi súp|You can add more salt as needed while the soup is cooking.
+capacity|Kho hàng|Công nhân xếp thùng đến sát trần, vạch "Tối đa" trên tường cho thấy kho không còn chỗ chứa thêm.|Vạch "Tối đa" trên tường|The new warehouse has a capacity of ten thousand boxes at once.
+durable|Sân bay|Hành khách kéo chiếc vali cứng qua đường nhám, bánh xe va đập mạnh mà vỏ vali vẫn nguyên.|Vali cứng không xước|We bought a durable suitcase because we travel almost every month.
+physical|Phòng lưu trữ|Nhân viên mở tủ sắt có khóa, lấy ra các bản hợp đồng bằng giấy thật dày cộp.|Tủ sắt chứa hợp đồng giấy|We keep a physical copy of every contract in this steel cabinet.
+recur|Xưởng|Cái máy quét cứ hỏng, công nhân sửa xong lại hỏng; trên tường treo lịch có nhiều vòng tròn đỏ lặp lại.|Lịch với các vòng tròn đỏ|The same error seems to recur every time we turn on the scanner.
+stay on top of|Văn phòng|Trợ lý đứng cạnh bảng việc cần làm trên tường, cầm bút gạch từng việc đã xong. Bàn gọn gàng, không việc nào bị trễ.|Bảng việc gạch từng dòng|A good assistant must stay on top of every task on the calendar.
+be made of|Xưởng mộc|Thợ mộc ghép tấm gỗ tái chế với bốn chân kim loại. Chiếc bàn xong: mặt làm từ gỗ, chân làm từ kim loại.|Mặt bàn gỗ chân kim loại|This table is made of recycled wood with strong metal legs.
+casual|Công ty|Ngày thứ Sáu, mọi người đi làm bằng áo thun và quần jeans, ngồi dựa ghế cười nói thoải mái.|Áo thun giữa văn phòng|Most people wear casual clothes at the office on Friday afternoon.
+be exposed to|Nhà máy|Nhân viên mới đi cùng người hướng dẫn qua từng khu của nhà máy, nhìn và chạm vào từng công đoạn.|Nhân viên mới đứng cạnh dây chuyền|Trainees will be exposed to every stage of production during their first week.
+out of|Phòng hành chính|Nhân viên kéo ngăn chứa giấy in, thấy trống trơn, hộp giấy cuối cùng đã dùng hết. Cô nhấc điện thoại gọi đặt thêm.|Ngăn giấy in trống trơn|We are out of paper, so please order another box today.
+practice|Phòng máy|Mỗi chiều, nhân viên cắm ổ cứng vào máy chủ để sao lưu, ai trong phòng cũng làm vậy như một thông lệ.|Ổ cứng cắm vào mỗi chiều|It is common practice to back up the server every afternoon.
+verbal|Công trường|Đốc công hét lớn một lệnh bằng miệng; công nhân ghi nhanh vào sổ vì chưa có giấy tờ nào.|Lệnh miệng ghi vào sổ|His verbal order was not clear, so the workers asked for a written one.
+network|Văn phòng|Kỹ thuật viên cúi xuống tủ mạng, cắm lại dây nối với các máy; trên mỗi bàn đèn mạng sáng xanh trở lại.|Đèn mạng sáng xanh trở lại|The network was slow, so the technician checked every cable in the room.
+popularity|Sân bay|Ở phòng chờ, gần như ai cũng cầm máy tính bảng; hàng trăm người đang cúi xuống màn hình.|Phòng chờ toàn máy tính bảng|The popularity of tablets has grown fast among travelers in this airport.
+process|Kho hàng|Máy quét đọc từng đơn trên băng chuyền, đóng dấu rồi đẩy hàng đến khu đóng gói rất nhanh.|Băng chuyền đóng dấu từng đơn|The machine can process hundreds of orders in only a few minutes.
+replace|Văn phòng|Kỹ thuật viên nhấc màn hình cũ khỏi bàn và đặt màn hình mới vào đúng chỗ đó.|Màn hình mới thế chỗ màn hình cũ|We need to replace the broken monitor before the meeting starts at noon.
+revolution|Đường phố|Ngày xưa người ta đứng chờ ở bốt điện thoại; nay ai cũng cầm điện thoại nhỏ trên tay giữa phố.|Bốt điện thoại cũ giữa phố đông|Mobile phones brought a revolution in how people communicate in public.
+technical|Tổng đài|Nhân viên đeo tai nghe, nhìn sơ đồ kết nối và hướng dẫn khách sửa lỗi máy từng bước.|Tai nghe và sơ đồ kết nối|Our technical team can fix most computer problems within one hour.
+beforehand|Phòng họp|Trước giờ họp, mỗi người nhận một tờ chương trình đặt sẵn trên ghế, nên đã đọc kỹ từ trước.|Tờ chương trình đặt sẵn trên ghế|Please read the report beforehand so we can discuss it quickly.
+complicated|Bưu điện|Khách cầm tờ mẫu gửi hàng chi chít ô và mũi tên, gãi đầu, tô sai mấy chỗ.|Tờ mẫu chi chít ô và mũi tên|The shipping form was so complicated that nobody filled it correctly.
+express|Đường phố|Người giao hàng phóng xe máy qua dòng xe, thùng hàng in chữ "Hỏa tốc" kẹp sau xe.|Thùng chữ "Hỏa tốc" sau xe|You can pay extra for express delivery if you need the gift tomorrow.
+fold|Phòng thư tín|Nhân viên cầm tờ thư, gấp làm ba phần đều nhau bằng ngón tay rồi nhét vào phong bì.|Tờ thư gấp ba|Please fold the letter in three before you put it in the envelope.
+mention|Phòng kế toán|Nhân viên viết email, gõ rõ "số hóa đơn 4521" ở dòng đầu để người nhận thấy ngay.|Số hóa đơn ở dòng đầu|Please mention the invoice number in the first line of your email.
+revise|Trường học|Học sinh cầm bài viết nháp, dùng bút đỏ gạch từ sai, viết lại câu đúng bên cạnh rồi nộp lại.|Bút đỏ sửa trên bài viết|You should revise your essay and fix the mistakes before Friday.
+abundant|Đảo nhỏ|Quầy trái cây ở chợ đảo chất đầy xoài, chuối, dưa hấu cao như núi; bán mãi vẫn còn rất nhiều.|Núi trái cây chất đầy sạp|The island has abundant fresh fruit, so the market is always full.
+accomplishment|Phòng phỏng vấn|Ứng viên đưa lý lịch, dòng đầu ghi giải thưởng thiết kế quốc gia. Nhà tuyển dụng gật đầu, tay chỉ vào thành tích đó.|Dòng giải thưởng đầu trang|Winning a national design prize is her greatest accomplishment so far.
+bring together|Hội chợ|Ở hội chợ việc làm, nhà tuyển dụng ngồi sau bàn, sinh viên cầm hồ sơ bước đến, hai bên gặp nhau.|Nhà tuyển dụng gặp sinh viên|The job fair will bring together employers and students from the whole city.
+commensurate|Công ty|Trên thư mời làm việc, mức lương ghi bằng bút đỏ, cạnh đó là số năm kinh nghiệm trong lý lịch; hai con số tương xứng nhau.|Hai cột số tương xứng|Your salary will be commensurate with your years of experience in this field.
+match|Phòng tuyển dụng|Nhà tuyển dụng đặt tờ lý lịch cạnh bản mô tả công việc, dùng bút đánh dấu các dòng trùng nhau.|Dấu tích ở các dòng trùng nhau|Your skills match the requirements listed in the job description very well.
+submit|Trường đại học|Sinh viên đứng trước hộp thu hồ sơ, đẩy phong bì dày vào khe ngay trước giờ đóng cửa.|Phong bì nhét vào khe hộp|Students must submit their final reports to the office by noon.
+ability|Phòng gym|Một người nâng tạ nặng lên cao, những người khác đứng xem, trầm trồ vì sức mạnh của anh.|Quả tạ nặng giơ cao|Her ability to lift heavy weights impressed everyone in the gym.
+be ready for|Phòng phỏng vấn|Ứng viên ngồi thẳng, hồ sơ mở sẵn trên bàn, hít thở sâu trước khi cửa phòng mở ra.|Hồ sơ mở sẵn trước cánh cửa|You should be ready for hard questions when the manager walks in.
+constantly|Studio thiết kế|Điện thoại trên bàn reo liên tục, cô vừa nhấc máy xong thì chuông lại reo. Đồng hồ chỉ gần trưa, hộp cơm vẫn chưa mở.|Điện thoại reo, hộp cơm chưa mở|The phone rang constantly all morning, so she had no time for lunch.
+present|Phòng họp|Ứng viên đứng trước hội đồng, chỉ vào slide trên màn hình và giới thiệu đề xuất của mình.|Người đứng chỉ vào slide|She will present her design proposal to the panel on Monday morning.
+weakness|Sân tennis|Người chơi tennis thua liên tiếp vì cú trái tay yếu; huấn luyện viên chỉ vào cổ tay và hướng dẫn sửa.|Cú trái tay hụt bóng|His biggest weakness is the backhand, so he practices it every morning.
+keep up with|Đường chạy|Một người chạy hết sức bám sát người dẫn nhịp phía trước, khoảng cách không bị kéo giãn ra.|Hai người chạy sát nhau|It is hard to keep up with the fast runner in front of us.
+set up|Văn phòng|Nhân viên nhân sự kê từng dãy ghế, bày bảng tên và đặt máy chiếu để chuẩn bị buổi định hướng.|Dãy ghế kê sẵn cùng máy chiếu|Staff will set up the chairs and the projector before the orientation starts.
+update|Nhà ở|Người dùng chạm vào điện thoại, sửa địa chỉ cũ thành địa chỉ mới trong hồ sơ rồi bấm lưu.|Dòng địa chỉ mới được lưu|Please update your home address in your profile before you save.
+be aware of|Công trường|Công nhân đứng trước biển cảnh báo "Sàn trơn", nhìn xuống chân và đi chậm lại vì đã biết.|Biển "Sàn trơn" trước mặt|Workers must be aware of the wet floor signs near the stairs.
+delicate|Nhà hàng|Hai người ngồi bàn ăn, người này nói rất nhỏ giọng, chọn lời thật cẩn thận vì chuyện nhạy cảm.|Hai người nói khẽ trên bàn ăn|Talking about money with a friend can be a delicate matter.
+flexible|Nhà ở|Người mẹ ngồi làm việc tại bàn cạnh cửa sổ, vừa gõ máy vừa trông con chơi, giờ giấc tự chọn.|Máy tính cạnh bé đang chơi|Her job is flexible, so she can work at home while watching her son.
+retire|Công ty|Ông cụ tóc bạc nhận bó hoa và chiếc đồng hồ trong buổi chia tay, cất thẻ nhân viên vào ngăn kéo lần cuối.|Bó hoa và thẻ nhân viên cuối cùng|The old manager will retire next month after thirty years at the company.
+contribute|Lớp học|Mỗi học sinh bước lên bảng, dán một mảnh giấy ý tưởng lên tấm bảng chung cho đến khi đầy.|Mảnh giấy ý tưởng dán lên bảng chung|Each student will contribute one idea to the class project this week.
+dedication|Bệnh viện|Y tá đứng nhận bằng khen trên sân khấu, tấm ảnh phía sau cho thấy cô trực đêm hai mươi năm liền.|Bằng khen và ảnh trực đêm|The nurse was praised for her dedication to every patient she met.
+loyal|Cửa hàng|Ông chủ trao phong bì thưởng cho người nhân viên đã làm ở tiệm suốt mười năm, người ấy mỉm cười.|Phong bì thưởng trao tận tay|He is a loyal employee who has worked at our shop for ten years.
+obvious|Phòng họp|Trên bảng điểm, một tên dẫn xa mọi người, cột điểm cao vọt nên ai cũng nhìn là biết ngay.|Cột điểm cao vọt trên bảng|It was obvious that she had won, because her score was far higher.
+promote|Văn phòng|Giám đốc trao thẻ phó giám đốc mới cho nhân viên và đưa anh lên chiếc ghế cao hơn; mọi người vỗ tay.|Thẻ chức vụ mới được trao|The director decided to promote him to deputy director this year.
+behavior|Siêu thị|Camera trên trần quan sát người mua đi qua các kệ, dừng nhiều ở kệ có đồ ăn vặt gần quầy tính tiền.|Người mua dừng trước kệ đồ ăn vặt|Cameras help the store study shopper behavior near the snack shelves.
+comfort|Khách sạn|Khách thả mình xuống ghế sofa mềm trong phòng, duỗi chân, cầm tách trà nóng, vẻ mặt thư giãn.|Ghế sofa mềm và tách trà nóng|The hotel provides soft beds and warm rooms for the comfort of guests.
+mandatory|Cửa hàng|Mỗi nhân viên cài thẻ tên lên áo trước khi bước ra sàn bán hàng; ai chưa đeo bị quản lý chặn lại.|Thẻ tên cài lên áo|Name badges are mandatory for every employee working on the shop floor.
+strict|Trung tâm thương mại|Nhân viên chỉ vào bảng "Hoàn trả trong 30 ngày, có hóa đơn". Khách không có hóa đơn bị từ chối.|Bảng quy định hoàn trả|The store has a strict return policy and requires a receipt for refunds.
+diverse|Văn phòng|Nhân viên mua hàng lật catalog nội thất, trang nào cũng bày hàng chục kiểu bàn ghế khác màu, khác dáng.|Nhiều kiểu ghế đủ màu|The catalog shows a diverse range of chairs in many colors and shapes.
+essential|Kho hàng|Nhân viên kho đếm kệ, chỉ vào ngăn giấy và mực in dán nhãn đỏ: thiếu hai thứ này là cả văn phòng ngừng làm việc.|Nhãn đỏ trên ngăn giấy mực|Paper and ink are essential supplies, so the office never runs out.
+function|Bếp|Chiếc lò mới có chức năng nướng. Người nấu ấn nút Nướng, đèn bật sáng, miếng cá bắt đầu vàng lên trong lò.|Nút Nướng bật sáng|The new oven has a grill function that cooks fish very quickly.
+maintain|Nhà máy|Thợ cầm cờ lê, tra dầu vào từng bánh răng của máy, giữ cho máy chạy đều qua mùa đông.|Thợ tra dầu vào bánh răng|The crew must maintain the machines so that they run safely every day.
+quality|Siêu thị|Người mua cầm quả táo bóng đẹp lên xem, ngửi thử, so với nhãn "Loại một" trên khay.|Nhãn "Loại một" trên khay táo|This supermarket sells apples of excellent quality at a fair price.
+smooth|Nhà hàng|Nhân viên bưng món ra vừa kịp lúc, bàn nào cũng đúng món, không ai phải chờ hay làm lại.|Khay món ra đúng lúc|Dinner service was smooth, and every table received the right dish on time.
+accurate|Bưu điện|Khách viết địa chỉ từng ký tự đúng, nhân viên đối chiếu với số nhà trên bản đồ, khớp hoàn toàn.|Địa chỉ khớp với bản đồ|Please write an accurate address so the parcel reaches the right house.
+carrier|Kho hàng|Tài xế xe tải in logo hãng vận chuyển bước xuống, đưa lô hàng cho nhân viên kho ký nhận.|Xe tải mang logo hãng vận chuyển|The carrier delivered our parcels to the warehouse right on schedule.
+remember|Văn phòng|Cô thư ký dán tờ giấy nhớ vàng lên màn hình: "Dán nhãn lên thùng". Nhìn tờ giấy, cô nhớ ra việc cần làm trước khi người giao hàng đến.|Tờ giấy nhớ vàng trên màn hình|Remember to label the boxes before the courier arrives this afternoon.
+sufficient|Nhà ở|Cả nhà đứng nhìn tủ lạnh đầy ắp thức ăn cho cuối tuần. Bà mẹ gật đầu: thế là đủ, không cần đi chợ thêm.|Tủ lạnh đầy ắp, mẹ gật đầu|The fridge holds sufficient food for the whole family this weekend.
+rectify|Nhà hàng|Khách chỉ vào hóa đơn ghi sai món. Thu ngân gạch số cũ, viết số đúng rồi in hóa đơn mới để sửa lỗi.|Gạch số sai, viết số đúng|The cashier will rectify the mistake on your bill right away.
+adjust|Phòng gym|Huấn luyện viên xoay núm để chỉnh độ cao của yên xe đạp tập cho vừa chân người tập.|Xoay núm chỉnh yên xe đạp|Please adjust the seat height before you start pedaling the bike.
+automatic|Gara nhà|Xe đến gần cổng, cửa gara tự mở lên mà không ai chạm tay vào.|Cửa gara tự mở, không ai chạm|The automatic door opened by itself as the car approached.
+crucial|Bệnh viện|Bác sĩ phẫu thuật nhìn đồng hồ trong phòng mổ. Ca mổ phụ thuộc vào phút này: phải cầm máu ngay, đây là lúc then chốt.|Đồng hồ trong phòng mổ|Every minute is crucial when the surgeon must stop the bleeding.
+discrepancy|Kho hàng|Nhân viên cầm bảng kiểm kê ghi 50 thùng, nhưng đếm trên kệ chỉ thấy 45. Cô khoanh tròn hai con số lệch nhau.|Giấy ghi 50, trên kệ chỉ có 45|There is a discrepancy between the list and the boxes on the shelf.
+disturb|Khách sạn|Biển Xin đừng làm phiền treo trên tay nắm cửa phòng khách sạn, người bên trong đang ngủ say.|Biển đừng làm phiền trên cửa|Please do not disturb the guest sleeping in this hotel room.
+reflect|Du lịch|Du khách đứng bên hồ phẳng lặng, núi và mây hiện ngược dưới mặt nước như một tấm gương lớn.|Núi hiện ngược dưới mặt hồ|The calm lake can reflect the mountains like a giant mirror.
+run|Nhà máy|Công nhân bấm nút xanh, băng chuyền bắt đầu chạy và máy móc vận hành đều đặn.|Nút xanh bật, băng chuyền chạy|The worker pressed the button to run the machine on the line.
+subtract|Siêu thị|Thu ngân quét hộp sữa khách trả lại, màn hình hiện số âm và tổng tiền giảm xuống. Cô trừ giá hộp sữa khỏi hóa đơn.|Tổng tiền trên màn hình giảm|The cashier will subtract the returned milk from the total bill.
+tedious|Văn phòng|Nhân viên ngồi trước chồng giấy cao, dùng ngón tay đếm từng tờ một, mắt mệt mỏi và ngáp dài.|Chồng giấy cao và cái ngáp dài|Sorting hundreds of papers by hand is a tedious job.
+cautious|Đường phố|Người đi bộ dừng ở mép vỉa hè, nhìn trái nhìn phải thật kỹ rồi mới bước qua đường mưa trơn.|Nhìn trái phải trước khi qua|He is cautious when crossing the street on a rainy night.
+deduct|Ngân hàng|Nhân viên ngân hàng chỉ vào bảng sao kê: một khoản phí nhỏ bị trừ ra khỏi tài khoản vào mỗi tháng.|Dòng phí trừ khỏi số dư|The bank will deduct a small fee from your account every month.
+dividend|Nhà ở|Hai vợ chồng ngồi bàn ăn mở thư của công ty, bên trong là tờ séc tiền lãi chia cho cổ đông.|Tờ séc chia lãi trong phong bì|Shareholders receive a dividend check from the company every quarter.
+transaction|Cửa hàng|Khách quẹt thẻ ở máy POS, máy in ra biên lai ghi ngày và số tiền của lần giao dịch đó.|Biên lai in ra từ máy POS|Each transaction at this store prints a receipt with the date.
+accumulate|Nhà ở|Mỗi ngày bé bỏ thêm vài đồng xu vào lọ heo đất, xu chồng lên nhau và lọ đầy dần.|Lọ heo đất đầy dần xu|Coins slowly accumulate in the jar as she saves each day.
+build up|Phòng gym|Vận động viên nâng tạ mỗi ngày. Sau nhiều tháng, bắp tay to dần lên, thấy rõ trong gương.|Bắp tay to dần qua từng tháng|It takes months to build up strength with regular weight training.
+attitude|Nhà hàng|Nhân viên phục vụ mỉm cười, cúi đầu chào khách với vẻ mặt thân thiện và dễ chịu.|Nụ cười thân thiện của phục vụ|The waiter has a friendly attitude toward every customer who walks in.
+commitment|Phòng họp|Giám đốc đứng trước cả nhóm, đặt tay lên ngực và ký vào bản cam kết. Mọi người vỗ tay.|Chữ ký trên bản cam kết|The manager signed a written commitment to finish the project on time.
+conservative|Văn phòng|Nhà đầu tư ngồi trước hai lựa chọn: một két sắt ghi trái phiếu và một đồ thị răng cưa. Ông chọn két sắt.|Ông chọn két sắt, bỏ đồ thị|A conservative investor chooses safe bonds instead of risky stocks.
+long-term|Vườn|Ông trồng một cây con ngoài vườn và cắm biển ghi 20 năm sau mới có quả.|Cây con và biển 20 năm sau|Planting fruit trees is a long-term plan that pays off years later.
+wise|Công viên|Cụ già ngồi bên bàn cờ, đặt tay lên vai cháu và bình tĩnh chỉ ra nước đi sáng suốt.|Cụ già chỉ nước cờ hay|The old man made a wise choice and avoided a costly mistake.
+give up|Đường chạy|Vận động viên marathon gần tới đích, chân đau nhức, nhưng cô vẫn nghiến răng chạy tiếp, không bỏ cuộc.|Vạch đích phía trước, cô vẫn chạy|The runner refused to give up even though her legs were aching.
+joint|Nhà ở|Hai vợ chồng cùng ngồi bên bàn bếp, mỗi người cầm một cây bút ký vào cùng một tờ khai thuế chung.|Hai cây bút, một tờ khai|The couple filed a joint tax return at their kitchen table.
+withhold|Văn phòng|Kế toán cầm bảng lương, tách một phần tiền thuế bỏ vào phong bì riêng rồi mới đưa phần còn lại cho nhân viên.|Một phần tiền tách ra khỏi lương|The company will withhold some tax from your salary each month.
+desired|Cửa hàng|Khách nhận chiếc áo đúng màu, đúng cỡ mà họ muốn, rồi mỉm cười hài lòng trước gương.|Áo đúng màu, đúng cỡ khách muốn|The shop finally found the desired color in my size.
+detail|Xưởng vẽ|Họa sĩ ghé sát bức tranh, cầm kính lúp soi và vẽ từng nét nhỏ trên cánh bướm.|Kính lúp soi nét nhỏ trên tranh|The painter added every tiny detail to the butterfly wings.
+realistic|Nhà đất|Hai vợ chồng đứng trước môi giới, bỏ qua biệt thự đắt tiền và chỉ vào căn nhà nhỏ vừa túi tiền.|Chọn nhà nhỏ vừa túi tiền|It is realistic to buy a small house that fits your income.
+translation|Hội nghị|Người phiên dịch đeo tai nghe, nói vào micro, trong khi khách nước ngoài nghe bản dịch và đọc chữ dịch trên màn hình.|Tai nghe và micro phiên dịch|The translation of the speech appeared on the screen in real time.
+adjacent|Khách sạn|Hai phòng khách sạn 305 và 306 nằm sát vách nhau, hai cánh cửa đứng cạnh nhau trên hành lang.|Hai cửa 305 và 306 sát nhau|Our hotel rooms are adjacent, so we can knock on the wall.
+concentrate|Thư viện|Học sinh đeo tai nghe chống ồn, cúi đầu đọc sách, cả người dồn hết vào trang giấy.|Tai nghe chống ồn trong thư viện|It is easier to concentrate on homework in a quiet library.
+hamper|Sân bay|Va li chất đống chắn ngang lối đi, người đẩy xe hành lý bị vướng, không đi qua được.|Đống va li chắn lối đi|Piles of luggage will hamper passengers trying to reach the gate.
+inconsiderate|Ga tàu|Trên tàu điện đông người, một thanh niên đặt balo lên ghế trống trong khi cụ già đứng loạng choạng bên cạnh.|Balo chiếm ghế, cụ già đứng|It is inconsiderate to put your bag on a seat while others stand.
+move up|Văn phòng|Cô nhân viên cầm thư thăng chức, chuyển bảng tên từ bàn nhân viên lên phòng quản lý ở tầng trên.|Chuyển bảng tên lên tầng trên|She worked hard to move up to a senior manager position.
+opt|Quán ăn|Khách đứng trước hai tấm bảng thực đơn, ngón tay chỉ vào món chay và chọn nó.|Ngón tay chỉ vào món đã chọn|Many guests opt for the vegetarian dish when it is available.
+bring up|Phòng họp|Giữa cuộc họp, anh giơ tay đứng lên nêu một vấn đề mới, đồng nghiệp quay lại nhìn.|Giơ tay nêu vấn đề giữa họp|Could I bring up one more issue before we finish the meeting?
+conclude|Lớp học|Cô giáo đóng cuốn sách, gõ thước xuống bàn để kết thúc bài giảng, chuông reo vang.|Tiếng chuông và cuốn sách đóng|The teacher will conclude the lesson when the bell rings.
+go ahead|Công trường|Kỹ sư giơ ngón cái ra hiệu cho đội thi công được bắt đầu đổ móng, máy xúc nổ máy.|Ngón cái và máy xúc nổ máy|The engineer told us to go ahead and start pouring the foundation.
+lengthy|Hội trường|Diễn giả nói mãi không dứt, đồng hồ trên tường chỉ hai giờ, khán giả ngáp dài.|Đồng hồ chỉ hai giờ, khán giả ngáp|The speaker gave a lengthy talk that lasted over two hours.
+priority|Bệnh viện|Y tá đẩy cáng bệnh nhân nguy kịch vượt qua hàng người đang chờ, đi thẳng vào phòng cấp cứu.|Cáng cấp cứu vượt hàng chờ|Emergency patients get priority over everyone else waiting in line.
+progress|Nhà ở|Chủ nhà đứng cạnh bức tường mới sơn được một nửa, thợ sơn chỉ vào phần đã xong để cho thấy công việc đang tiến triển.|Bức tường sơn xong một nửa|The painter showed us the progress he made on the wall.
+conform|Nhà máy|Kiểm định viên đặt sản phẩm vào khuôn mẫu chuẩn, thấy vừa khít nên dán tem đạt.|Sản phẩm vừa khít khuôn chuẩn|Every product must conform to the standard shown on this template.
+garment|Xưởng may|Thợ may treo từng bộ quần áo đã may xong lên giá, mỗi bộ gắn một cái nhãn nhỏ.|Dãy quần áo treo trên giá|The tailor hung each garment carefully on the rack.
+perceive|Cửa hàng túi xách|Khách nhìn hai chiếc túi: chiếc giá cao đặt trong tủ kính sáng nên họ cảm nhận nó tốt hơn hẳn.|Túi đắt trong tủ kính sáng|Many shoppers perceive expensive items as being higher in quality.
+repel|Đường phố|Người đi đường mặc áo mưa, nước mưa lăn thành giọt và trượt khỏi mặt vải, áo vẫn khô.|Giọt nước lăn khỏi áo mưa|This raincoat can repel water so you stay dry in storms.
+throw out|Nhà bếp|Đầu bếp lấy hộp sữa chua quá hạn từ tủ lạnh ra rồi ném vào thùng rác.|Hộp quá hạn rơi vào thùng rác|You should throw out any food that is past its expiry date.
+uniform|Tiệm bánh|Trên băng chuyền, hàng chục chiếc bánh quy nằm thẳng hàng, cái nào cũng to bằng nhau như đúc.|Hàng bánh giống hệt nhau|The bakery makes cookies of uniform size on a conveyor belt.
+wrinkle|Tiệm giặt|Thợ ủi ấn bàn là nóng lên nếp nhăn lớn trên tay áo sơ mi, nếp nhăn phẳng dần.|Bàn là xóa nếp nhăn trên áo|She ironed the shirt to remove the wrinkle on the sleeve.
+anxious|Hành lang|Hai thí sinh ngồi ngoài hành lang, cắn móng tay, liếc nhìn cửa phòng chờ kết quả.|Cắn móng tay trước cửa phòng|He felt anxious while waiting for the exam results outside.
+assume|Du lịch|Du khách nhìn trời xanh, cho rằng sẽ không mưa nên để ô ở khách sạn. Rồi mưa bất ngờ đổ xuống.|Trời xanh nhưng mưa bất ngờ|Don't assume it will stay sunny just because the sky is blue.
+experiment|Phòng thí nghiệm|Nhà khoa học mặc áo blouse, nhỏ chất lỏng màu vào ống nghiệm và ghi kết quả vào sổ.|Ống nghiệm và cuốn sổ ghi chép|The scientist ran an experiment with colored liquids in the lab.
+logical|Lớp học|Học sinh viết các bước giải lên bảng, mỗi bước nối với bước sau bằng một mũi tên rõ ràng.|Mũi tên nối các bước trên bảng|The teacher's logical steps on the board were easy to follow.
+solve|Gara|Thợ sửa xe cúi dưới gầm, siết con ốc cuối cùng, rồi động cơ nổ máy lại: vấn đề đã được giải quyết.|Thợ siết ốc, xe nổ máy lại|The mechanic managed to solve the engine problem in one hour.
+apprehensive|Nhà ở|Người thuê nhà đứng ở cửa, tay run run cầm thư báo tăng tiền thuê, mặt lo lắng.|Bức thư tăng tiền thuê run run|The tenant felt apprehensive after reading the rent increase letter.
+circumstance|Sân bay|Bảng thông báo ở sân bay ghi Hoãn vì bão. Hành khách nhìn ra cửa sổ thấy mưa gió, tình huống bất ngờ buộc họ phải ở lại.|Bảng báo hoãn chuyến vì bão|Due to unusual circumstances, all evening flights were delayed.
+subject to|Cửa hàng|Trên biển giá trong tiệm có dòng chữ nhỏ Giá có thể thay đổi. Khách cúi xuống chỉ vào dòng chữ đó.|Dòng chữ nhỏ về thay đổi giá|All prices are subject to change without notice at this store.
+arrive|Ga tàu|Tàu dừng lại, cửa mở ra và hành khách bước xuống sân ga, vừa đến nơi.|Tàu dừng, cửa mở ra sân ga|The train will arrive at the station in about five minutes.
+compromise|Nhà ở|Hai anh em tranh nhau chiếc bánh. Mẹ cắt đôi, mỗi đứa một nửa, cả hai cùng nhượng bộ.|Chiếc bánh cắt đôi cho hai đứa|They reached a compromise and split the cake into two halves.
+daring|Vách núi|Người đàn ông đứng mép vách đá cao, hít sâu rồi nhảy dù xuống, cười tươi trong gió.|Nhảy dù từ vách đá cao|It was a daring jump from the cliff, but he loved it.
+familiar|Quê nhà|Anh về quê sau nhiều năm, đứng trước cổng làng, nhìn thấy cây đa cũ và nhận ra ngay vì quá quen.|Cây đa đầu làng nhìn quen|The old banyan tree looked familiar to him after many years.
+majority|Phòng họp|Trên bàn họp, tám cánh tay giơ lên đồng ý, chỉ có hai tay không giơ: phần lớn mọi người đồng ý.|Tám tay giơ lên, hai tay không|The majority of the team raised their hands to vote yes.
+mix|Quầy bar|Bartender đổ rượu, nước cam và đá vào bình lắc, lắc đều rồi rót ra ly.|Bình lắc cocktail đang lắc|The bartender will mix juice and soda in a tall glass.
+rely|Phố lạ|Du khách đứng giữa phố lạ, nhìn bản đồ trên điện thoại và dựa vào đó để tìm đường đi.|Du khách nhìn bản đồ điện thoại|Tourists rely on their phone maps to find the hotel in town.
+excite|Công viên|Trẻ em reo hò, giơ tay lên khi thấy tàu lượn siêu tốc lao tới, mắt sáng rỡ.|Trẻ giơ tay reo trước tàu lượn|The huge roller coaster will excite every child in the park.
+flavor|Bếp|Đầu bếp nếm thìa nước sốt, nhắm mắt lại và nhận ra vị đậm đà của tỏi và tiêu.|Thìa nước sốt được nếm thử|The soup has a rich flavor of garlic and black pepper.
+forget|Siêu thị|Cô bước ra khỏi siêu thị với giỏ gần trống, bỗng đập trán vì quên mua sữa dù có trong danh sách.|Danh sách có dòng mua sữa|Don't forget to buy milk, it is on the shopping list.
+ingredient|Bếp ăn|Trên bàn bếp có bột, trứng, cà chua, mỗi thứ để riêng. Đầu bếp vừa đọc công thức vừa lấy từng nguyên liệu.|Bột, trứng, cà chua xếp trên bàn|Flour is the main ingredient in this simple bread recipe.
+random|Sự kiện|Người dẫn chương trình thò tay vào thùng lớn, rút ngẫu nhiên một tấm vé trúng thưởng.|Tay rút một vé trong thùng|The host drew a random ticket from the big box.
+burdensome|Văn phòng|Một nhân viên ôm chồng hộp cơm cao quá đầu, loạng choạng đi dọc hành lang, trông rất nặng nề và phiền toái.|Chồng hộp cơm cao quá đầu|Carrying forty lunch boxes upstairs was a burdensome task.
+impress|Tiệc|Khách tròn mắt khen khi thấy bàn tiệc bày những chiếc bánh đẹp mắt từ tiệm nổi tiếng.|Khách tròn mắt trước bàn bánh|The beautiful cakes will impress our guests at the party.
+multiple|Cửa hàng|Quầy thu ngân có nhiều cách thanh toán đặt cạnh nhau: máy quẹt thẻ, hộp tiền mặt và mã QR trên điện thoại.|Thẻ, tiền mặt, mã QR trên quầy|The shop accepts multiple payment methods, including cards and cash.
+pick up|Nhà hàng|Người giao hàng bước vào, nhận túi đồ ăn đóng gói từ tay nhân viên rồi mang đi.|Túi đồ ăn trao tay người nhận|I will pick up the pizza from the restaurant after work.
+accustom to|Vùng núi|Du khách từ miền nóng đến vùng tuyết, mặc áo dày, xoa tay và dần quen với cái lạnh sau vài ngày.|Áo dày giữa trời tuyết trắng|Travelers must accustom themselves to the cold weather in the mountains.
+culinary|Trường nấu ăn|Học viên mặc đồng phục bếp trắng, đội mũ cao, đứng trong lớp học nấu ăn nhìn thầy chỉ cách thái.|Mũ bếp cao trong lớp nấu ăn|She studies at a culinary school to become a professional chef.
+demanding|Nhà hàng|Khách khó tính gọi món liên tục, nhân viên phục vụ chạy tới chạy lui, tay bưng nhiều đĩa mà không kịp nghỉ.|Tay bưng đầy đĩa, không kịp nghỉ|Being a waiter is a demanding job with long hours and little rest.
+draw|Lễ hội|Giữa lễ hội ẩm thực, dòng người đông nghịt xếp hàng dài trước gian hàng của đầu bếp nổi tiếng.|Hàng dài trước gian hàng đầu bếp|The street festival will draw huge crowds of hungry visitors.
+incorporate|Bếp|Đầu bếp rắc thêm rau củ tươi từ nông trại vào nồi súp quen thuộc, khuấy đều cho hòa vào món.|Rau tươi rắc vào nồi súp cũ|The chef will incorporate fresh herbs into the traditional soup.
+method|Nhà ở|Bà chỉ cháu ba bước gấp áo vẽ trên tờ giấy: gập đôi, gập ba, rồi xếp gọn.|Ba bước gấp áo trên giấy|Grandma showed me a simple method for folding shirts neatly.
+outlet|Trung tâm|Một cửa hàng mới khai trương trong trung tâm thương mại, băng rôn đỏ treo trước cửa, nhân viên cắt băng.|Băng khai trương trước cửa hàng|The brand opened a new outlet at the busy shopping mall.
+relinquish|Văn phòng|Ông chủ già tháo chùm chìa khóa, đặt vào tay con gái rồi đứng dậy rời ghế giám đốc.|Chìa khóa trao từ tay ông chủ|The old owner will relinquish his seat and hand over the keys.
+assist|Hội nghị|Nhân viên đeo thẻ ngồi cạnh một cụ già, giúp cụ điền phiếu đăng ký ở bàn đón khách.|Giúp khách điền phiếu đăng ký|Volunteers assist elderly guests with the registration form at the desk.
+coordinate|Hậu trường|Người tổ chức cầm bộ đàm và bảng lịch, chỉ tay cho nhóm ánh sáng, nhạc công và người dựng sân khấu làm việc ăn khớp.|Bộ đàm và bảng lịch trong tay|She will coordinate the lighting, music and stage crew tonight.
+exact|Nhà thuốc|Dược sĩ đặt thìa bột lên cân điện tử và chờ đến khi màn hình hiện đúng 5,00 gam.|Cân điện tử hiện đúng 5,00 g|The pharmacist measured the exact amount of powder on a digital scale.
+site|Công trường|Kỹ sư đội mũ bảo hộ đứng trên khu đất trống, cầm bản vẽ và chỉ ra nơi sẽ xây tòa nhà.|Mũ bảo hộ trên khu đất trống|The engineer picked a good site for the new building.
+beverage|Máy bay|Tiếp viên đẩy xe nước dọc lối đi trên máy bay và đưa một ly nước cam lạnh cho hành khách.|Xe nước đẩy dọc lối máy bay|The flight attendant served a cold beverage to each passenger.
+blanket|Máy bay|Hành khách run vì lạnh trong khoang bay, tiếp viên đưa cho một tấm chăn và người đó quấn quanh vai.|Chăn quấn quanh vai hành khách|The flight attendant handed me a warm blanket during the flight.
+depart|Ga tàu|Đồng hồ ga chỉ 8:15. Đoàn tàu rời sân ga số sáu, người trong toa vẫy tay qua cửa sổ khi tàu lăn bánh.|Tàu lăn bánh, người vẫy tay|The train departs from platform six right at eight fifteen.
+prohibit|Sân bay|Ở cổng an ninh, nhân viên chỉ vào biển đỏ có chai nước bị gạch chéo, rồi bỏ chai nước lớn của khách vào thùng.|Biển chai nước bị gạch chéo|Security rules prohibit passengers from bringing large water bottles through this gate.
+deal with|Nhà hàng|Khách giận dữ chỉ vào tô súp nguội. Quản lý cúi chào, ghi lại rồi bưng ngay tô súp nóng ra thay.|Tô súp nóng thay tô nguội|The manager will deal with your complaint about the cold soup immediately.
+distinguish|Siêu thị|Hai hộp sữa giống hệt nhau, chỉ khác chữ nhỏ. Cô nheo mắt đọc nhãn từng hộp để biết hộp nào không đường.|Hai hộp sữa giống hệt|She squinted at the labels to distinguish sugar-free milk from regular milk.
+equivalent|Chợ|Người bán đặt hai túi gạo lên hai đĩa cân. Kim chỉ đúng giữa, hai đĩa nằm ngang bằng nhau.|Hai đĩa cân ngang nhau|This bag of rice is equivalent in weight to that one.
+excursion|Du lịch|Nhóm du khách đội mũ lên xe buýt nhỏ đi nửa ngày đến làng cổ. Hướng dẫn viên cầm cờ đi trước dẫn đường.|Hướng dẫn viên cầm cờ|The hotel guests joined a short excursion to the old fishing village.
+extend|Khách sạn|Ở quầy lễ tân, khách đưa chìa khóa và xin ở thêm hai ngày. Lễ tân gõ máy rồi đổi ngày trả phòng trên phiếu.|Ngày trả phòng bị đổi|I would like to extend my stay at the hotel by two nights.
+prospective|Showroom|Một người lạ vừa bước vào phòng trưng bày xe, chưa mua gì. Nhân viên mỉm cười đưa tờ giá cho vị khách sắp mua này.|Tờ giá đưa người lạ|The salesperson gave a brochure to each prospective customer entering the showroom.
+situation|Đường phố|Mưa lớn làm ngập bánh xe. Cảnh sát đứng giữa ngã tư, nhìn quanh bình tĩnh rồi ra hiệu cho từng hàng xe.|Cảnh sát giữa ngã tư ngập|The police officer stayed calm during the difficult situation at the flooded intersection.
+system|Bệnh viện|Nhân viên ngồi trước màn hình có sơ đồ nối các khoa với nhau. Bấm một nút, hồ sơ bệnh nhân hiện ở mọi phòng.|Một nút, mọi phòng thấy hồ sơ|The hospital's new computer system shares patient records between every department instantly.
+operate|Nhà máy|Công nhân đội mũ bảo hộ bấm nút xanh. Cỗ máy chạy ầm ầm, băng chuyền chở từng hộp đi đều.|Băng chuyền chạy sau nút xanh|Only trained workers may operate this machine on the factory floor.
+relatively|Đại lý vé|Khách nhìn bảng giá: vé tàu 20 đô, vé máy bay 80 đô. Cô gật đầu vì vé tàu rẻ hơn hẳn khi so sánh.|Bảng giá tàu 20, bay 80|Train tickets are relatively cheap compared with plane tickets on this route.
+remote|Vùng núi|Một con đường đất nhỏ chạy qua đồi vắng, chỉ có vài nhà gỗ xa tít, không thấy xe, không thấy người, điện thoại mất sóng.|Vài nhà gỗ giữa đồi vắng|The remote cabin is hours away from the nearest shop or town.
+advance|Nhà hàng|Quán đông nghẹt, biển ghi hết bàn. Một cặp đôi cầm giấy đặt bàn từ tuần trước thong thả bước vào trong.|Giấy đặt bàn từ tuần trước|Please book your table well in advance because weekends are always very busy.
+chain|Phố mua sắm|Ba quán cà phê cùng logo xanh, cùng bảng hiệu đứng ở ba góc phố khác nhau. Trên bản đồ có hàng chục chấm xanh.|Cùng logo ở ba góc phố|This coffee chain has opened new shops in three different cities.
+expect|Hội trường|Nhân viên xếp hai trăm cái ghế thành hàng thẳng. Anh nhìn danh sách đăng ký rồi nhìn đồng hồ, chờ khách đến.|Hai trăm ghế xếp sẵn|We expect two hundred guests to arrive for the conference tomorrow morning.
+service|Sảnh khách sạn|Nhân viên mặc đồng phục xách vali giúp khách, mở cửa, đưa khăn lạnh và mỉm cười thân thiện.|Nhân viên xách vali, mở cửa|The hotel staff provide excellent service with a smile at every moment.
+confusion|Ga tàu|Hai hành khách cùng cầm vé ghế 12A, đứng đối mặt nhau, nhìn tấm bảng rồi gãi đầu. Nhân viên soát vé chạy đến.|Hai vé cùng một ghế|There was confusion when two passengers held tickets for the same seat.
+disappoint|Thuê xe|Khách nhận chìa khóa rồi thấy chiếc xe móp, trầy và bám đầy bụi. Vai anh chùng xuống, mặt buồn thiu.|Chiếc xe móp bám bụi|A dirty rental car will disappoint customers who expected a clean one.
+nervous|Thành phố lạ|Người lái xe nắm chặt vô lăng bằng hai tay, trán đẫm mồ hôi. Biển báo lạ, xe cộ chen chúc quanh anh.|Hai tay siết chặt vô lăng|He felt nervous while driving through the crowded streets of the unfamiliar city.
+optional|Quầy thuê xe|Trên hợp đồng, nhân viên chỉ vào ô bảo hiểm thêm và nói không bắt buộc. Khách để trống ô đó và vẫn ký.|Ô tích bị để trống|The extra insurance box is optional, so you may leave it empty.
+tempt|Tiệm bánh|Chiếc bánh kem dâu bóng loáng sau tủ kính. Cô đang ăn kiêng dừng lại, nuốt nước bọt, tay đã đưa gần cửa tủ.|Bánh dâu sau tủ kính|The fresh strawberry cake tempts every customer who walks past the window.
+combine|Bếp|Đầu bếp đổ bột và trứng vào cùng một cái tô to, rồi cầm phới khuấy cho hòa vào nhau.|Bột và trứng trong một tô|First, combine the flour and eggs in a large bowl.
+continue|Lớp học|Chuông ra chơi reo nhưng cô giáo giơ tay nói còn năm phút. Cô cầm phấn viết tiếp lên bảng, học sinh chép theo.|Cô viết tiếp khi chuông reo|Please continue writing until the teacher tells you to stop.
+description|Cửa hàng|Khách cầm một chiếc áo, đọc tấm thẻ treo ở cổ áo. Thẻ ghi rõ chất liệu, kích cỡ và màu sắc từng dòng.|Thẻ ghi chất liệu, cỡ, màu|The description on the tag lists the size, color, and fabric clearly.
+disperse|Quảng trường|Sau buổi hòa nhạc, đám đông đứng chật quảng trường bắt đầu tản ra, từng nhóm nhỏ đi về nhiều lối khác nhau.|Đám đông tản ra nhiều ngả|The crowd began to disperse as the police asked everyone to move on.
+entertainment|Nhà ở|Cả nhà ngồi trên sofa, ôm bát bắp rang, xem phim trên TV và cười to. Trên bàn có đàn guitar và đĩa nhạc.|Cả nhà cười trước TV|Movies and music are my favorite kinds of entertainment at home.
+influence|Mua sắm mạng|Cô gái đọc các bình luận năm sao dưới sản phẩm. Cô đổi ý, bấm mua tai nghe này thay vì loại định mua trước.|Bình luận năm sao|Good reviews strongly influence which headphones people decide to buy.
+range|Cửa hàng giày|Cả bức tường dài toàn kệ giày đủ cỡ, đủ màu, đủ kiểu, từ giày em bé đến giày thể thao người lớn.|Cả bức tường đầy giày|The store sells a wide range of shoes for children and adults.
+approach|Lớp toán|Cô giáo không chép công thức lên bảng mà xếp que tính màu trên bàn. Học sinh cùng xếp và học theo cách mới này.|Que tính màu thay công thức|The teacher took a fresh approach to teaching fractions with colored blocks.
+create|Xưởng mộc|Người thợ mộc bào, cưa và ghép đống gỗ rời rạc thành một chiếc ghế mới đẹp. Mùn cưa còn rơi quanh chân.|Đống gỗ thành chiếc ghế|The carpenter created a beautiful chair from a pile of plain wood.
+element|Sân khấu|Nhân viên chỉ vào từng thành phần của buổi diễn trên bàn dài: đèn, phông nền, loa. Mỗi thứ có thẻ đánh dấu riêng.|Đèn, phông, loa trên một bàn|Good lighting is an important element of every stage show.
+experience|Chuyến đi|Cả gia đình ngồi trên bè đi xuống sông, nhìn voi tắm. Ai cũng phấn khích, chụp ảnh và cười lớn.|Cả nhà trên bè xem voi|Riding a boat down the river was a wonderful experience for everyone.
+occur|Công trường|Cạnh tòa nhà đang xây, một viên gạch bất ngờ rơi xuống đất. Người công nhân không đội mũ giật mình quay lại.|Viên gạch rơi xuống đất|Most accidents occur when workers forget to wear their safety helmets.
+rehearse|Phòng tập|Bốn diễn viên đứng thành hàng trong phòng tập, tay cầm kịch bản, nói thoại lần này đến lần khác. Đạo diễn gõ nhịp.|Diễn viên cầm kịch bản|The actors rehearse their lines again and again before the big show.
+sold out|Rạp hát|Trước quầy vé có tấm biển đỏ ghi HẾT VÉ. Hàng người dài thở dài rồi quay về.|Biển đỏ HẾT VÉ|The concert was sold out, so many fans went home disappointed.
+broad|Tiệc buffet|Bàn buffet dài trải khắp phòng, bày hàng chục món: cá, thịt, rau, bánh, trái cây. Khách cầm đĩa đi lấy mãi.|Bàn buffet dài đủ món|The buffet offers a broad selection of dishes from many countries.
+category|Thư viện|Mỗi kệ sách dán một nhãn: Truyện, Khoa học, Nấu ăn. Thủ thư xếp từng cuốn vào đúng nhãn của nó.|Nhãn dán trên từng kệ|Each shelf has a label showing the category of books on it.
+disparate|Phòng khách|Bốn món đồ rất khác nhau bị đặt chung một phòng: ghế gỗ cổ, bàn kính, đèn nhựa, thảm lông.|Ghế cổ cạnh đèn nhựa|The room mixed disparate furniture, from an antique chair to a plastic lamp.
+divide|Bữa tiệc|Cô cắt chiếc pizza tròn thành tám miếng bằng nhau rồi chia cho từng đứa trẻ đang chờ.|Pizza cắt tám miếng|She divided the pizza into eight equal slices for the children.
+favorite|Phòng trẻ em|Giữa hàng chục món đồ chơi, cô bé chỉ ôm chặt chú gấu bông cũ. Cô bé không buông nó ra dù một giây.|Cô bé ôm gấu bông cũ|This old teddy bear is my favorite toy of all time.
+preference|Quán cà phê|Nhân viên cầm phiếu khảo sát. Hết người này đến người khác đều tích vào ô trà thay vì ô cà phê.|Ô trà được tích nhiều|Customers show a clear preference for tea over coffee in the morning.
+reason|Phòng họp|Máy chiếu tắt giữa buổi họp. Kỹ thuật viên cúi xuống gầm bàn, thấy dây điện bị lỏng, đó chính là nguyên nhân.|Dây điện lỏng sau máy chiếu|The reason the projector stopped was a loose cable behind it.
+taste|Tiệm quần áo|Giữa dãy váy bóng loáng, cô gái chọn chiếc váy cổ điển có hoa nhỏ. Mẹ gật đầu khen con chọn đồ rất có gu.|Váy hoa nhỏ giữa váy bóng|She has excellent taste in clothes and always chooses elegant styles.
+urge|Tiệm nhạc cụ|Cậu bé đứng ngoài tủ kính, mắt dán vào cây guitar bóng loáng. Tay cậu đã đặt lên kính, rất muốn chạm vào.|Tay áp lên tủ kính|He felt a strong urge to touch the shiny guitar in the window.
+collection|Nhà sưu tập|Ông cụ mở tủ kính, bên trong bày hàng chục chiếc đồng hồ cổ xếp ngay ngắn thành hàng.|Tủ kính đầy đồng hồ cổ|He proudly showed us his collection of antique clocks on the shelf.
+criticism|Triển lãm|Một người đàn ông chỉ tay vào bức tranh, lắc đầu và chê to. Họa sĩ đứng cạnh cúi mặt im lặng.|Ngón tay chê bức tranh|The painter listened quietly to the harsh criticism of her new work.
+express|Lớp mỹ thuật|Cậu bé chấm màu đỏ tươi và quệt thật mạnh lên giấy để cho cô giáo thấy cậu đang rất giận.|Vệt đỏ mạnh trên giấy|Children often express their feelings through bright colors and simple drawings.
+respond|Phòng làm việc|Màn hình báo có thư mới. Chị nhân viên gõ nhanh vài dòng rồi bấm gửi lại ngay.|Bấm gửi thư trả lời|Please respond to this email as soon as you can.
+specialize|Cửa hàng|Trước cửa tiệm nhỏ treo biển chỉ bán giày chạy bộ. Bên trong có hàng trăm đôi chạy bộ, không có loại giày nào khác.|Biển chỉ bán giày chạy|This little shop specializes in running shoes and sells nothing else.
+spectrum|Lớp vật lý|Ánh sáng trắng xuyên qua lăng kính thủy tinh, trên tường hiện một dải bảy màu từ đỏ đến tím.|Dải bảy màu trên tường|The prism splits white light into a spectrum of seven colors.
+assignment|Tòa soạn|Biên tập viên đưa cho phóng viên trẻ một phong bì ghi việc cần làm. Cô xách máy ảnh và chạy ra cửa.|Phong bì giao việc|The editor gave the young reporter a difficult assignment in another city.
+choose|Tiệm kem|Cậu bé đứng trước tủ kem đủ vị, nhìn hồi lâu rồi chỉ vào kem dâu, bảo người bán múc cho mình.|Ngón tay chỉ kem dâu|You can choose one flavor of ice cream from the menu.
+constant|Nhà ở|Cô ngồi trong nhà bịt tai, vì tiếng búa khoan ngoài đường vang liên tục không ngừng từ sáng đến tối.|Cô bịt tai vì tiếng khoan|The constant noise from the road made it hard to sleep.
+decisive|Sân bóng|Phút cuối trận, cầu thủ sút bóng vào lưới, tỉ số thành 1-0. Khán đài bùng nổ, cả đội ôm nhau.|Bóng vào lưới phút cuối|His decisive goal in the last minute won the match.
+disseminate|Nhà in|Máy in nhả ra hàng trăm tờ báo. Nhân viên bỏ báo vào túi và chuyển lên xe đưa đến nhiều thành phố.|Xe chở báo đi nhiều nơi|The company works hard to disseminate health news to every town.
+impact|Bãi biển|Sau khi xem phim tài liệu về rác nhựa, cả lớp kéo ra bãi biển nhặt rác, túi nào cũng đầy.|Cả lớp nhặt rác biển|The film had a strong impact on how students treated the beach.
+in-depth|Phỏng vấn|Phóng viên ngồi giữa bàn đầy tài liệu và biểu đồ, hỏi chuyên gia từng câu một suốt hơn một giờ.|Bàn đầy tài liệu biểu đồ|The journalist wrote an in-depth article about the city's water problems.
+link|Máy tính|Trên màn hình có dòng chữ xanh gạch chân. Con trỏ chuột biến thành bàn tay, người dùng bấm vào.|Chữ xanh gạch chân|Click the blue link at the bottom of the page.
+instrument|Phòng mổ|Y tá xếp kéo, kẹp và dao nhỏ ngay hàng trên khay inox sáng bóng, rồi rửa sạch từng cái.|Khay dụng cụ sáng bóng|The nurse laid each sterile instrument carefully on the metal tray.
+manage|Phòng tập|Người đàn ông đau lưng tập động tác nhẹ cùng huấn luyện viên. Mặt ông dần nhẹ nhõm, bớt nhăn nhó.|Động tác nhẹ, mặt nhẹ nhõm|Gentle exercise helps him manage his back pain every day.
+serious|Cấp cứu|Bác sĩ cầm phim X-quang, nhìn lâu rồi cau mày. Bệnh nhân nằm trên cáng, y tá đẩy gấp vào phòng mổ.|Bác sĩ cau mày xem phim|The doctor said the injury was serious and needed surgery immediately.
+aware|Phòng nha|Nha sĩ cầm gương nhỏ chỉ vết đen sau răng. Bệnh nhân trợn tròn mắt, lần đầu biết mình bị sâu răng.|Gương nhỏ chỉ vết đen|Many people are not aware that they have a cavity until it hurts.
+catch up|Văn phòng|Cuối tuần, cô ngồi một mình ở bàn, xếp đống hồ sơ trễ hạn và làm bù từng cái đến tối.|Đống hồ sơ trễ hạn|I stayed late at the office to catch up on my work.
+distraction|Phòng chờ|Bệnh nhân đang lo lắng ngồi nhìn bể cá có cá nhiều màu bơi qua bơi lại, và quên mất nỗi sợ.|Bể cá trong phòng chờ|The colorful fish tank is a pleasant distraction for anxious patients.
+encouragement|Phòng nha|Cô vệ sinh răng vỗ vai cậu bé, giơ ngón cái lên. Cậu bé đang run bỗng mở miệng ra và mỉm cười.|Ngón cái giơ lên|A warm smile and a word of encouragement helped the boy stay calm.
+evident|Chụp X-quang|Bác sĩ treo phim lên đèn. Một vết nứt trắng trên xương hiện ra rõ ràng, ai nhìn cũng thấy ngay.|Vết nứt trắng trên phim|The crack in the bone was evident on the X-ray.
+habit|Nhà tắm|Sáng và tối, cậu đứng trước gương cầm bàn chải. Trên tường treo tờ lịch có ba mươi ngày đều được đánh dấu.|Lịch đánh dấu ba mươi ngày|Brushing my teeth before bed is a habit I never skip.
+illuminate|Phòng nha|Chiếc đèn nhỏ treo trên ghế nha khoa chiếu thẳng vào miệng bệnh nhân, tạo một vùng sáng trắng.|Vùng sáng trong miệng|A bright lamp illuminates the patient's mouth during the dental exam.
+irritate|Công viên|Phấn hoa bay trong gió. Cô bé dụi mắt đỏ hoe và hắt hơi liên tục, nhăn mặt khó chịu.|Mắt đỏ, hắt hơi liên tục|Pollen can irritate your eyes and make you sneeze.
+restore|Xưởng sửa|Người thợ chà nhám và sơn lại chiếc ghế gỗ cũ nát. Ghế dần trở lại đẹp như mới.|Ghế cũ trở lại như mới|He worked hard to restore the old chair to its original beauty.
+aspect|Phòng họp|Trên bảng có hình tròn chia thành ba phần: giá, chất lượng, thời gian. Mọi người chỉ từng phần để bàn từng khía cạnh.|Hình tròn chia ba phần|Every aspect of the plan, from cost to timing, was discussed carefully.
+emphasize|Nhà máy|Quản đốc đứng trước biển An toàn, vỗ tay mạnh lên chữ và nhắc đi nhắc lại cho công nhân nghe.|Tay vỗ lên biển An toàn|The manager emphasized safety by tapping the sign before the shift began.
+portion|Căng tin|Cô nhân viên múc một phần cơm đầy ụ vào khay, rồi đặt thêm một miếng cá nướng bên cạnh.|Khay cơm đầy ụ|The cook served a large portion of rice with grilled fish.
+regardless|Chợ|Mưa rất to nhưng người bán hàng vẫn mặc áo mưa, kéo sạp ra mở như mọi sáng. Khách cũng vẫn đến mua.|Sạp mở dưới mưa|The market opens at six every day, regardless of the weather.
+suitable|Tiệm xe đạp|Cậu bé ngồi lên chiếc xe nhỏ, hai chân chạm đất. Xe lớn thì quá cao, còn xe này vừa vặn nên cậu gật đầu.|Chân chạm đất vừa vặn|This small bicycle is suitable for children under ten years old.
+procedure|Phòng mổ|Bác sĩ đeo khẩu trang đứng quanh bàn mổ dưới đèn sáng. Đồng hồ trên tường chạy qua hai giờ của ca phẫu thuật.|Đèn mổ và đồng hồ tường|The surgical procedure lasted two hours, and the patient recovered well.
+result|Xét nghiệm|Kỹ thuật viên lấy tờ giấy vừa in ra từ máy, kẹp vào hồ sơ và đưa cho bệnh nhân đang chờ.|Tờ giấy vừa in ra|The nurse handed him the test result in a sealed envelope.
+consult|Hiệu thuốc|Khách cầm hai hộp thuốc đưa qua quầy hỏi dược sĩ. Dược sĩ mở sách tra rồi chỉ cho khách xem.|Hai hộp thuốc đưa qua quầy|You should consult a pharmacist before taking these two medicines together.
+convenient|Bãi xe|Xe hơi dừng bên ô cửa sổ nhỏ, người lái hạ kính nhận túi thuốc mà không cần xuống xe.|Túi thuốc đưa qua kính xe|The drive-through window is convenient because you never leave your car.
+factor|Phòng khám|Bác sĩ nhìn bệnh án, ghi tuổi và cân nặng của bệnh nhân lên bảng để quyết định liều thuốc.|Tuổi và cân nặng trên bảng|Weight is an important factor when a doctor decides the dose.
+interaction|Nhà bếp|Trên bàn bếp có hộp thuốc và lọ vitamin. Cô đọc nhãn, lo lắng, rồi gọi hỏi dược sĩ xem hai loại có hại nhau không.|Thuốc và vitamin cạnh nhau|Some vitamins have a dangerous interaction with certain heart medicines.
+limit|Siêu thị|Biển trên kệ ghi tối đa hai hộp mỗi người. Khách cầm đúng hai hộp rồi đặt hộp thứ ba lại.|Biển tối đa hai hộp|The sign says there is a limit of two boxes per customer.
+potential|Nhà ở|Cô dùng kính lúp đọc dòng chữ nhỏ trên nhãn hộp thuốc, nơi ghi các tác dụng phụ có thể xảy ra.|Kính lúp trên nhãn thuốc|Read the label to learn about potential risks before using it.
+sample|Trung tâm thương mại|Nhân viên quầy mỹ phẩm tặng cô khách một túi nhỏ đựng kem dùng thử, miễn phí.|Túi kem dùng thử nhỏ|The saleswoman offered her a free sample of the new hand cream.
+volunteer|Khu phố|Một thanh niên mặc áo xanh tình nguyện đạp xe chở túi thuốc đến nhà cụ già, cụ cười đón ở cửa.|Áo xanh, túi thuốc, xe đạp|A volunteer in a green shirt delivers food to elderly neighbors.
+`;
 var RAWGL=`abandon|v|từ bỏ, bỏ dở|The company decided to abandon the project after costs rose sharply.
 abilities|n|năng lực, khả năng|Candidates should list their abilities clearly on the application form.
 abolish|v|bãi bỏ, xóa bỏ|The board voted to abolish the outdated reporting procedure.
@@ -8457,10 +8767,11 @@ var WEEKS=parseData(RAW1+RAW2+RAW3+RAW4+RAW5);
 var BR=12; /* Tuần 1-12: chi nhánh; bài 13 trở đi: Hội sở */
 function lab(n){return n>16?'Nâng cao · bài '+(n-16):n>BR?'Hội sở · bài '+(n-BR):'Tuần '+n;}
 function wn(n){return n>16?n-16:n>BR?n-BR:n;}
-var QMAP={};
+var QMAP={},QP2={},QBLK={};
 WEEKS.forEach(function(w){
   w.p5.concat(w.p2).forEach(function(q){QMAP[q.id]=q;});
-  w.blocks.forEach(function(b){b.qs.forEach(function(q){QMAP[q.id]=q;});});
+  w.p2.forEach(function(q){QP2[q.id]=1;});
+  w.blocks.forEach(function(b){b.qs.forEach(function(q){QMAP[q.id]=q;QBLK[q.id]=b;});});
 });
 var GT=parseGrammar(RAWG,'g'),PT=parseGrammar(RAWP,'p');
 GT.forEach(function(t){if((!t.pts||!t.pts.length)&&PTS1[t.id])t.pts=PTS1[t.id];if(!t.pts)t.pts=[];});
@@ -8514,7 +8825,7 @@ var IC={
 /* ---------- Lưu tiến độ (chỉ trong trình duyệt này) ---------- */
 var P={q:{},pr:{},srs:{},days:{},hist:[],nc:{d:'',n:0}};
 try{var raw=localStorage.getItem('toeic-quay-v1');if(raw){var o=JSON.parse(raw);Object.keys(o).forEach(function(k){P[k]=o[k];});}}catch(e){}
-function initP(){if(!P.start)P.start=dkey(new Date());if(!P.xp)P.xp=0;if(!P.bd)P.bd={};if(!P.goalHit)P.goalHit={};}
+function initP(){if(!P.start)P.start=dkey(new Date());if(!P.xp)P.xp=0;if(!P.bd)P.bd={};if(!P.goalHit)P.goalHit={};if(!P.er)P.er={};}
 function save(){try{localStorage.setItem('toeic-quay-v1',JSON.stringify(P));}catch(e){}}
 initP();
 function dkey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -8897,36 +9208,140 @@ function heroHtml(){
 }
 
 /* ---------- Giao diện: trang chủ ---------- */
+
+function viewHowto(){
+  P.seenGuide=1;save();
+  var steps=[
+   ['Làm gì mỗi ngày','Mở trang chủ, làm lần lượt 5 việc trong mục Hôm nay. Mỗi việc 4 đến 10 phút. Bận thì chỉ ôn thẻ từ vựng 5 phút, giữ chuỗi ngày liên tiếp.'],
+   ['Học từ mới','Vào Từ vựng, chọn chủ đề. Bấm loa để nghe giọng Mỹ, bấm Nói để máy chấm từng từ. Chạm bất kỳ từ nào để xem nghĩa, họ từ, đồng nghĩa, trái nghĩa, giới từ đi kèm, và lưu từ.'],
+   ['Nhớ lâu','Từ mới vào Ôn thẻ. Nhớ rồi thì thẻ quay lại sau 1, 2, 4, 8, 16 ngày; chưa nhớ thì quay lại sớm. Mỗi tuần dùng Gõ lại từ để tự lục trí nhớ.'],
+   ['Nói tự nhiên','Dùng Nhại giọng: nghe một lần rồi nói theo ngay. Dùng Ẩn chữ khi đã quen. Phát âm giúp sửa từng âm bằng bài IPA.'],
+   ['Ngữ pháp và thi thử','Ngữ pháp: đọc phần lý thuyết ngắn rồi làm bài, có giải thích. Đo trình độ để biết điểm mạnh yếu và làm lại sau vài tuần.']
+  ];
+  var feats=[
+   ['Chạm từ để tra','Ở mọi nơi trong app, chạm một từ tiếng Anh để mở thẻ tra: nghĩa, phiên âm, họ từ, đồng nghĩa, trái nghĩa, giới từ theo sau.'],
+   ['Sơ đồ tư duy','Mỗi bài và mỗi chủ đề có sơ đồ. Bấm Che nghĩa để tự kiểm tra trí nhớ.'],
+   ['Hình dung và ghi nhớ','Từ trừu tượng có cảnh minh họa cụ thể và ô ghi chú cách nhớ của riêng bạn.'],
+   ['Giọng Mỹ tự nhiên','Câu mẫu dùng giọng đọc thu sẵn, nghe chậm được. Nói xong máy chấm từng từ.'],
+   ['Từ đã lưu','Lưu từ bất kỳ, sắp xếp, tìm kiếm và xem quan hệ giữa các từ.'],
+   ['Sao lưu','Chuyển dữ liệu sang máy khác bằng mã hoặc file trong mục Sao lưu. Dữ liệu chỉ nằm trên thiết bị của bạn.']
+  ];
+  return '<header class="top"><a class="back" href="#home">‹ Về trang chủ</a><p class="eyebrow">Hướng dẫn</p><h1>Dùng app trong 1 phút</h1><p class="lead">Nguyên tắc: học ít mỗi ngày, nghe và nói thật, ôn đúng lúc sắp quên.</p></header>'+
+   '<section class="card"><h2>Cách học mỗi ngày</h2><ol class="howlist">'+steps.map(function(x){return '<li><b>'+x[0]+'</b><span>'+x[1]+'</span></li>';}).join('')+'</ol></section>'+
+   '<section class="card"><h2>Chức năng nổi bật</h2><ul class="howlist">'+feats.map(function(x){return '<li><b>'+x[0]+'</b><span>'+x[1]+'</span></li>';}).join('')+'</ul></section>'+
+   '<div class="howend"><a class="btn primary big" href="#home">Bắt đầu học</a><a class="btn" href="#learn">Vì sao cách học này hiệu quả</a></div>';
+}
+
+/* ---------- Luyện nghe và Sổ lỗi ---------- */
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function poolListen(part){
+  var out=[];
+  WEEKS.forEach(function(w){
+    if(part!=='dlg')w.p2.forEach(function(q){out.push(q);});
+    if(part!=='p2')w.blocks.forEach(function(b){if(b.type==='dlg'&&!isRead(b))b.qs.forEach(function(q){out.push(q);});});
+  });
+  return out;
+}
+function pickListen(part){
+  var pool=shuf(poolListen(part)),fresh=pool.filter(function(q){return P.q[q.id]===undefined;}),bad=pool.filter(function(q){return P.q[q.id]===0;}),rest=pool.filter(function(q){return P.q[q.id]===1;});
+  return fresh.concat(bad,rest).slice(0,10);
+}
+function errAll(){return Object.keys(P.q).filter(function(id){return P.q[id]===0&&QMAP[id];});}
+function errDue(){var t=today();return errAll().filter(function(id){var e=P.er[id];return !e||e.due<=t;});}
+function drStart(kind,part){
+  var list=kind==='err'?shuf(errDue()).slice(0,10).map(function(id){return QMAP[id];}):pickListen(part);
+  if(!list.length){toast('Chưa có câu để làm.');return;}
+  S.dr={kind:kind,part:part,list:list,i:0,ch:{},ok:0,rev:{}};location.hash='#drill';if(drIsL(list[0]))drPlay(list[0]);
+}
+function drIsL(q){return !!QP2[q.id]||!!QBLK[q.id];}
+function drPlay(q){if(QP2[q.id])playP2(q);else if(QBLK[q.id])playLines(QBLK[q.id].lines);}
+function viewDrill(){
+  var d=S.dr;if(!d)return viewListen();
+  var back=d.kind==='err'?'#errors':'#listen',ttl=d.kind==='err'?'Sổ lỗi':'Luyện nghe';
+  if(d.i>=d.list.length){
+    var n=d.list.length,pct=Math.round(100*d.ok/n);
+    return '<header class="top"><a class="back" href="'+back+'">‹ '+ttl+'</a><p class="eyebrow">'+ttl+'</p><h1>Đúng '+d.ok+'/'+n+' câu</h1><p class="lead">'+(d.kind==='err'?(pct>=80?'Rất tốt. Câu làm đúng sẽ được ôn lại thưa dần rồi rời khỏi sổ lỗi.':'Câu sai sẽ quay lại vào ngày mai. Đọc kỹ phần giải thích rồi thử lại.'):(pct>=80?'Nghe tốt. Câu sai đã được ghi vào Sổ lỗi để ôn lại đúng lúc.':'Câu sai đã được ghi vào Sổ lỗi. Làm lại sau 1 ngày để nhớ lâu.'))+'</p></header>'+
+      '<div class="howend"><button class="btn primary big" data-act="dr-again">Làm lượt mới</button><a class="btn" href="#errors">Mở Sổ lỗi ('+errAll().length+' câu)</a><a class="btn" href="#home">Về trang chủ</a></div>';
+  }
+  var q=d.list[d.i],ch=d.ch[q.id],done=ch!==undefined,isL=drIsL(q),isP2=!!QP2[q.id],L='ABCD';
+  var showTxt=!isP2||done||d.rev[q.id];
+  var opts=q.o.map(function(o,k){
+    var cls=done?(o.ok?'ok':(k===ch?'no':'')):'',mk=done?(o.ok?'<span class="mk">✓ Đúng</span>':(k===ch?'<span class="mk">✗ Sai</span>':'')):'';
+    return '<button class="opt '+cls+'" data-act="dr-ans" data-k="'+k+'"'+(done?' disabled':'')+'><span class="k">'+L[k]+'</span><span class="tx">'+(showTxt?esc(o.t):'<span class="muted">Đáp án '+L[k]+'</span>')+'</span>'+mk+'</button>';
+  }).join('');
+  var stem=isP2?(showTxt?'<p class="qt">'+esc(q.q)+'</p>':'<p class="qt muted">Nghe câu hỏi, rồi chọn câu trả lời.</p>'):'<p class="qt">'+blankHtml(q.q)+'</p>';
+  var blk=QBLK[q.id],tr=(blk&&(done||d.rev[q.id]))?'<div class="tr">'+blk.lines.map(function(l){return '<p><b>'+esc(l.who)+'</b> '+esc(l.t)+'</p>';}).join('')+'</div>':'';
+  var tools=isL?'<div class="btns"><button class="btn sm" data-act="dr-play">'+IC.spk+' Nghe'+(blk?' đoạn hội thoại':'')+'</button>'+(done?'':'<button class="btn sm ghost" data-act="dr-rev">'+(d.rev[q.id]?'Ẩn chữ':'Hiện chữ')+'</button>')+'</div>':'';
+  return '<header class="top"><a class="back" href="'+back+'">‹ '+ttl+'</a><p class="eyebrow">'+ttl+' · câu '+(d.i+1)+'/'+d.list.length+'</p></header>'+
+    '<div class="card">'+tools+tr+stem+'<div class="opts">'+opts+'</div>'+(done&&q.e?'<p class="exp">'+esc(q.e)+'</p>':'')+'</div>'+
+    (done?'<button class="btn primary big" data-act="dr-next">'+(d.i+1>=d.list.length?'Xem kết quả':'Câu tiếp theo')+'</button>':'');
+}
+function drAns(k){
+  var d=S.dr,q=d.list[d.i];if(d.ch[q.id]!==undefined)return;
+  var ok=!!q.o[k].ok;d.ch[q.id]=k;if(ok)d.ok++;
+  if(d.kind==='err'){
+    var e=P.er[q.id]||{box:0};
+    if(ok){e.box++;if(e.box>=2){P.q[q.id]=1;delete P.er[q.id];}else{e.due=addDays(today(),3);P.er[q.id]=e;}}
+    else{e.box=0;e.due=addDays(today(),1);P.er[q.id]=e;}
+    touch();
+  }else{
+    P.q[q.id]=ok?1:0;if(ok&&P.er[q.id])delete P.er[q.id];touch();
+  }
+  save();render();onAnswer(q,ok);
+}
+function viewListen(){
+  var n2=poolListen('p2').length,n3=poolListen('dlg').length,ne=errDue().length;
+  function row(t,desc,n,act,part){return '<div class="card"><h3>'+t+'</h3><p class="fine">'+desc+'</p><button class="btn primary" data-act="'+act+'" data-part="'+part+'">Luyện 10 câu (có '+n+' câu)</button></div>';}
+  return '<header class="top"><a class="back" href="#home">‹ Về trang chủ</a><p class="eyebrow">Luyện nghe</p><h1>Nghe, chọn, hiểu vì sao</h1><p class="lead">Mỗi lượt 10 câu, ưu tiên câu bạn chưa làm hoặc từng sai. Câu sai tự vào Sổ lỗi.</p></header>'+
+    row('Part 2: hỏi và đáp','Nghe một câu hỏi và 3 câu trả lời A, B, C. Chú ý từ để hỏi (When, Where, Who...) trước, bỏ qua đáp án nghe giống từ trong câu hỏi.',n2,'dr-listen','p2')+
+    row('Part 3 và 4: hội thoại, bài nói','Đọc câu hỏi trước nếu được, rồi nghe tìm đúng thông tin: ai, ở đâu, vấn đề gì, sẽ làm gì tiếp theo.',n3,'dr-listen','dlg')+
+    row('Trộn cả hai','Xen kẽ các dạng như đề thi thật.',n2+n3,'dr-listen','mix')+
+    '<a class="card howbanner" href="#errors"><b>Sổ lỗi: '+ne+' câu đến hạn làm lại</b><span class="fine">Làm lại câu từng sai đúng lúc sắp quên</span></a>'+
+    '<p class="fine">Hình ảnh cho Part 1 chưa có trong app này.</p>';
+}
+function viewErrors(){
+  var all=errAll(),due=errDue();
+  var prev=all.slice(0,8).map(function(id){var q=QMAP[id],c=q.o.filter(function(o){return o.ok;})[0];return '<div class="row"><div><div class="t">'+esc(String(q.q).replace(/_{6}|___\(\d\)___/g,'____').slice(0,110))+'</div><div class="s">Đáp án: <b>'+esc(c?c.t:'')+'</b></div></div></div>';}).join('');
+  return '<header class="top"><a class="back" href="#home">‹ Về trang chủ</a><p class="eyebrow">Sổ lỗi</p><h1>'+(all.length?all.length+' câu cần nhớ lại':'Chưa có câu sai nào')+'</h1><p class="lead">Câu làm sai tự vào đây. Làm đúng 2 lần cách nhau vài ngày thì câu rời khỏi sổ.</p></header>'+
+    (due.length?'<button class="btn primary big" data-act="dr-err">Làm lại '+Math.min(10,due.length)+' câu ('+due.length+' câu đến hạn)</button>':(all.length?'<p class="card fine">Không còn câu nào đến hạn hôm nay. Quay lại vào ngày mai.</p>':''))+
+    (prev?'<section class="card"><h3>Một số câu trong sổ</h3>'+prev+'</section>':'<p class="card fine">Làm Luyện nghe, bài tập ngữ pháp hoặc Đo trình độ. Câu sai sẽ xuất hiện ở đây.</p>');
+}
 function viewHome(){
   var cw=currentWeek(),st=streak(),due=dueCount(),w=WEEKS[cw-1];
   var plan=[
     ['8′','Từ vựng','Ôn thẻ đến hạn và học 10 từ mới','cards',0,''],
     ['10′','Nghe','Part 2 và hội thoại: '+lab(cw),'go',cw,'listen'],
     ['8′','Ngữ pháp','Part 5, '+lab(cw)+': '+w.focus,'go',cw,'p5'],
-    ['4′','Chốt ngày','Nói to vài câu mẫu và nghe máy chấm','go',cw,w.sents.length?'sents':'vocab']
-  ].map(function(p){
-    return '<button data-act="'+(p[3]==='cards'?'to-cards':'go')+'" data-week="'+p[4]+'" data-tab="'+p[5]+'"><span class="min">'+p[0]+'</span><span><b>'+p[1]+'</b><br><span class="d">'+esc(p[2])+'</span></span><span aria-hidden="true">›</span></button>';
+    ['5′','Nhại giọng','Nghe câu mẫu rồi nói theo ngay, máy chấm từng từ','shadow',0,''],
+    ['4′','Nhớ chủ động','Xem nghĩa tiếng Việt, tự gõ lại từ tiếng Anh','type',0,'']
+  ].concat(errDue().length?[['3′','Sổ lỗi','Làm lại '+Math.min(10,errDue().length)+' câu từng sai','err',0,'']]:[]).map(function(p){
+    return '<button data-act="'+(p[3]==='cards'?'to-cards':p[3]==='shadow'?'shadow':p[3]==='type'?'to-type':p[3]==='err'?'to-err':'go')+'" data-week="'+p[4]+'" data-tab="'+p[5]+'"><span class="min">'+p[0]+'</span><span><b>'+p[1]+'</b><br><span class="d">'+esc(p[2])+'</span></span><span aria-hidden="true">›</span></button>';
   }).join('');
   function wkList(a,b){return WEEKS.slice(a,b).map(function(x){
     var s=weekStat(x);
     return '<a class="wk" href="#week-'+x.n+'"><span class="n">'+String(wn(x.n)).padStart(2,'0')+'</span><span><span class="tt">'+esc(x.title)+'</span><br><span class="ff">'+esc(x.focus)+'</span><span class="bar"><i style="width:'+s.pct+'%"></i></span></span></a>';
   }).join('');}
-  return '<header class="top"><p class="eyebrow">TOEIC 4 kỹ năng · 450 đến 990</p><h1>Từ nền tảng đến 990, mỗi ngày một ít</h1>'+
-    '<p class="lead">Học 30 phút mỗi ngày, hoặc chỉ 5 phút những hôm mệt. Máy đọc mẫu, bạn nói thử, trang chấm từng từ.</p>'+
-    '<div class="chips"><span class="pill gold">Chuỗi '+st+' ngày</span><span class="pill">'+due+' thẻ đến hạn</span><span class="pill">Đang ở '+lab(cw)+'</span></div></header>'+
-    heroHtml()+'<section class="card"><h2>Hôm nay</h2><div class="plan">'+plan+'</div>'+
+  var first=!P.seenGuide;
+  return '<header class="top brandbar"><div><p class="eyebrow">TOEIC 450 đến 990</p><h1 class="brand">TOEIC Học Nhanh Dễ Nhớ</h1></div><a class="btn sm" href="#howto">Hướng dẫn</a></header>'+
+    (first?'<a class="card howbanner" href="#howto"><b>Mới dùng? Xem hướng dẫn 1 phút</b><span class="fine">Cách học và các chức năng chính của app</span></a>':'')+
+    '<div class="chips"><span class="pill gold">Chuỗi '+st+' ngày</span><span class="pill">'+due+' thẻ đến hạn</span><span class="pill">Đang ở '+lab(cw)+'</span></div>'+
+    heroHtml()+'<section class="card"><h2>Hôm nay</h2><p class="fine sub" style="margin-top:0">Làm lần lượt từ trên xuống, mỗi việc vài phút.</p><div class="plan">'+plan+'</div>'+
     '<button class="btn primary big" data-act="to-cards">Chỉ có 5 phút? Ôn thẻ từ vựng</button></section>'+
-    '<section><h2 class="sec">1. Đo trình độ</h2><p class="fine sub">Làm trước để biết nên bắt đầu từ đâu.</p>'+testCard()+testCardAdv()+'</section>'+
-    '<section><h2 class="sec">2. Công cụ học</h2><p class="fine sub">Mỗi công cụ một việc, dùng theo nhu cầu.</p><div class="tiles">'+
-    '<a class="tile" href="#vocab"><span class="tic">'+IC2.book+'</span><span class="ti">Từ vựng</span><span class="td">'+VT.length+' chủ đề, 600 từ, từ đã lưu ('+SV().list.length+')</span></a>'+
+    '<section><h2 class="sec">Công cụ học</h2><div class="tiles">'+
+    '<a class="tile" href="#vocab"><span class="tic">'+IC2.book+'</span><span class="ti">Từ vựng</span><span class="td">'+VT.length+' chủ đề, 600 từ, đã lưu '+SV().list.length+'</span></a>'+
     '<a class="tile" href="#grammar"><span class="tic">'+IC2.pen+'</span><span class="ti">Ngữ pháp</span><span class="td">'+GT.length+' chủ đề, '+gTotal()+' bài tập</span></a>'+
     '<a class="tile" href="#pron"><span class="tic">'+IC2.wave+'</span><span class="ti">Phát âm</span><span class="td">'+PT.length+' bài IPA giọng Mỹ</span></a>'+
-    '<a class="tile" href="#sw"><span class="tic">'+IC2.mic+'</span><span class="ti">Nói và Viết</span><span class="td">'+SW.sp.length+' bài Nói, '+SW.wr.length+' bài Viết</span></a></div>'+
-    '<p class="fine links"><a href="#gmap">Danh mục ngữ pháp</a> · <a href="#guide">Bản đồ TOEIC 4 kỹ năng</a> · <a href="#learn">Phương pháp học</a> · <a href="#progress">Tiến độ</a> · <a href="#backup">Sao lưu</a></p></section>'+
-    '<section><h2 class="sec">3. Lộ trình bài học</h2><p class="fine sub">Học theo thứ tự: Chi nhánh, rồi Hội sở, rồi Nâng cao.</p>'+
+    '<button class="tile" data-act="shadow"><span class="tic">'+IC2.wave+'</span><span class="ti">Nhại giọng</span><span class="td">Nghe rồi nói theo ngay</span></button>'+
+    '<a class="tile" href="#type"><span class="tic">'+IC2.pen+'</span><span class="ti">Gõ lại từ</span><span class="td">Nhớ chủ động, tự gõ</span></a>'+
+    '<a class="tile" href="#listen"><span class="tic">'+IC2.wave+'</span><span class="ti">Luyện nghe</span><span class="td">Part 2, 3, 4 có giải thích</span></a>'+
+    '<a class="tile" href="#errors"><span class="tic">'+IC2.pen+'</span><span class="ti">Sổ lỗi</span><span class="td">'+errAll().length+' câu cần nhớ lại</span></a>'+
+    '<a class="tile" href="#sw"><span class="tic">'+IC2.mic+'</span><span class="ti">Nói và Viết</span><span class="td">'+SW.sp.length+' bài Nói, '+SW.wr.length+' bài Viết</span></a></div></section>'+
+    '<section><h2 class="sec">Lộ trình bài học</h2><p class="fine sub">Học theo thứ tự: Chi nhánh, rồi Hội sở, rồi Nâng cao.</p>'+
     '<details class="path" open><summary>Chi nhánh: 12 tuần <span class="fine">Giao dịch viên, tư vấn, dịch vụ khách hàng</span></summary><div class="wks">'+wkList(0,BR)+'</div></details>'+
     '<details class="path"><summary>Hội sở: 4 bài <span class="fine">Họp, báo cáo, tuân thủ, sản phẩm</span></summary><div class="wks">'+wkList(BR,16)+'</div></details>'+
-    '<details class="path"><summary>Nâng cao 650 đến 990: 8 bài <span class="fine">Tín dụng, rủi ro, tài chính, hợp đồng, đề tổng hợp</span></summary><div class="wks">'+wkList(16,WEEKS.length)+'</div></details></section>';
+    '<details class="path"><summary>Nâng cao 650 đến 990: 8 bài <span class="fine">Tín dụng, rủi ro, tài chính, hợp đồng, đề tổng hợp</span></summary><div class="wks">'+wkList(16,WEEKS.length)+'</div></details></section>'+
+    '<section><h2 class="sec">Đo trình độ</h2><p class="fine sub">Làm một lần để biết nên bắt đầu từ đâu, làm lại sau vài tuần để thấy tiến bộ.</p>'+testCard()+testCardAdv()+'</section>'+
+    '<p class="fine links"><a href="#howto">Hướng dẫn</a> · <a href="#learn">Phương pháp học</a> · <a href="#gmap">Danh mục ngữ pháp</a> · <a href="#guide">Bản đồ TOEIC</a> · <a href="#backup">Sao lưu</a></p>';
 }
 
 /* ---------- Giao diện: tuần học ---------- */
@@ -9193,12 +9608,76 @@ function viewProgress(){
     (function(){var sp=0,wr=0;Object.keys(P.sw||{}).forEach(function(k){if(k.charAt(0)==='s')sp++;else wr++;});return '<section class="card"><h3>Sao lưu</h3><p class="fine">Chuyển dữ liệu học sang thiết bị khác. <a href="#backup">Sao lưu và khôi phục</a></p></section>'+
     '<section class="card"><h3>Nói và Viết</h3><p class="fine">Đã làm '+sp+'/'+SW.sp.length+' bài Nói và '+wr+'/'+SW.wr.length+' bài Viết. <a href="#sw">Luyện tiếp</a></p></section>';})()+
     '<section><h2 style="margin-bottom:10px">Theo bài học</h2><div class="wks">'+rows+'</div></section>'+
-    '<section class="card"><h3>Xóa dữ liệu học</h3><p class="fine">Tiến độ chỉ lưu trong trình duyệt này, không đồng bộ sang thiết bị khác.</p>'+
+    profCard()+'<section class="card"><h3>Xóa dữ liệu học</h3><p class="fine">Tiến độ chỉ lưu trong trình duyệt này, không đồng bộ sang thiết bị khác.</p>'+
     (S.confirm?'<div class="btns"><button class="btn" data-act="reset-do" style="border-color:var(--bad);color:var(--bad)">Xóa hết, không hoàn tác</button><button class="btn ghost" data-act="reset-ask">Giữ lại</button></div>':'<button class="btn" data-act="reset-ask">Xóa tiến độ</button>')+'</section>';
 }
 
 /* ---------- Luyện nói: bảng chấm phát âm ---------- */
 function cur(){return S.practice.list[S.practice.i];}
+
+/* ---------- Gõ lại từ (nhớ chủ động) ---------- */
+function srsRate(v,g){
+  var s=P.srs[v.id],isNew=!s;s=s||{box:0,due:today()};
+  if(isNew){if(P.nc.d!==today())P.nc={d:today(),n:0};P.nc.n++;}
+  if(g){s.box=Math.min((s.box||0)+1,5);s.due=addDays(today(),[0,1,2,4,8,16][s.box]);}else{s.box=0;s.due=today();}
+  P.srs[v.id]=s;touch();
+}
+function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i];}for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+function tyBuild(){
+  var d=buildDeck(0).list.slice(0,10);
+  if(d.length<5){var seen=allVocab().filter(function(v){return P.srs[v.id]&&d.indexOf(v)<0;}).sort(function(a,b){return (P.srs[a.id].box||0)-(P.srs[b.id].box||0);});d=d.concat(seen.slice(0,10-d.length));}
+  if(!d.length)d=allVocab().slice(0,10);
+  return {list:d,i:0,res:null,hint:false,ok:0};
+}
+function cloze(ex,w){var re=new RegExp('\\b'+w.replace(/[^a-z\' ]/ig,'').replace(/ /g,'\\s+')+'\\w*','ig');return esc(ex).replace(re,'<span class="blank"></span>');}
+function viewType(){
+  var t=S.ty;
+  if(!t||t.i>=t.list.length){
+    var n=t?t.list.length:0;
+    return '<header class="top"><a class="back" href="#home">‹ Về trang chủ</a><p class="eyebrow">Gõ lại từ</p><h1>Xong lượt này</h1><p class="lead">Bạn nhớ đúng '+(t?t.ok:0)+'/'+n+' từ. Từ sai sẽ quay lại sớm trong Ôn thẻ.</p></header><div class="btns"><button class="btn primary" data-act="ty-again">Làm lượt mới</button><a class="btn" href="#cards">Ôn thẻ</a></div>';
+  }
+  var v=t.list[t.i],r=t.res,vv=VMAP[v.id]||{},pos=vv.pos||'';
+  var h='<header class="top"><a class="back" href="#home">‹ Về trang chủ</a><p class="eyebrow">Gõ lại từ · '+(t.i+1)+'/'+t.list.length+'</p></header><div class="card fc">';
+  h+='<p class="eyebrow">Nghĩa tiếng Việt'+(pos?' · '+esc(pos):'')+'</p><p class="m" style="font-size:22px">'+esc(v.m)+'</p>';
+  h+='<p class="ex">'+(r?hl(v.ex,v.w.toLowerCase()):cloze(v.ex,v.w))+'</p>';
+  if(!r){
+    if(t.hint)h+='<p class="fine">Gợi ý: '+v.w.length+' chữ cái, bắt đầu bằng <b>'+esc(v.w.charAt(0))+'</b>'+(v.w.indexOf(' ')>0?' (cụm gồm '+v.w.split(' ').length+' từ)':'')+'</p>';
+    h+='<input id="tyin" class="inp" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Gõ từ tiếng Anh" aria-label="Từ tiếng Anh">'
+      +'<div class="btns"><button class="btn primary big" style="flex:1" data-act="ty-check">Kiểm tra</button>'+(t.hint?'':'<button class="btn" data-act="ty-hint">Gợi ý</button>')+'<button class="btn ghost" data-act="ty-skip">Chưa nhớ</button></div>';
+  }else{
+    h+='<p class="'+(r.ok?'ty-ok':'ty-bad')+'"><b>'+(r.ok?(r.near?'Gần đúng, chú ý chính tả':'Chính xác'):'Chưa đúng')+'</b>'+(r.val?' · bạn gõ: '+esc(r.val):'')+'</p>'
+      +'<p class="w">'+esc(v.w)+'</p><p class="ipa-line">'+esc(ipaOf(v.w))+'</p>'
+      +'<div class="btns"><button class="btn sm" data-act="say" data-text="'+esc(v.w)+'">'+IC.spk+' Nghe từ</button><button class="btn sm" data-act="say" data-text="'+esc(v.ex)+'">'+IC.spk+' Nghe câu</button></div>'
+      +'<button class="btn primary big" data-act="ty-next">'+(t.i+1>=t.list.length?'Xem kết quả':'Từ tiếp theo')+'</button>';
+  }
+  return h+'</div>';
+}
+function tyCheck(skip){
+  var t=S.ty,v=t.list[t.i],val=skip?'':(($('#tyin')||{}).value||'').trim().toLowerCase().replace(/\s+/g,' ');
+  var w=v.w.toLowerCase(),d=val?lev(val,w):99,ok=!!val&&(d===0||(w.length>=6&&d===1)),near=ok&&d===1;
+  t.res={ok:ok,near:near,val:val};if(ok)t.ok++;srsRate(v,ok?1:0);render();
+  if(ok||true)say(v.w);
+}
+
+/* ---------- Nhại giọng (shadowing) ---------- */
+function shadowList(){
+  var cw=currentWeek(),w=WEEKS[cw-1],list=[];
+  (w.sents||[]).forEach(function(x){list.push({id:x.id,t:x.t,vi:x.vi,label:'Nhại giọng'});});
+  allVocab().filter(function(v){return P.srs[v.id]&&(P.srs[v.id].box||0)<=2;}).slice(0,4).forEach(function(v){list.push({id:v.id+'x',t:v.ex,vi:v.m,label:'Nhại giọng'});});
+  return list.slice(0,8);
+}
+function openShadow(){
+  var l=shadowList();if(!l.length){toast('Chưa có câu để nhại.');return;}
+  stopSpeak();S.practice={list:l,i:0,shadow:true,hide:false,sg:0};S.rec=null;renderSheet(true);shadowGo();
+}
+function shadowGo(){
+  var p=S.practice;if(!p||!p.shadow)return;var c=cur(),tk=++p.sg,i=p.i;
+  S.rec=null;renderSheet();
+  say(c.t).then(function(){
+    if(S.practice!==p||p.sg!==tk||p.i!==i||(S.rec&&(S.rec.active||S.rec.result)))return;
+    if(S.mic!=='none'&&dict)startRec();
+  });
+}
 function openPractice(list,i){stopSpeak();S.practice={list:list,i:i||0};S.rec=null;renderSheet(true);}
 function closeSheet(){releaseMic();if(S.rec&&S.rec.active&&dict){try{dict.stop();}catch(e){}}S.practice=null;S.rec=null;stopSpeak();renderSheet();}
 function gauge(p){
@@ -9216,14 +9695,16 @@ function renderSheet(first){
   document.body.style.overflow='hidden';
   var p=S.practice,c=cur(),r=S.rec||{},h='';
   h+='<div class="sh-head"><span class="eyebrow">'+esc(c.label||'Luyện nói')+' · '+(p.i+1)+'/'+p.list.length+'</span><button class="btn sm" data-act="close">Đóng</button></div>';
-  h+='<p class="target">'+esc(c.t)+'</p>';
-  var ip=c.ipa||ipaOf(c.t);if(ip)h+='<p class="ipa-line">'+esc(ip)+'</p>';
+  var hid=p.shadow&&p.hide&&!r.result;
+  if(p.shadow)h+='<p class="fine" style="margin:0 0 6px">Nghe một lần, rồi nói theo ngay khi máy bắt đầu thu. Đừng chờ nghĩ xong.</p>';
+  h+='<p class="target'+(hid?' blurred':'')+'">'+esc(c.t)+'</p>';
+  var ip=hid?'':(c.ipa||ipaOf(c.t));if(ip)h+='<p class="ipa-line">'+esc(ip)+'</p>';
   if(c.vi)h+='<p class="vi">'+esc(c.vi)+'</p>';
   if(P.pr[c.id]!==undefined)h+='<p class="fine">Điểm cao nhất của câu này: '+P.pr[c.id]+'</p>';
   if(r.active){
     h+='<div class="rec" role="status"><i></i>Đang nghe, hãy đọc câu ở trên</div><div class="live" id="live" aria-live="polite">'+esc((r.final+' '+r.partial).trim())+'</div><button class="btn primary big" data-act="rec-stop">Dừng và chấm điểm</button>';
   }else{
-    h+='<div class="btns"><button class="btn" data-act="model">'+IC.spk+' Nghe mẫu</button><button class="btn" data-act="model-slow">Nghe chậm</button></div>';
+    h+='<div class="btns"><button class="btn" data-act="model">'+IC.spk+' Nghe mẫu</button><button class="btn" data-act="model-slow">Nghe chậm</button>'+(p.shadow?'<button class="btn'+(p.hide?' primary':'')+'" data-act="sh-hide" aria-pressed="'+!!p.hide+'">Ẩn chữ</button><button class="btn" data-act="sh-go">Nghe rồi nói</button>':'')+'</div>';
     if(S.mic!=='none')h+='<button class="btn primary big" data-act="rec-start">'+IC.mic+' '+(r.result?'Nói lại':'Bấm để nói')+'</button>';
     else h+='<div class="note"><span>'+ERR.nomic+' Cách khác: dùng micro trên bàn phím điện thoại để đọc câu vào ô dưới, rồi bấm Chấm điểm.</span><textarea id="typed" placeholder="Nội dung bạn vừa đọc" aria-label="Nội dung bạn vừa đọc"></textarea><button class="btn primary" data-act="typed">Chấm điểm</button></div>';
     if(r.err&&r.err!=='nomic')h+='<div class="note" role="alert">'+(ERR[r.err]||ERR.error)+'</div>';
@@ -9239,6 +9720,7 @@ function renderSheet(first){
     else h+='<p class="fine">'+(R.words.every(function(w){return w.state==='ok';})?'Mọi từ đều được nhận đúng. Sang câu tiếp theo.':'Nghe mẫu, nhìn phiên âm IPA rồi nói lại chậm hơn.')+'</p>';
     h+='<p class="fine">Điểm cho biết máy nhận ra đúng từng từ bạn nói, không phải chấm chi tiết từng âm. Kết quả phụ thuộc micro và tiếng ồn xung quanh.</p>';
   }
+  if(p.shadow&&r.result&&p.i<p.list.length-1)h+='<button class="btn primary big" data-act="sh-next">Câu tiếp theo</button>';
   if(p.list.length>1)h+='<div class="sheet-nav"><button class="btn sm" data-act="snav" data-d="-1"'+(p.i===0?' disabled':'')+'>‹ Trước</button><button class="btn sm" data-act="snav" data-d="1"'+(p.i===p.list.length-1?' disabled':'')+'>Sau ›</button></div>';
   sheet.innerHTML='<div class="sheet-bg" data-act="bg"><div class="sheet" role="dialog" aria-modal="true" aria-label="Luyện phát âm" tabindex="-1">'+h+'</div></div>';
   if(first){var el=$('.sheet',sheet);if(el)el.focus();}
@@ -9857,6 +10339,18 @@ function relRow(x){
     (g.m?'<div><b>'+esc(g.m)+'</b></div>':'<div class="fine">'+(S.lk&&S.lk.fill?'Đang tra nghĩa...':'Chưa có nghĩa tiếng Việt')+'</div>')+
     (g.ex?'<div class="fine" style="font-size:14px">'+hl(g.ex,x)+'</div>':'')+relPrepHtml(x)+'</div>';
 }
+var SCN={};
+RAWSC.split('\n').forEach(function(l){var f=l.split('|');if(f.length===5)SCN[f[0].toLowerCase()]={c:f[1],s:f[2],i:f[3],e:f[4]};});
+function sceneBlock(w,v,c){
+  var k=String(w).toLowerCase(),o=SCN[k],ex=(v&&v.ex)||c.ex||'';
+  if(o)return '<div class="scn"><span class="pill scn-ctx">'+esc(o.c)+'</span><p class="scene">'+esc(o.s)+'</p>'
+    +'<p class="scn-key"><span class="eyebrow">Hình ảnh chốt</span> '+esc(o.i)+'</p>'
+    +'<p class="scn-en">'+hl(o.e,k)+'</p>'
+    +'<p class="fine" style="margin:6px 0 8px">Nhắm mắt, nhìn lại cảnh trên 10 giây, rồi tự kể lại bằng lời của bạn.</p></div>';
+  if(ex)return '<div class="scn"><span class="pill scn-ctx">Ngữ cảnh từ câu ví dụ</span><p class="scene">'+hl(ex,k)+'</p>'
+    +'<p class="fine" style="margin:6px 0 8px">Tự dựng cảnh: ai đang làm gì, ở đâu, nhìn thấy gì trong câu trên? Ghi lại một hình ảnh của riêng bạn bên dưới.</p></div>';
+  return '<p class="fine" style="margin:0 0 8px">Chưa có câu ví dụ cho từ này. Hãy nghĩ một người, một nơi và một hành động có dùng từ này, rồi ghi lại bên dưới.</p>';
+}
 function lkFill(w){
   var G=famGroups(w),rl=relOf(w),L=S.lk,list=[];
   ['n','v','adj','adv'].forEach(function(k){G[k].forEach(function(x){if(x!==w)list.push(x);});});
@@ -9883,8 +10377,8 @@ function lkHtml(){
   h+='<div class="btns"><button class="btn sm" data-act="lk-say" data-w="'+esc(w)+'">'+IC.spk+' Nghe giọng Mỹ</button><button class="btn sm" data-act="lk-say-slow" data-w="'+esc(w)+'">Nghe chậm</button><button class="btn sm" data-act="lk-prac" data-w="'+esc(w)+'">'+IC.mic+' Nói</button><button class="btn sm'+(saved?' primary':'')+'" data-act="lk-save" data-w="'+esc(w)+'" aria-pressed="'+saved+'">'+(saved?IC2.bmf+' Đã lưu':IC2.bm+' Lưu từ này')+'</button></div>';
   function sec(t,body){return body?'<div style="margin-top:10px"><h3 style="margin:0 0 4px">'+t+'</h3>'+body+'</div>':'';}
   h+=sec('Sơ đồ tư duy của từ',wordMM(w));
-  var scn=(v&&v.ex)||c.ex||'',nt=(P.lkn&&P.lkn[w])||'';
-  h+=sec('Hình dung và ghi nhớ','<p class="fine" style="margin:0 0 6px">'+(picName(w,(v&&v.m)||c.vi||'')?'':'Từ này khó vẽ thành một hình. ')+'Nhắm mắt, hình dung cảnh này ở quầy giao dịch, rồi nói lại câu bằng lời của bạn.</p>'+(scn?'<p class="scene">'+esc(scn)+'</p>':'')+'<textarea id="lknote" class="wta" rows="2" placeholder="Ghi cách nhớ của bạn: một hình ảnh, một câu chuyện ngắn hoặc từ tiếng Việt nghe giống" aria-label="Ghi chú ghi nhớ" data-w="'+esc(w)+'">'+esc(nt)+'</textarea>');
+  var nt=(P.lkn&&P.lkn[w])||'';
+  h+=sec('Hình dung và ghi nhớ',sceneBlock(w,v,c)+'<textarea id="lknote" class="wta" rows="2" placeholder="Ghi cách nhớ của bạn: một hình ảnh, một câu chuyện ngắn hoặc từ tiếng Việt nghe giống" aria-label="Ghi chú ghi nhớ" data-w="'+esc(w)+'">'+esc(nt)+'</textarea>');
   var G=famGroups(w),PN={n:'Danh từ',v:'Động từ',adj:'Tính từ',adv:'Trạng từ'},fam='',total=0;
   ['n','v','adj','adv'].forEach(function(k){var l=G[k].filter(function(x){return x!==w;});total+=l.length;if(l.length)fam+='<div style="margin-top:6px"><span class="fine" style="font-weight:700">'+PN[k]+'</span>'+l.map(relRow).join('')+'</div>';});
   if(G.inf.length)fam+='<div style="margin-top:6px"><span class="fine" style="font-weight:700">Dạng chia, số nhiều</span><p>'+chipsHtml(G.inf.filter(function(x){return x!==w;}))+'</p></div>';
@@ -9997,8 +10491,8 @@ function bkDownload(code){
 }
 function bkApplyAll(d){
   var data=d&&d.data?d.data:d;if(!data||typeof data!=='object')throw new Error('format');
-  Object.keys(P).forEach(function(k){delete P[k];});
-  Object.keys(data).forEach(function(k){P[k]=data[k];});
+  var keepPf=P.prof;Object.keys(P).forEach(function(k){delete P[k];});
+  Object.keys(data).forEach(function(k){P[k]=data[k];});if(!P.prof&&keepPf)P.prof=keepPf;
   initP();save();
   if(P.sv&&P.sv.cu)Object.keys(P.sv.cu).forEach(function(k){VMAP[k]=P.sv.cu[k];});
 }
@@ -10210,11 +10704,11 @@ function viewMM(){
 function viewLearn(){
   var M=[
    ['Lặp lại ngắt quãng','Ôn từ đúng lúc sắp quên thì nhớ lâu hơn nhiều so với học dồn.','Mục Ôn thẻ lên lịch ôn theo mức nhớ của bạn. Mỗi ngày ôn thẻ trước, rồi mới học từ mới.'],
-   ['Nhớ lại chủ động','Tự lục trí nhớ trước khi xem đáp án hiệu quả hơn đọc lại nhiều lần.','Trên mọi sơ đồ tư duy có nút Che nghĩa. Nhìn từ, nói nghĩa thành tiếng, rồi mới chạm để kiểm tra. Bài kiểm tra và thẻ lật cũng theo cách này.'],
+   ['Nhớ lại chủ động','Tự lục trí nhớ trước khi xem đáp án hiệu quả hơn đọc lại nhiều lần.','Mục Gõ lại từ: xem nghĩa tiếng Việt và câu bị che từ, tự gõ từ tiếng Anh, kết quả cập nhật lịch ôn thẻ. Trên mọi sơ đồ tư duy có nút Che nghĩa. Nhìn từ, nói nghĩa thành tiếng, rồi mới chạm để kiểm tra. Bài kiểm tra và thẻ lật cũng theo cách này.'],
    ['Mã hóa kép: chữ và hình','Gắn từ với hình ảnh giúp tạo hai đường ghi nhớ.','Từ cụ thể (card, deposit, signature...) có biểu tượng minh họa. Với từ trừu tượng, hãy tự hình dung một tình huống ở quầy giao dịch rồi nhớ cả cảnh đó.'],
    ['Học theo cụm và họ từ','Não nhớ cụm và quan hệ tốt hơn từ rời rạc.','Chạm một từ để xem sơ đồ họ từ, đồng nghĩa, trái nghĩa, giới từ đi kèm và dạng động từ phía sau (V-ing, to V).'],
    ['Xen kẽ nhiều dạng bài','Trộn từ vựng, ngữ pháp, nghe và nói trong một buổi giúp chọn đúng cách làm khi thi.','Mục Hôm nay trộn 4 việc ngắn. Bài kiểm tra trộn đủ các phần. Tránh dành cả buổi cho một chủ đề.'],
-   ['Nghe rồi nói đuổi theo (shadowing)','Nhại theo người bản xứ giúp ngữ điệu và nối âm tự nhiên.','Bấm Nghe để nghe giọng Mỹ, nói đuổi theo từng câu, rồi bấm Nói để máy chấm. Nghe chậm khi cần.'],
+   ['Nghe rồi nói đuổi theo (shadowing)','Nhại theo người bản xứ giúp ngữ điệu và nối âm tự nhiên.','Mục Nhại giọng trên trang chủ: máy đọc mẫu rồi tự mở micro để bạn nói theo ngay, kèm chế độ Ẩn chữ. Bấm Nghe để nghe giọng Mỹ, nói đuổi theo từng câu, rồi bấm Nói để máy chấm. Nghe chậm khi cần.'],
    ['Tự đặt câu của mình','Tự tạo câu ghi nhớ sâu hơn chỉ đọc ví dụ.','Sau mỗi chủ đề, nói to 2 câu về công việc ở quầy bằng từ mới. Dùng bài Nói và Viết để được chấm.'],
    ['Theo dõi tiến độ và kiểm tra định kỳ','Biết mình yếu ở đâu để dồn thời gian đúng chỗ.','Mục Tiến độ cho thấy kết quả từng phần. Làm bài kiểm tra mỗi 2 tuần và ôn lại phần dưới 70%.']
   ];
@@ -10225,11 +10719,51 @@ function viewLearn(){
 
 function navRender(){
   var items=[['home','#home','Học',IC.home],['vocab','#vocab','Từ vựng',IC.cards],['grammar','#grammar','Ngữ pháp',IC.book],['pron','#pron','Phát âm',IC.mic22],['sw','#sw','Nói/Viết',IC.pen],['progress','#progress','Tiến độ',IC.chart]];
-  var active=S.route==='mm'?(S.mm.k==='w'?'home':S.mm.k==='v'?'vocab':'grammar'):S.route==='learn'?'home':S.route==='backup'?'progress':S.route==='cards'||S.route==='vtopic'||S.route==='saved'?'vocab':S.route==='week'||S.route==='guide'||S.route==='test'?'home':S.route==='gtopic'||S.route==='gmap'?'grammar':S.route==='ptopic'?'pron':S.route==='speak'||S.route==='write'?'sw':S.route;
+  var active=S.route==='mm'?(S.mm.k==='w'?'home':S.mm.k==='v'?'vocab':'grammar'):S.route==='learn'||S.route==='type'||S.route==='howto'||S.route==='drill'||S.route==='listen'||S.route==='errors'?'home':S.route==='backup'?'progress':S.route==='cards'||S.route==='vtopic'||S.route==='saved'?'vocab':S.route==='week'||S.route==='guide'||S.route==='test'?'home':S.route==='gtopic'||S.route==='gmap'?'grammar':S.route==='ptopic'?'pron':S.route==='speak'||S.route==='write'?'sw':S.route;
   navEl.innerHTML=items.map(function(i){return '<a href="'+i[1]+'"'+(active===i[0]?' aria-current="page"':'')+'>'+i[3]+'<span>'+i[2]+'</span></a>';}).join('');
 }
+
+var FIELDS=['Ngân hàng, tài chính','Bảo hiểm, chứng khoán','Kế toán, kiểm toán','Bán lẻ, thương mại','Hành chính, văn phòng','Nhân sự, đào tạo','Công nghệ thông tin','Y tế, dược','Giáo dục','Sản xuất, kỹ thuật','Logistics, xuất nhập khẩu','Du lịch, khách sạn, nhà hàng','Sinh viên, mới đi làm','Khác'];
+function needProf(){var p=P.prof;return !(p&&p.email&&p.phone&&p.field&&p.role);}
+function okEmail(x){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(x);}
+function normPhone(x){var d=String(x||'').replace(/[\s.\-()]/g,'');if(/^\+84\d{9}$/.test(d))d='0'+d.slice(3);else if(/^84\d{9}$/.test(d))d='0'+d.slice(2);return /^0\d{9}$/.test(d)?d:'';}
+function profForm(first,err,vals){
+  vals=vals||P.prof||{};var f=vals.field||'',inList=FIELDS.indexOf(f)>=0,other=f&&!inList?f:'';
+  return '<div class="ob-card"><div class="fld"><label for="pf-email">Email</label><input id="pf-email" class="inp" type="email" inputmode="email" autocomplete="email" placeholder="ten@email.com" value="'+esc(vals.email||'')+'"></div>'
+  +'<div class="fld"><label for="pf-phone">Số điện thoại</label><input id="pf-phone" class="inp" type="tel" inputmode="tel" autocomplete="tel" placeholder="0901234567" value="'+esc(vals.phone||'')+'"></div>'
+  +'<div class="fld"><label for="pf-field">Lĩnh vực công tác</label><select id="pf-field" class="inp"><option value="">Chọn lĩnh vực</option>'+FIELDS.map(function(x){return '<option'+((inList&&f===x)||(!inList&&other&&x==='Khác')?' selected':'')+'>'+esc(x)+'</option>';}).join('')+'</select></div>'
+  +'<div class="fld" id="pf-oth-w"'+((!inList&&other)||f==='Khác'?'':' hidden')+'><label for="pf-oth">Ghi rõ lĩnh vực</label><input id="pf-oth" class="inp" type="text" placeholder="Ví dụ: Bất động sản" value="'+esc(other)+'"></div>'
+  +'<div class="fld"><label for="pf-role">Vị trí công việc</label><input id="pf-role" class="inp" type="text" autocomplete="organization-title" placeholder="Ví dụ: Giao dịch viên, Chuyên viên tín dụng" value="'+esc(vals.role||'')+'"></div>'
+  +'<p class="ob-err" id="pf-err" role="alert">'+esc(err||'')+'</p>'
+  +'<button class="btn primary ob-go" data-act="prof-save" data-first="'+(first?1:0)+'">'+(first?'Bắt đầu học':'Lưu thông tin')+'</button></div>';
+}
+function viewOnboard(){
+  return '<div class="ob"><div class="ob-hero"><p class="eyebrow">Chào mừng</p><h1>Thiết lập hồ sơ của bạn</h1><p class="lead">Chỉ mất 30 giây. Thông tin này giúp app biết bạn làm lĩnh vực nào để gợi ý ví dụ và bối cảnh sát công việc.</p></div>'
+  +profForm(true,S.obErr,S.obVals)
+  +'<p class="fine ob-note">Thông tin chỉ lưu trong trình duyệt của thiết bị này, không gửi đi đâu và không đồng bộ sang máy khác. Bạn có thể sửa lại trong mục Tiến độ.</p></div>';
+}
+function profSave(first){
+  var em=(($('#pf-email')||{}).value||'').trim(),ph=normPhone(($('#pf-phone')||{}).value),fd=(($('#pf-field')||{}).value||''),rl=(($('#pf-role')||{}).value||'').trim(),ot=(($('#pf-oth')||{}).value||'').trim();
+  var raw={email:em,phone:(($('#pf-phone')||{}).value||'').trim(),field:fd==='Khác'&&ot?ot:fd,role:rl};
+  var err='';
+  if(!okEmail(em))err='Email chưa đúng. Ví dụ: ten@email.com';
+  else if(!ph)err='Số điện thoại cần 10 số, bắt đầu bằng 0 (hoặc +84).';
+  else if(!fd)err='Hãy chọn lĩnh vực công tác.';
+  else if(fd==='Khác'&&!ot)err='Hãy ghi rõ lĩnh vực của bạn.';
+  else if(rl.length<2)err='Hãy nhập vị trí công việc.';
+  if(err){S.obVals=raw;S.obErr=err;var e=$('#pf-err');if(e)e.textContent=err;return;}
+  P.prof={email:em.toLowerCase(),phone:ph,field:raw.field,role:rl,ts:Date.now()};save();S.obErr='';S.obVals=null;
+  if(first){location.hash='#howto';render();navRender();window.scrollTo(0,0);}else{toast('Đã lưu hồ sơ.','good');render();}
+}
+function profCard(){
+  var p=P.prof||{};
+  return '<section class="card"><h3>Hồ sơ của bạn</h3><p class="fine" style="margin-bottom:8px">'+esc(p.role||'')+' · '+esc(p.field||'')+'<br>'+esc(p.email||'')+' · '+esc(p.phone||'')+'</p>'
+   +'<details><summary class="btn sm" style="display:inline-block;cursor:pointer">Sửa thông tin</summary><div style="margin-top:10px">'+profForm(false,'',p)+'</div></details></section>';
+}
 function render(){
-  app.innerHTML=S.route==='mm'?viewMM():S.route==='learn'?viewLearn():S.route==='home'?viewHome():S.route==='week'?viewWeek():S.route==='cards'?viewCards():S.route==='test'?viewTest():S.route==='grammar'?viewGrammar():S.route==='gtopic'?viewGTopic(false):S.route==='pron'?viewPron():S.route==='ptopic'?viewGTopic(true):S.route==='sw'?viewSW():S.route==='speak'?viewSpeak():S.route==='write'?viewWrite():S.route==='gmap'?viewGMap():S.route==='guide'?viewGuide():S.route==='backup'?viewBackup():S.route==='vocab'?viewVocab():S.route==='vtopic'?viewVTopic():S.route==='saved'?viewSaved():viewProgress();
+  if(needProf()){app.innerHTML=viewOnboard();navEl.hidden=true;document.body.classList.add('ob-on');return;}
+  navEl.hidden=false;document.body.classList.remove('ob-on');
+  app.innerHTML=S.route==='drill'?viewDrill():S.route==='listen'?viewListen():S.route==='errors'?viewErrors():S.route==='howto'?viewHowto():S.route==='type'?viewType():S.route==='mm'?viewMM():S.route==='learn'?viewLearn():S.route==='home'?viewHome():S.route==='week'?viewWeek():S.route==='cards'?viewCards():S.route==='test'?viewTest():S.route==='grammar'?viewGrammar():S.route==='gtopic'?viewGTopic(false):S.route==='pron'?viewPron():S.route==='ptopic'?viewGTopic(true):S.route==='sw'?viewSW():S.route==='speak'?viewSpeak():S.route==='write'?viewWrite():S.route==='gmap'?viewGMap():S.route==='guide'?viewGuide():S.route==='backup'?viewBackup():S.route==='vocab'?viewVocab():S.route==='vtopic'?viewVTopic():S.route==='saved'?viewSaved():viewProgress();
   if(S.route==='write')wcUpdate();
   navRender();
 }
@@ -10252,6 +10786,11 @@ function route(){
   else if(h==='gmm'){S.route='mm';S.mm={k:'g'};}
   else if((m=h.match(/^gmm-(\d+)$/))&&GT[+m[1]-1]){S.route='mm';S.mm={k:'gt',n:+m[1]};}
   else if(h==='learn'){S.route='learn';}
+  else if(h==='howto'){S.route='howto';}
+  else if(h==='listen'){S.route='listen';}
+  else if(h==='errors'){S.route='errors';}
+  else if(h==='drill'){S.route='drill';}
+  else if(h==='type'){S.route='type';S.ty=tyBuild();}
   else if(h==='gmap'){S.route='gmap';}
   else if(h==='guide'){S.route='guide';}
   else if(h==='pron'){S.route='pron';}
@@ -10267,6 +10806,7 @@ function goWeek(n,tab){
   if(location.hash==='#week-'+n){route();}else location.hash='week-'+n;
 }
 function weekBy(el){return WEEKS[+el.dataset.w-1];}
+document.addEventListener('change',function(e){if(e.target&&e.target.id==='pf-field'){var w=$('#pf-oth-w');if(w)w.hidden=e.target.value!=='Khác';}});
 document.addEventListener('input',function(e){var t=e.target;if(t&&t.id==='lknote'){P.lkn=P.lkn||{};var w=t.dataset.w;if(t.value.trim())P.lkn[w]=t.value;else delete P.lkn[w];save();}});
 document.addEventListener('click',function(e){
   var el=e.target.closest('[data-act]');if(!el)return;
@@ -10319,6 +10859,8 @@ document.addEventListener('click',function(e){
     case 'bg':if(e.target===el)closeSheet();break;
     case 'close':closeSheet();break;
     case 'go':goWeek(+el.dataset.week,el.dataset.tab);break;
+    case 'to-err':location.hash='errors';break;
+    case 'to-type':location.hash='type';break;
     case 'to-cards':if(location.hash==='#cards')route();else location.hash='cards';break;
     case 'tab':S.tab=el.dataset.tab;stopSpeak();render();break;
     case 'say':say(el.dataset.text);break;
@@ -10362,7 +10904,7 @@ document.addEventListener('click',function(e){
     case 'rec-stop':stopRec();break;
     case 'typed':{var tv=($('#typed')||{}).value;tv=(tv||'').trim();if(!tv)break;S.rec={active:false,final:tv,partial:'',result:null,err:''};finishRec();break;}
     case 'snav':
-      S.practice.i=Math.max(0,Math.min(S.practice.list.length-1,S.practice.i+(+el.dataset.d)));S.rec=null;stopSpeak();renderSheet(true);break;
+      S.practice.i=Math.max(0,Math.min(S.practice.list.length-1,S.practice.i+(+el.dataset.d)));S.rec=null;stopSpeak();renderSheet(true);if(S.practice.shadow)shadowGo();break;
     case 'flip':S.deck.flip=true;render();break;
     case 'rate':{
       var d=S.deck,cv2=d.list[d.i],s=P.srs[cv2.id],isNew=!s;
@@ -10373,7 +10915,24 @@ document.addEventListener('click',function(e){
       P.srs[cv2.id]=s;touch();d.i++;d.flip=false;render();window.scrollTo(0,0);break;}
     case 'cards-more':S.deck=buildDeck(10);render();break;
     case 'reset-ask':S.confirm=!S.confirm;render();break;
-    case 'reset-do':P={q:{},pr:{},srs:{},days:{},hist:[],nc:{d:'',n:0}};initP();save();S.chosen={};S.confirm=false;render();toast('Đã xóa tiến độ.');break;
+    case 'dr-listen':drStart('listen',el.dataset.part);break;
+    case 'dr-err':drStart('err','');break;
+    case 'dr-again':drStart(S.dr.kind,S.dr.part);render();break;
+    case 'dr-ans':drAns(+el.dataset.k);break;
+    case 'dr-rev':S.dr.rev[S.dr.list[S.dr.i].id]=!S.dr.rev[S.dr.list[S.dr.i].id];render();break;
+    case 'dr-play':drPlay(S.dr.list[S.dr.i]);break;
+    case 'dr-next':S.dr.i++;render();window.scrollTo(0,0);if(S.dr.i<S.dr.list.length&&drIsL(S.dr.list[S.dr.i]))drPlay(S.dr.list[S.dr.i]);break;
+    case 'sh-go':shadowGo();break;
+    case 'sh-next':S.practice.i=Math.min(S.practice.list.length-1,S.practice.i+1);S.rec=null;stopSpeak();renderSheet(true);shadowGo();break;
+    case 'sh-hide':S.practice.hide=!S.practice.hide;renderSheet();break;
+    case 'shadow':openShadow();break;
+    case 'ty-check':tyCheck(false);break;
+    case 'ty-skip':tyCheck(true);break;
+    case 'ty-hint':S.ty.hint=true;render();var ti=$('#tyin');if(ti)ti.focus();break;
+    case 'ty-next':S.ty.i++;S.ty.res=null;S.ty.hint=false;render();window.scrollTo(0,0);break;
+    case 'ty-again':S.ty=tyBuild();render();break;
+    case 'prof-save':profSave(el.dataset.first==='1');break;
+    case 'reset-do':var pf0=P.prof;P={q:{},pr:{},srs:{},days:{},hist:[],nc:{d:'',n:0}};if(pf0)P.prof=pf0;initP();save();S.chosen={};S.confirm=false;render();toast('Đã xóa tiến độ.');break;
   }
 });
 document.addEventListener('change',function(e){
@@ -10388,7 +10947,7 @@ document.addEventListener('input',function(e){
   S.wr.text=e.target.value;wcUpdate();clearTimeout(S.wr.dt);
   S.wr.dt=setTimeout(function(){try{if(!P.sw)P.sw={};var t=SWQ[S.sid];if(t){var o=P.sw[t.id]||(P.sw[t.id]={att:[]});o.draft=S.wr.text;save();}}catch(x){}},600);
 });
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&S.practice)closeSheet();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&S.practice)closeSheet();if(e.key==='Enter'&&e.target&&e.target.id==='tyin'){e.preventDefault();tyCheck(false);}});
 window.addEventListener('hashchange',route);
 initMic();
 route();
